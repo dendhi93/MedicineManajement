@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/progress_bar_style.xml" value="0.1925" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_splash.xml" value="0.3625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

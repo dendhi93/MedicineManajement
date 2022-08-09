@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MedicineManagement</string>
+    <string name="content_description">-</string>
 </resources>
