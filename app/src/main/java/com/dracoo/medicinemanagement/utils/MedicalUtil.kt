@@ -1,10 +1,14 @@
 package com.dracoo.medicinemanagement.utils
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 object MedicalUtil {
 
@@ -28,4 +32,37 @@ object MedicalUtil {
             }
         }
     }
+
+    fun alertDialogDismiss(alertMessage : String,
+                           alertTitle : String,context: Context,
+                           isDismiss : Boolean){
+        val alertDialog = AlertDialog.Builder(context).setTitle(alertTitle)
+        alertDialog.setMessage(alertMessage)
+        alertDialog.setPositiveButton(android.R.string.ok){
+                dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setCancelable(false)
+        val alert: AlertDialog = alertDialog.create()
+        when(isDismiss){
+            true -> {
+                if(alert.isShowing){
+                    alert.dismiss()
+                }
+            }
+            else ->{
+                if(!alert.isShowing){
+                    alert.show()
+                }
+            }
+        }
+
+
+
+
+
+    }
+
+    fun getCurrentDateTime(dateTimeFormat : String): String =
+        SimpleDateFormat(dateTimeFormat, Locale.getDefault()).format(Date())
 }

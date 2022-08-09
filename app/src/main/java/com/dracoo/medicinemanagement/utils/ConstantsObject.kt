@@ -16,4 +16,8 @@ object ConstantsObject {
     //date time format
     const val vTahunJamSetrip = "yyyy-MM-dd HH:mm:ss"
     const val vDateGaringJamSetrip = "dd/MM/yyyy HH:mm:ss"
+
+    //message
+    const val vNoConnectionTitle = "Tidak Terkoneksi"
+    const val vNoConnectionMessage = "Handphone anda tidak terkoneksi jaringan"
 }
