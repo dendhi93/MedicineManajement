@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">MedicineManagement</string>
+    <string name="app_name">Medicine Management</string>
     <string name="content_description">-</string>
     <string name="home_activity">Home</string>
+
+    //login activity
+    <string name="username">Nama Pengguna</string>
+    <string name="login_btn">Login</string>
+    <string name="copyright">Copyright 2022</string>
+    <string name="by">By dracoo</string>
+
 </resources>
