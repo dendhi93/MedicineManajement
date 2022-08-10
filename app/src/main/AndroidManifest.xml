@@ -3,8 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dracoo.medicinemanagement">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".MedicineApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,13 +17,17 @@
         android:roundIcon="@mipmap/ic_medical_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicineManagement"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".menus.main.MainActivity"
-            android:label="@string/home_activity"
+            android:name=".menus.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".menus.splash.SplashActivity"
+            android:name=".menus.main.MainActivity"
+            android:exported="false"
+            android:label="@string/home_activity" />
+        <activity
+            android:name=".menus.splash.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

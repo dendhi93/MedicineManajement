@@ -10,7 +10,7 @@ import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 
 class MainActivity : AppCompatActivity() {
-    var doubleBackToExitPressedOnce = false
+    private var doubleBackToExitPressedOnce = false
     private val checkConnection by lazy {
         CheckConnectionUtil(application)}
 
