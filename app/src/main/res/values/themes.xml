@@ -18,4 +18,17 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="CustomTopCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.TopCut</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialCardView.TopCut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">25dp</item>
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 </resources>

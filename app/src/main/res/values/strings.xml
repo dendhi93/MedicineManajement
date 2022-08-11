@@ -7,6 +7,11 @@
     <string name="username">Nama Pengguna</string>
     <string name="login_btn">Login</string>
     <string name="copyright">Copyright 2022</string>
-    <string name="by">By dracoo</string>
+    <string name="by">By dracooCorp</string>
+
+    //home activity
+    <string name="date_lbl">Tanggal</string>
+    <string name="choose_menu">Pilih Menu</string>
+    <string name="choose_menu_you_want">Pilih menu yang akan dikerjakan</string>
 
 </resources>

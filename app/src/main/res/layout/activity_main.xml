@@ -4,15 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/text_blue1"
     tools:context=".menus.main.MainActivity">
 
+    <ImageView
+        android:id="@+id/user_home_iv"
+        android:layout_width="48dp"
+        android:contentDescription="@string/content_description"
+        android:layout_height="41dp"
+        android:src="@drawable/ic_user_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp" />
+
     <TextView
+        android:id="@+id/name_value_home_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        android:text="@string/content_description"
+        android:textColor="@color/text_light1"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_home_iv"
+        app:layout_constraintBottom_toBottomOf="@+id/user_home_iv"/>
+
+    <TextView
+        android:id="@+id/date_lbl_home_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/date_lbl"
+        android:textColor="@color/text_light1"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/user_home_iv"
+        app:layout_constraintStart_toStartOf="@+id/user_home_iv"/>
+
+    <TextView
+        android:id="@+id/date_value_home_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/content_description"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_light1"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/date_lbl_home_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/date_lbl_home_tv"
+        app:layout_constraintStart_toEndOf="@+id/date_lbl_home_tv"/>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/CustomTopCardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="27dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_lbl_home_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/choose_menu_title_home_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/choose_menu"
+                android:textColor="@color/text_black1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/choose_menu_subtitle_home_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_menu_you_want"
+                android:textColor="@color/text_gray1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/choose_menu_title_home_tv"
+                app:layout_constraintTop_toBottomOf="@id/choose_menu_title_home_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/choose_menu_home_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="30dp"
+                app:layout_constraintTop_toBottomOf="@id/choose_menu_subtitle_home_tv"
+                tools:listitem="@layout/item_grid_home"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

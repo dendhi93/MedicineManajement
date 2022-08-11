@@ -25,7 +25,7 @@ object MedicalUtil {
                 snackBar.show()
             }
             else -> {
-                val snackBar = Snackbar.make(rootView, snackMessage, Snackbar.LENGTH_INDEFINITE)
+                val snackBar = Snackbar.make(rootView, snackMessage, Snackbar.LENGTH_SHORT)
                 snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
                 snackBar.setActionTextColor(Color.WHITE)
                 snackBar.show()
@@ -56,13 +56,21 @@ object MedicalUtil {
                 }
             }
         }
-
-
-
-
-
     }
 
     fun getCurrentDateTime(dateTimeFormat : String): String =
         SimpleDateFormat(dateTimeFormat, Locale.getDefault()).format(Date())
+
+    fun getChangeDateFormat(stDateTime: String, stSourceDateTimeFormat : String, stResultDateFormat : String): String? {
+        return try {
+            val source = SimpleDateFormat(stSourceDateTimeFormat, Locale.getDefault())
+
+            val dateSource = source.parse(stDateTime.trim())
+            val dateFormat = SimpleDateFormat(stResultDateFormat, Locale.getDefault())
+
+            if (dateSource != null) {
+                dateFormat.format(dateSource)
+            } else { "" }
+        } catch (e: Exception) { "" }
+    }
 }

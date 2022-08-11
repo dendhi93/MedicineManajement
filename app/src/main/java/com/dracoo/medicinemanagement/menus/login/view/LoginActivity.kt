@@ -38,18 +38,18 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         checkConnection.observe(this){
-            when{
+            isConnected = when {
                 !it -> {
                     MedicalUtil.alertDialogDismiss(
                         ConstantsObject.vNoConnectionTitle,
                         ConstantsObject.vNoConnectionMessage, this, false)
-                    isConnected = false
+                    false
                 }
                 else -> {
                     MedicalUtil.alertDialogDismiss(
                         ConstantsObject.vNoConnectionTitle,
                         ConstantsObject.vNoConnectionMessage, this, true)
-                    isConnected = true
+                    true
                 }
             }
         }

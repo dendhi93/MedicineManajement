@@ -6,6 +6,8 @@ import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dracoo.medicinemanagement.R
+import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
+import com.dracoo.medicinemanagement.databinding.ActivitySplashBinding
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
@@ -14,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
+    private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -21,7 +24,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.hide()
     }
 
     override fun onStart() {
@@ -36,7 +41,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.getUser().observe(this){
-            MedicalUtil.snackBarMessage("user $it", this, ConstantsObject.vSnackBarWithOutTombol)
+            binding.apply {
+                nameValueHomeTv.text = it
+                dateValueHomeTv.text = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateSetripJamMinute)
+            }
         }
     }
 
