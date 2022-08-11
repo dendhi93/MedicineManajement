@@ -10,7 +10,7 @@ import com.dracoo.medicinemanagement.databinding.ActivitySplashBinding
 import com.dracoo.medicinemanagement.menus.splash.viewmodel.SplashViewModel
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dracoo.medicinemanagement.menus.login.LoginActivity
+import com.dracoo.medicinemanagement.menus.login.view.LoginActivity
 import com.dracoo.medicinemanagement.menus.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -41,7 +41,6 @@ class SplashActivity : AppCompatActivity() {
                         },950)
                     }
                     else -> {
-                        Timber.e("hasil ${mSplashViewModel.getUser()}")
                         Handler(Looper.getMainLooper()).postDelayed({
                             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                             finish()

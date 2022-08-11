@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".menus.login.LoginActivity"
+            android:name=".menus.login.view.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".menus.main.MainActivity"
