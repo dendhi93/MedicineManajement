@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Medicine Management</string>
     <string name="content_description">-</string>
-    <string name="home_activity">Home</string>
+
+    //menus
+    <string name="medicine_activity">Input Obat Baru</string>
 
     //login activity
     <string name="username">Nama Pengguna</string>

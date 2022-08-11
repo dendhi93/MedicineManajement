@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
         MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
             "Apakah anda yaking ining keluar aplikasi ?"
         ) {
-            Timber.e("coba")
             mainViewModel.updateUser()
             finishAffinity()
         }

@@ -1,6 +1,7 @@
 package com.dracoo.medicinemanagement.menus.main.adapter
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemGridHomeBinding
+import com.dracoo.medicinemanagement.menus.new_medicine.NewMedicineActivity
 import com.dracoo.medicinemanagement.model.MenuModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import timber.log.Timber
@@ -34,9 +36,12 @@ class MainActivityAdapter(private val listMenu: ArrayList<MenuModel>,
             itemMenuHomeCv.backgroundTintList =
                 ContextCompat.getColorStateList(activity, listMenu[position].color)
             itemMenuHomeCv.setOnClickListener {
-                Timber.e("Test click")
-                if(listMenu[position].title == ConstantsObject.vExitApps){
-                    mCallBackSelectedMenu.onExitApps()
+                when (listMenu[position].title) {
+                    ConstantsObject.vExitApps -> mCallBackSelectedMenu.onExitApps()
+                    ConstantsObject.vInputMedicine -> {
+                        activity.startActivity(Intent(activity, NewMedicineActivity::class.java))
+                        activity.finish()
+                    }
                 }
             }
         }
