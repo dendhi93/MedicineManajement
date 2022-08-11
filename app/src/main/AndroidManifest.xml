@@ -23,7 +23,7 @@
             android:name=".menus.login.view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".menus.main.MainActivity"
+            android:name=".menus.main.view.MainActivity"
             android:exported="false"
             android:label="@string/home_activity" />
         <activity

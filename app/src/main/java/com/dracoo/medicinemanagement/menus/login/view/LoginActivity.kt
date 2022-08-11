@@ -11,9 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityLoginBinding
-import com.dracoo.medicinemanagement.databinding.ActivitySplashBinding
 import com.dracoo.medicinemanagement.menus.login.viewmodel.LoginViewModel
-import com.dracoo.medicinemanagement.menus.main.MainActivity
+import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil

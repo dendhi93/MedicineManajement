@@ -16,9 +16,15 @@ object ConstantsObject {
     //date time format
     const val vTahunJamSetrip = "yyyy-MM-dd HH:mm:ss"
     const val vDateGaringJam = "dd/MM/yyyy HH:mm:ss"
-    const val vDateSetripJamMinute = "dd - MM - yyyy HH : mm"
+    const val vDateSetripJamMinute = "dd-MM-yyyy HH:mm"
 
     //message
     const val vNoConnectionTitle = "Tidak Terkoneksi"
     const val vNoConnectionMessage = "Handphone anda tidak terkoneksi jaringan"
+
+    //menus
+    const val vExitApps = "Keluar Aplikasi"
+    const val vInputMedicine = "Input Obat Baru"
+    const val vStockOpname = "Stock Opname"
+    const val vDirectSales = "Penjualan Obat"
 }

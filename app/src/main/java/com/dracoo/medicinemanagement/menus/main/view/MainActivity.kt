@@ -1,20 +1,24 @@
-package com.dracoo.medicinemanagement.menus.main
+package com.dracoo.medicinemanagement.menus.main.view
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.dracoo.medicinemanagement.R
+import androidx.recyclerview.widget.GridLayoutManager
 import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
-import com.dracoo.medicinemanagement.databinding.ActivitySplashBinding
+import com.dracoo.medicinemanagement.menus.main.adapter.CallBackExitApps
+import com.dracoo.medicinemanagement.menus.main.adapter.MainActivityAdapter
+import com.dracoo.medicinemanagement.menus.main.viewmodel.MainViewModel
+import com.dracoo.medicinemanagement.model.MenuModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CallBackExitApps {
     private var doubleBackToExitPressedOnce = false
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModels()
@@ -34,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         checkConnection.observe(this){
             when{
                 !it ->MedicalUtil.alertDialogDismiss(ConstantsObject.vNoConnectionTitle,
-                    ConstantsObject.vNoConnectionMessage, this, false)
+                    ConstantsObject.vNoConnectionMessage,    this, false)
                 else -> MedicalUtil.alertDialogDismiss(ConstantsObject.vNoConnectionTitle,
                     ConstantsObject.vNoConnectionMessage, this, true)
             }
@@ -44,7 +48,25 @@ class MainActivity : AppCompatActivity() {
             binding.apply {
                 nameValueHomeTv.text = it
                 dateValueHomeTv.text = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateSetripJamMinute)
+
+                val alListMainMenu = ArrayList<MenuModel>()
+                alListMainMenu.addAll(mainViewModel.initMenu())
+                chooseMenuHomeRv.layoutManager = GridLayoutManager(this@MainActivity, 2)
+                chooseMenuHomeRv.setHasFixedSize(true)
+                chooseMenuHomeRv.adapter = MainActivityAdapter(alListMainMenu, this@MainActivity,
+                    this@MainActivity)
             }
+        }
+    }
+
+    override fun onExitApps() {
+        Timber.e("exit Apps")
+        MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
+            "Apakah anda yaking ining keluar aplikasi ?"
+        ) {
+            Timber.e("coba")
+            mainViewModel.updateUser()
+            finishAffinity()
         }
     }
 

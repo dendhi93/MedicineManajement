@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,6 +58,35 @@ object MedicalUtil {
             }
         }
     }
+
+    fun showDialogConfirmation(
+        context: Context,
+        title: String,
+        msg: String,
+        callback: () -> Unit
+    ) {
+        val dialogConfirmation =  MaterialAlertDialogBuilder(context)
+            .setTitle(title)
+            .setMessage(msg)
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("OK") { _, _ -> callback() }
+            .setCancelable(false)
+            .create()
+            .apply {
+                setCanceledOnTouchOutside(false)
+            }
+
+        when {
+            !dialogConfirmation.isShowing -> {
+                dialogConfirmation.show()
+            }
+            else -> {
+                dialogConfirmation.cancel()
+                dialogConfirmation.dismiss()
+            }
+        }
+    }
+
 
     fun getCurrentDateTime(dateTimeFormat : String): String =
         SimpleDateFormat(dateTimeFormat, Locale.getDefault()).format(Date())
