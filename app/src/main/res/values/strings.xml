@@ -4,6 +4,7 @@
 
     //menus
     <string name="medicine_activity">Input Obat Baru</string>
+    <string name="add_new_menu_medicine">-</string>
 
     //login activity
     <string name="username">Nama Pengguna</string>
