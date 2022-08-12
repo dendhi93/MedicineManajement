@@ -64,12 +64,13 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
 
                 infoHomeIv.setOnClickListener {
                     mainViewModel.getAddress().observe(this@MainActivity){ itGetAddress ->
-                        Timber.e("address ")
                         val bottomDialog = BottomSheetDialog(this@MainActivity)
                         val bottomSheetBinding = DialogBottomSheetInfoBinding.inflate(this@MainActivity.layoutInflater)
                         val view = bottomSheetBinding.root
                         bottomDialog.setContentView(view)
-                        bottomDialog.show()
+                        if(!bottomDialog.isShowing){
+                            bottomDialog.show()
+                        }
 
                         bottomSheetBinding.apply {
                             valueNameBtiTv.text = itGetUser
@@ -85,7 +86,6 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
     }
 
     override fun onExitApps() {
-        Timber.e("exit Apps")
         MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
             "Apakah anda yaking ining keluar aplikasi ?"
         ) {

@@ -22,6 +22,7 @@
         <activity
             android:name=".menus.new_medicine.NewMedicineActivity"
             android:label="@string/medicine_activity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".menus.login.view.LoginActivity"

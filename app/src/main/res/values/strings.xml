@@ -19,4 +19,13 @@
     <string name="choose_menu_you_want">Pilih menu yang akan dikerjakan</string>
     <string name="welcome">Welcome</string>
 
+    //dialog
+    <string name="medicine_code">Kode Obat</string>
+    <string name="medicine_name">Nama Obat</string>
+    <string name="pieces_type">Jenis Satuan</string>
+    <string name="qty_medicine">Jumlah</string>
+    <string name="piece_prize">Harga Satuan</string>
+    <string name="save_btn">Simpan</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="27dp"
                 android:text="@string/choose_menu"
                 android:textColor="@color/text_black1"
                 android:textSize="16sp"
