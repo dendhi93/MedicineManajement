@@ -1,15 +1,11 @@
 package com.dracoo.medicinemanagement.menus.main.view
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
 import com.dracoo.medicinemanagement.databinding.DialogBottomSheetInfoBinding
 import com.dracoo.medicinemanagement.menus.main.adapter.CallBackExitApps
@@ -21,7 +17,6 @@ import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), CallBackExitApps {

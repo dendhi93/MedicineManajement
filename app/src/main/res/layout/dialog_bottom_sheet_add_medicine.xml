@@ -6,21 +6,13 @@
     android:background="#99000000"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <View
-        android:id="@+id/top_bti_v2"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <com.google.android.material.card.MaterialCardView
         style="@style/CustomTopCardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bti_v2"
+        app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +23,7 @@
                 android:id="@+id/top_btn"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginHorizontal="150dp"
                 android:backgroundTint="@color/gray_button"
                 app:shapeAppearanceOverlay="@style/buttomShape"
@@ -41,18 +33,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <TextView
+                android:id="@+id/lbl_top_bsam_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="22dp"
+                android:text="@string/medicine_input"
+                android:textColor="@color/text_gray1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_btn" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/medicine_code_bsam_til"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="20dp"
                 app:boxBackgroundColor="@color/white"
                 android:textColorHint="@color/border_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_btn">
+                app:layout_constraintTop_toBottomOf="@+id/lbl_top_bsam_tv">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/medicine_code_bsam_tiet"
@@ -107,6 +111,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/lbl_bottom_bsam_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="27dp"
+                android:text="@string/medicine_qty_input"
+                android:textColor="@color/text_gray1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pieces_type_bsam_til" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/qty_medicine_bsam_til"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -118,7 +134,7 @@
                 android:textColorHint="@color/border_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pieces_type_bsam_til">
+                app:layout_constraintTop_toBottomOf="@+id/lbl_bottom_bsam_tv">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/qty_medicine_bsam_tiet"

@@ -56,10 +56,13 @@
 
             <TextView
                 android:id="@+id/value_name_bti_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/content_description"
+                android:lines="2"
+                android:maxLines="2"
+                android:layout_marginStart="14dp"
                 android:textColor="@color/text_gray1"
                 android:fontFamily="@font/inter_bold"
                 android:textSize="16sp"
@@ -79,10 +82,14 @@
 
             <TextView
                 android:id="@+id/value_address_bti_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="14dp"
                 android:text="@string/content_description"
+                android:lines="3"
+                android:maxLines="3"
+                android:gravity="start"
                 android:textColor="@color/text_gray1"
                 android:fontFamily="@font/inter_bold"
                 android:textSize="16sp"
