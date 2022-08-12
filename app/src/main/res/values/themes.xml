@@ -31,4 +31,9 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="Box.TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/border_color1</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
 </resources>

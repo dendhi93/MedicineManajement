@@ -13,9 +13,9 @@ class LoginViewModel @Inject constructor(
     private val storeRepository : DataStoreUtil
 ): ViewModel() {
 
-    fun saveUser(name : String){
+    fun saveUser(name : String, address : String){
         viewModelScope.launch(Dispatchers.IO) {
-            storeRepository.saveUser(name)
+            storeRepository.saveUser(name, address)
         }
     }
 }

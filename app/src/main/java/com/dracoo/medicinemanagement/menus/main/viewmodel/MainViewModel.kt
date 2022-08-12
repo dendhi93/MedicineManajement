@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
 
     fun updateUser(){
         viewModelScope.launch(Dispatchers.IO) {
-            storeRepository.saveUser("")
+            storeRepository.saveUser("", "")
         }
     }
 

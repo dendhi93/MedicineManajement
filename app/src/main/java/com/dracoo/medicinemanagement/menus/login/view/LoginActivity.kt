@@ -17,6 +17,7 @@ import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -26,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
         CheckConnectionUtil(application)
     }
     private var isConnected = false
+    private var isNameEmpty = true
+    private var isAddressEmpty = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +57,19 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.apply {
-            nikLoginEt.addTextChangedListener {
-                when{
-                    it.isNullOrBlank() -> activeInActiveButton(false)
-                    else -> {
-                        when(isConnected){
-                            true -> activeInActiveButton(true)
-                            else -> activeInActiveButton(false)
-                        }
-                    }
+            nameLoginEt.addTextChangedListener {
+                isNameEmpty = it.isNullOrBlank()
+                when {
+                    !isNameEmpty && !isAddressEmpty && isConnected-> activeInActiveButton(true)
+                    else -> activeInActiveButton(false)
+                }
+            }
+
+            addressLoginTiet.addTextChangedListener {
+                isAddressEmpty = it.isNullOrBlank()
+                when {
+                    !isNameEmpty && !isAddressEmpty && isConnected-> activeInActiveButton(true)
+                    else -> activeInActiveButton(false)
                 }
             }
 
@@ -70,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginLpi.apply {
                     visibility = View.VISIBLE
                     Handler(Looper.getMainLooper()).postDelayed({
-                        loginViewModel.saveUser(nikLoginEt.text.toString())
+                        loginViewModel.saveUser(nameLoginEt.text.toString(), "")
                         visibility = View.GONE
 
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))

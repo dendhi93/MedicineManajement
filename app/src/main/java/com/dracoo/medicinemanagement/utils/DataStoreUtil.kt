@@ -19,9 +19,10 @@ constructor(
     @ApplicationContext private val context: Context
 )  {
 
-    suspend fun saveUser(name: String) {
+    suspend fun saveUser(name: String, address : String) {
         context.dataStore.edit { preferences ->
             preferences[vUserKey] = name
+            preferences[vAddressKey] = address
         }
     }
 
@@ -31,8 +32,9 @@ constructor(
         }
 
     companion object {
-        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userEmail")
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userData")
         val vUserKey = stringPreferencesKey("user_key")
+        val vAddressKey = stringPreferencesKey("address_key")
     }
 
 }
