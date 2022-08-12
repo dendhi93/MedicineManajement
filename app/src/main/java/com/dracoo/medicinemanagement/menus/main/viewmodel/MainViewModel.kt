@@ -20,6 +20,8 @@ class MainViewModel @Inject constructor(
 
     fun getUser() = storeRepository.getUser().asLiveData()
 
+    fun getAddress() = storeRepository.getAddress().asLiveData()
+
     fun updateUser(){
         viewModelScope.launch(Dispatchers.IO) {
             storeRepository.saveUser("", "")

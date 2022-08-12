@@ -31,6 +31,11 @@ constructor(
             preferences[vUserKey] ?: ""
         }
 
+    fun getAddress(): Flow<String?> = context.dataStore.data
+        .map { preferences ->
+            preferences[vAddressKey] ?: ""
+        }
+
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userData")
         val vUserKey = stringPreferencesKey("user_key")

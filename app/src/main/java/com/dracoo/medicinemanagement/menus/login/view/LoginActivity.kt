@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginLpi.apply {
                     visibility = View.VISIBLE
                     Handler(Looper.getMainLooper()).postDelayed({
-                        loginViewModel.saveUser(nameLoginEt.text.toString(), "")
+                        loginViewModel.saveUser(nameLoginEt.text.toString(), addressLoginTiet.text.toString())
                         visibility = View.GONE
 
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))

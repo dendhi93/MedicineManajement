@@ -1,12 +1,17 @@
 package com.dracoo.medicinemanagement.menus.main.view
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
+import com.dracoo.medicinemanagement.databinding.DialogBottomSheetInfoBinding
 import com.dracoo.medicinemanagement.menus.main.adapter.CallBackExitApps
 import com.dracoo.medicinemanagement.menus.main.adapter.MainActivityAdapter
 import com.dracoo.medicinemanagement.menus.main.viewmodel.MainViewModel
@@ -14,6 +19,7 @@ import com.dracoo.medicinemanagement.model.MenuModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -44,9 +50,9 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
             }
         }
 
-        mainViewModel.getUser().observe(this){
+        mainViewModel.getUser().observe(this){ itGetUser ->
             binding.apply {
-                nameValueHomeTv.text = it
+                nameValueHomeTv.text = itGetUser
                 dateValueHomeTv.text = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateSetripJamMinute)
 
                 val alListMainMenu = ArrayList<MenuModel>()
@@ -55,6 +61,25 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
                 chooseMenuHomeRv.setHasFixedSize(true)
                 chooseMenuHomeRv.adapter = MainActivityAdapter(alListMainMenu, this@MainActivity,
                     this@MainActivity)
+
+                infoHomeIv.setOnClickListener {
+                    mainViewModel.getAddress().observe(this@MainActivity){ itGetAddress ->
+                        Timber.e("address ")
+                        val bottomDialog = BottomSheetDialog(this@MainActivity)
+                        val bottomSheetBinding = DialogBottomSheetInfoBinding.inflate(this@MainActivity.layoutInflater)
+                        val view = bottomSheetBinding.root
+                        bottomDialog.setContentView(view)
+                        bottomDialog.show()
+
+                        bottomSheetBinding.apply {
+                            valueNameBtiTv.text = itGetUser
+                            valueAddressBtiTv.text = itGetAddress
+                            btiCl.setOnClickListener {
+                                bottomDialog.dismiss()
+                            }
+                        }
+                    }
+                }
             }
         }
     }

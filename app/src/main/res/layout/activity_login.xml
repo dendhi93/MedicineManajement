@@ -14,7 +14,7 @@
         <View
             android:id="@+id/header_login_v"
             android:layout_width="match_parent"
-            android:layout_height="370dp"
+            android:layout_height="430dp"
             android:background="@color/text_blue1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
