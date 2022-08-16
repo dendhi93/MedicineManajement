@@ -89,42 +89,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/pieces_type_bsam_til"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="20dp"
-                app:boxBackgroundColor="@color/white"
-                android:textColorHint="@color/border_color2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medicine_name_bsam_til">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/pieces_type_bsam_tiet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="50"
-                    android:hint="@string/pieces_type" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <TextView
                 android:id="@+id/lbl_bottom_bsam_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="37dp"
                 android:text="@string/medicine_qty_input"
                 android:textColor="@color/text_gray1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pieces_type_bsam_til" />
+                app:layout_constraintTop_toBottomOf="@+id/medicine_name_bsam_til" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/qty_medicine_bsam_til"
+                android:id="@+id/pieces_type_bsam_til"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,12 +115,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/lbl_bottom_bsam_tv">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/qty_medicine_bsam_tiet"
+                    android:id="@+id/pieces_type_bsam_tiet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:maxLength="50"
-                    android:hint="@string/qty_medicine" />
+                    android:hint="@string/pieces_type" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +134,7 @@
                 android:textColorHint="@color/border_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/qty_medicine_bsam_til">
+                app:layout_constraintTop_toBottomOf="@+id/pieces_type_bsam_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/pieces_prize_bsam_tiet"

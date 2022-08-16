@@ -19,6 +19,9 @@
     <string name="choose_menu_you_want">Pilih menu yang akan dikerjakan</string>
     <string name="welcome">Welcome</string>
 
+    //new medicine activity
+    <string name="empty_data">Data Kosong</string>
+
     //dialog
     <string name="medicine_code">Kode Obat</string>
     <string name="medicine_name">Nama Obat</string>
@@ -28,6 +31,6 @@
     <string name="save_btn">Simpan</string>
     <string name="cancel">Cancel</string>
     <string name="medicine_input">Input Kode, Nama Obat dan Jenis Satuan</string>
-    <string name="medicine_qty_input">Input Jumlah dan Harga Satuan</string>
+    <string name="medicine_qty_input">Input Jenis dan Harga Satuan</string>
 
 </resources>

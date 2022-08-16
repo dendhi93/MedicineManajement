@@ -1,4 +1,4 @@
-package com.dracoo.medicinemanagement.menus.new_medicine
+package com.dracoo.medicinemanagement.menus.new_medicine.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.dracoo.medicinemanagement.utils.DataStoreUtil

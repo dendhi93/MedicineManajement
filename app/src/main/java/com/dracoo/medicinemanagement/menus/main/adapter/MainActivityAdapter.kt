@@ -9,10 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemGridHomeBinding
-import com.dracoo.medicinemanagement.menus.new_medicine.NewMedicineActivity
+import com.dracoo.medicinemanagement.menus.new_medicine.view.NewMedicineActivity
 import com.dracoo.medicinemanagement.model.MenuModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
-import timber.log.Timber
 
 class MainActivityAdapter(private val listMenu: ArrayList<MenuModel>,
                           private val activity: Activity,

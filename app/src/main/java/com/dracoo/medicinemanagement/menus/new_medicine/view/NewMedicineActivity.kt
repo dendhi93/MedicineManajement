@@ -1,4 +1,4 @@
-package com.dracoo.medicinemanagement.menus.new_medicine
+package com.dracoo.medicinemanagement.menus.new_medicine.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -24,7 +24,6 @@ class NewMedicineActivity : AppCompatActivity() {
     private var isCodeMedicineEmpty = true
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
-    private var isQtyEmpty = true
     private var isConnected = false
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -84,10 +83,6 @@ class NewMedicineActivity : AppCompatActivity() {
                 isPieceTypeEmpty = it.isNullOrBlank()
                 activeInActiveDialogButton(bottomSheetAddBinding)
             }
-            qtyMedicineBsamTiet.addTextChangedListener {
-                isQtyEmpty = it.isNullOrBlank()
-                activeInActiveDialogButton(bottomSheetAddBinding)
-            }
 
             cancelBsamButton.setOnClickListener {
                 if(bottomAddDialog.isShowing){
@@ -116,7 +111,7 @@ class NewMedicineActivity : AppCompatActivity() {
         dialogBinding.apply {
             when{
                 !isCodeMedicineEmpty && !isMedicineNameEmpty
-                        && !isPieceTypeEmpty && !isQtyEmpty
+                        && !isPieceTypeEmpty
                         && piecesPrizeBsamTiet.text.toString().isNotEmpty()
                         && isConnected -> {
                             saveBsamButton.backgroundTintList =

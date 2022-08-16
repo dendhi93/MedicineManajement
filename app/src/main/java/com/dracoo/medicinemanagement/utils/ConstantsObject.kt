@@ -27,4 +27,13 @@ object ConstantsObject {
     const val vInputMedicine = "Input Obat Baru"
     const val vStockOpname = "Stock Opname"
     const val vDirectSales = "Penjualan Obat"
+
+    //url
+    const val vMasterObatGForm = "https://docs.google.com/forms/d/11hNY7pWBVDi0qYa0LD8nI-Q4nxeYh7Vb5IVbbjpGHKY/viewform?edit_requested=true"
+
+    //JSON POST master medicine
+    const val medicineCodeJson = "entry.438343947"
+    const val medicineNameJson = "entry.1827398503"
+    const val piecesTypeJson = "entry.1875704685"
+    const val customerInput = "entry.1235443380"
 }

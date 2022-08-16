@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="3dp"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/gray_4"
+        android:layout_margin="7dp">
+
+        <TextView
+            android:id="@+id/medicine_lbl_name_mm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/inter_light_beta"
+            android:text="@string/medicine_name"
+            android:textColor="@color/gray_1"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mendicine_value_mm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_light_beta"
+            android:text="@string/content_description"
+            android:textColor="@color/text_orange2"
+            android:layout_marginStart="4dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/medicine_lbl_name_mm_tv"
+            app:layout_constraintStart_toEndOf="@id/medicine_lbl_name_mm_tv"
+            app:layout_constraintTop_toTopOf="@id/medicine_lbl_name_mm_tv" />
+
+        <View
+            android:id="@+id/separator_mm_view"
+            android:layout_width="0.3dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="13dp"
+            android:background="@color/gray_1"
+            app:layout_constraintBottom_toBottomOf="@id/mendicine_value_mm_tv"
+            app:layout_constraintStart_toEndOf="@id/mendicine_value_mm_tv"
+            app:layout_constraintTop_toTopOf="@id/mendicine_value_mm_tv" />
+
+        <TextView
+            android:id="@+id/date_lbl__mm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_light_beta"
+            android:text="@string/content_description"
+            android:textColor="@color/gray_1"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/separator_mm_view"
+            app:layout_constraintStart_toEndOf="@id/separator_mm_view"
+            app:layout_constraintTop_toTopOf="@id/separator_mm_view" />
+
+        <TextView
+            android:id="@+id/prize_lbl_mm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/inter_light_beta"
+            android:text="@string/piece_prize"
+            android:textColor="@color/gray_1"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/medicine_lbl_name_mm_tv"
+            app:layout_constraintTop_toBottomOf="@id/medicine_lbl_name_mm_tv" />
+
+        <TextView
+            android:id="@+id/block_value_iti_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/inter_light_beta"
+            android:text="@string/content_description"
+            android:textColor="@color/text_black2"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/prize_lbl_mm_tv"
+            app:layout_constraintStart_toEndOf="@id/prize_lbl_mm_tv"
+            app:layout_constraintTop_toTopOf="@id/prize_lbl_mm_tv" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/ic_arrow_right_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

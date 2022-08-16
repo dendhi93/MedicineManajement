@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".menus.new_medicine.NewMedicineActivity"
+            android:name=".menus.new_medicine.view.NewMedicineActivity"
             android:label="@string/medicine_activity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
