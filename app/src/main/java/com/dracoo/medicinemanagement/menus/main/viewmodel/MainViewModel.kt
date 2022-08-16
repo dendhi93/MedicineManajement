@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.model.MenuModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
-import com.dracoo.medicinemanagement.utils.DataStoreUtil
+import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val storeRepository : DataStoreUtil
+    private val storeRepository : DataStoreRepo
 ): ViewModel() {
 
     fun getUser() = storeRepository.getUser().asLiveData()

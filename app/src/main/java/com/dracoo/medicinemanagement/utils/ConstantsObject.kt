@@ -30,6 +30,7 @@ object ConstantsObject {
 
     //url
     const val vMasterObatGForm = "https://docs.google.com/forms/d/11hNY7pWBVDi0qYa0LD8nI-Q4nxeYh7Vb5IVbbjpGHKY/viewform?edit_requested=true"
+    const val vMasterObatExcel = "https://docs.google.com/spreadsheets/d/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/edit#gid=479952186"
 
     //JSON POST master medicine
     const val medicineCodeJson = "entry.438343947"

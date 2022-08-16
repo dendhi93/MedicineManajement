@@ -1,4 +1,4 @@
-package com.dracoo.medicinemanagement.utils
+package com.dracoo.medicinemanagement.repo
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @ViewModelScoped
-class DataStoreUtil
+class DataStoreRepo
 @Inject
 constructor(
     @ApplicationContext private val context: Context
