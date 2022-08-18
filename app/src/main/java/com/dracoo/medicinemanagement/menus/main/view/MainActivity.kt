@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
 
     override fun onExitApps() {
         MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
-            "Apakah anda yaking ining keluar aplikasi ?"
+            "Apakah anda yakin ingin keluar aplikasi ?"
         ) {
             mainViewModel.updateUser()
             finishAffinity()

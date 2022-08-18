@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -11,12 +13,15 @@ import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityNewMedicineBinding
 import com.dracoo.medicinemanagement.databinding.DialogBottomSheetAddMedicineBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import com.dracoo.medicinemanagement.menus.new_medicine.viewmodel.NewMedicineViewModel
+import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.dracoo.medicinemanagement.utils.ThousandSeparatorUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class NewMedicineActivity : AppCompatActivity() {
@@ -25,6 +30,7 @@ class NewMedicineActivity : AppCompatActivity() {
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
     private var isConnected = false
+    private val newMedicineViewModel : NewMedicineViewModel by viewModels()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -57,7 +63,29 @@ class NewMedicineActivity : AppCompatActivity() {
                     true
                 }
             }
+            if(isConnected){
+                getMedicineData()
+            }
         }
+    }
+
+    private fun getMedicineData(){
+        binding.nmPg.visibility = View.VISIBLE
+        newMedicineViewModel.getMasterMedicine(object : NewMedicineViewModel.DataCallback<List<MedicineMasterModel>>{
+            override fun onDataLoaded(data: List<MedicineMasterModel>?) {
+                data?.let {
+                    Timber.e("array size " +it.size)
+                }
+                binding.nmPg.visibility = View.GONE
+            }
+
+            override fun onDataError(error: String?) {
+                error?.let {
+                    Timber.e("$error")
+                }
+                binding.nmPg.visibility = View.GONE
+            }
+        })
     }
 
     private fun initBottomSheetAddMedicine(){
@@ -135,8 +163,7 @@ class NewMedicineActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                onBackPressed()
                 return true
             }
             R.id.menu_item ->{
@@ -145,6 +172,12 @@ class NewMedicineActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
 
