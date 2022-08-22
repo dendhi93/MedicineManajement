@@ -26,6 +26,12 @@ constructor(
         }
     }
 
+    suspend fun saveMasterMedicine(stResponse : String){
+        context.dataStore.edit { preferences ->
+            preferences[vMasterMedicineKey] = stResponse
+        }
+    }
+
     fun getUser(): Flow<String?> = context.dataStore.data
         .map { preferences ->
             preferences[vUserKey] ?: ""
@@ -40,6 +46,7 @@ constructor(
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userData")
         val vUserKey = stringPreferencesKey("user_key")
         val vAddressKey = stringPreferencesKey("address_key")
+        val vMasterMedicineKey = stringPreferencesKey("master_medicine")
     }
 
 }

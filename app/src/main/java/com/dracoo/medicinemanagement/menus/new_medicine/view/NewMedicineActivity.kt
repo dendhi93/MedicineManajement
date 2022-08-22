@@ -9,10 +9,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityNewMedicineBinding
 import com.dracoo.medicinemanagement.databinding.DialogBottomSheetAddMedicineBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import com.dracoo.medicinemanagement.menus.new_medicine.adapter.NewMedicineAdapter
 import com.dracoo.medicinemanagement.menus.new_medicine.viewmodel.NewMedicineViewModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
@@ -31,9 +33,11 @@ class NewMedicineActivity : AppCompatActivity() {
     private var isPieceTypeEmpty = true
     private var isConnected = false
     private val newMedicineViewModel : NewMedicineViewModel by viewModels()
+    private lateinit var newMedicineAdapter: NewMedicineAdapter
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,17 @@ class NewMedicineActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        newMedicineAdapter = NewMedicineAdapter(this)
+        binding.medicineBmRv.apply {
+            layoutManager = LinearLayoutManager(
+                this@NewMedicineActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            setHasFixedSize(true)
+            adapter = newMedicineAdapter
+        }
+
         checkConnection.observe(this){
             isConnected = when {
                 !it -> {
@@ -74,7 +89,21 @@ class NewMedicineActivity : AppCompatActivity() {
         newMedicineViewModel.getMasterMedicine(object : NewMedicineViewModel.DataCallback<List<MedicineMasterModel>>{
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
                 data?.let {
-                    Timber.e("array size " +it.size)
+                    binding.apply {
+                        when(it.size){
+                            0 ->{
+                                medicineBmRv.visibility = View.GONE
+                                animEmptyNmGiv.visibility = View.VISIBLE
+                                titleDataKosongAiscTv.visibility = View.VISIBLE
+                            }
+                            else ->{
+                                newMedicineAdapter.initAdapter(it)
+                                medicineBmRv.visibility = View.VISIBLE
+                                animEmptyNmGiv.visibility = View.GONE
+                                titleDataKosongAiscTv.visibility = View.GONE
+                            }
+                        }
+                    }
                 }
                 binding.nmPg.visibility = View.GONE
             }
@@ -85,7 +114,13 @@ class NewMedicineActivity : AppCompatActivity() {
                 }
                 binding.nmPg.visibility = View.GONE
             }
-        })
+        }){
+            try {
+                newMedicineViewModel.saveDataMedicine(it)
+            }catch (e :Exception){
+                Timber.e("failed to save master " +e.printStackTrace())
+            }
+        }
     }
 
     private fun initBottomSheetAddMedicine(){
