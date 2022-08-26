@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,5 +104,17 @@ object MedicalUtil {
                 dateFormat.format(dateSource)
             } else { "" }
         } catch (e: Exception) { "" }
+    }
+
+    fun moneyFormat(input : Double) : String?{
+        return try{
+//            val format: NumberFormat = NumberFormat.getCurrencyInstance()
+//            format.maximumFractionDigits = 0
+//            format.currency = Currency.getInstance("IDR")
+//
+//            format.format(input).toString()
+            val formatter: NumberFormat = DecimalFormat("#,###")
+            formatter.format(input)
+        }catch (e:Exception){ "" }
     }
 }

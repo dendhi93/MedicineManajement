@@ -5,5 +5,6 @@ data class MedicineMasterModel(
     val kodeobat : String,
     val satuanobat : String,
     val hargasatuan : String,
-    val namaobat : String
+    val namaobat : String,
+    val kategoriObat : String
 )

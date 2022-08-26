@@ -31,11 +31,15 @@ object ConstantsObject {
     //url
     const val vMasterObatGForm = "https://docs.google.com/forms/d/11hNY7pWBVDi0qYa0LD8nI-Q4nxeYh7Vb5IVbbjpGHKY/viewform?edit_requested=true"
     const val vMasterObatExcel = "https://docs.google.com/spreadsheets/d/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/edit#gid=479952186"
-    const val vMasterObatExcel2 = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:E1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
+    const val vMasterObatExcel2 = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
 
     //JSON POST master medicine
     const val medicineCodeJson = "entry.438343947"
     const val medicineNameJson = "entry.1827398503"
     const val piecesTypeJson = "entry.1875704685"
     const val customerInput = "entry.1235443380"
+
+    //input mode
+    const val vNewData = "New Data"
+    const val vShowData = "Show Data"
 }

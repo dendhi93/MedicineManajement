@@ -8,7 +8,6 @@ import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,15 +28,17 @@ class NewMedicineViewModel @Inject constructor(
                         onCallBackString?.invoke(it.toString())
                         val jArrayValue = data.getJSONArray("values")
                         (0 until jArrayValue.length()).forEach { i ->
-                            val stDate = jArrayValue[i].toString().split(",")[0].split("[")[1].replace("\"", "")
+                            val stDate = jArrayValue[i].toString().split(",")[0]
+                                .split("[")[1].replace("\"", "").replace("\\", "")
                             val stMedicineCode = jArrayValue[i].toString().split(",")[1].replace("\"", "")
                             val stMedicineType = jArrayValue[i].toString().split(",")[2].replace("\"", "")
                             val stMedicinePrize = jArrayValue[i].toString().split(",")[3].replace("\"", "")
                             val stMedicineName = jArrayValue[i].toString().split(",")[4].split("]")[0].replace("\"", "")
+                            val stMedicineCategory = jArrayValue[i].toString().split(",")[5].split("]")[0].replace("\"", "")
 //                            Timber.e("split result date "  + stDate + "\ncode " + stMedicineCode + " " +
 //                                    "\nstMedicineType " + stMedicineType + "\nstMedicinePrize"
 //                                    +stMedicinePrize+ "\nstMedicineName " +stMedicineName)
-                            list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName))
+                            list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName,stMedicineCategory))
                         }
                         callback.onDataLoaded(list)
                     }

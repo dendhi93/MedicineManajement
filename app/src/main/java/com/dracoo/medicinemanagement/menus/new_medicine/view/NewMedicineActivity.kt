@@ -32,6 +32,7 @@ class NewMedicineActivity : AppCompatActivity() {
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
     private var isConnected = false
+    private var selectedInputMode = ""
     private val newMedicineViewModel : NewMedicineViewModel by viewModels()
     private lateinit var newMedicineAdapter: NewMedicineAdapter
     private val checkConnection by lazy {
@@ -52,7 +53,11 @@ class NewMedicineActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        newMedicineAdapter = NewMedicineAdapter(this)
+        newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
+            selectedInputMode = ConstantsObject.vShowData
+            initBottomSheetAddMedicine(it)
+        })
+
         binding.medicineBmRv.apply {
             layoutManager = LinearLayoutManager(
                 this@NewMedicineActivity,
@@ -123,7 +128,7 @@ class NewMedicineActivity : AppCompatActivity() {
         }
     }
 
-    private fun initBottomSheetAddMedicine(){
+    private fun initBottomSheetAddMedicine(selectedModel : MedicineMasterModel?){
         val bottomAddDialog = BottomSheetDialog(this)
         val bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
         val view = bottomSheetAddBinding.root
@@ -167,6 +172,27 @@ class NewMedicineActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            when(selectedInputMode){
+                ConstantsObject.vNewData -> {
+                    saveBsamButton.visibility = View.VISIBLE
+                    cancelBsamButton.visibility = View.VISIBLE
+                }
+                else -> {
+                    saveBsamButton.visibility = View.GONE
+                    cancelBsamButton.visibility = View.GONE
+                    selectedModel?.let {
+                        medicineCodeBsamTiet.setText(it.kodeobat)
+                        medicineNameBsamTiet.setText(it.namaobat)
+                        medicineCategoryBsamTiet.setText(it.kategoriObat)
+                        piecesTypeBsamTiet.setText(it.satuanobat)
+                        when(val piecesPrize = it.hargasatuan){
+                            "0" -> piecesPrizeBsamTiet.setText(piecesPrize)
+                            else -> piecesPrizeBsamTiet.setText(MedicalUtil.moneyFormat(piecesPrize.toDouble()))
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -202,7 +228,8 @@ class NewMedicineActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_item ->{
-                initBottomSheetAddMedicine()
+                selectedInputMode = ConstantsObject.vNewData
+                initBottomSheetAddMedicine(null)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

@@ -27,6 +27,7 @@
     <string name="medicine_name">Nama Obat</string>
     <string name="pieces_type">Jenis Satuan</string>
     <string name="qty_medicine">Jumlah</string>
+    <string name="medicine_category">Kategory Obat</string>
     <string name="piece_prize">Harga Satuan</string>
     <string name="save_btn">Simpan</string>
     <string name="cancel">Cancel</string>
