@@ -40,6 +40,27 @@ constructor(
          }
     }
 
+    suspend fun postMedicineMaster(callback: ApiCallback<JSONObject>){
+        val queue = Volley.newRequestQueue(context)
+        withContext(Dispatchers.IO) {
+            val stringReq = StringRequest(Request.Method.GET, ConstantsObject.vMasterObatGForm,
+                { response ->
+                    try {
+                        response.let {
+                            Timber.e("response $response")
+                            callback.onDataLoaded(JSONObject(it))
+                        }
+                    }catch (e :Exception){ callback.onDataError("error $e") }
+                },
+                {
+                    val errObj = JSONObject(it?.message.toString())
+                    callback.onDataError(errObj.getString("message"))
+                }
+            )
+            queue.add(stringReq)
+        }
+    }
+
     //interface response from server
     interface ApiCallback<T> {
         fun onDataLoaded(data: T?)
