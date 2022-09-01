@@ -51,7 +51,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vMasterObatExcel2,
+                Method.POST, ConstantsObject.vMasterObatExcel,
                 { response ->
                     try {
                         response.let {
