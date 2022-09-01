@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
 import com.dracoo.medicinemanagement.databinding.DialogBottomSheetInfoBinding
 import com.dracoo.medicinemanagement.menus.main.adapter.CallBackExitApps
@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
 
                 val alListMainMenu = ArrayList<MenuModel>()
                 alListMainMenu.addAll(mainViewModel.initMenu())
-                chooseMenuHomeRv.layoutManager = GridLayoutManager(this@MainActivity, 2)
+                chooseMenuHomeRv.layoutManager = LinearLayoutManager(
+                    this@MainActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
                 chooseMenuHomeRv.setHasFixedSize(true)
                 chooseMenuHomeRv.adapter = MainActivityAdapter(alListMainMenu, this@MainActivity,
                     this@MainActivity)
