@@ -1,9 +1,12 @@
 package com.dracoo.medicinemanagement.repo
 
 import android.content.Context
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
+import com.android.volley.RetryPolicy
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -36,27 +39,48 @@ constructor(
                      callback.onDataError(errObj.getString("message"))
                  }
              )
+             val retryPolicy: RetryPolicy =
+                 DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+             stringReq.retryPolicy = retryPolicy
+             queue.add(stringReq)
              queue.add(stringReq)
          }
     }
 
-    suspend fun postMedicineMaster(callback: ApiCallback<JSONObject>){
+    suspend fun postMedicineMaster(model : MedicineMasterModel, callback: ApiCallback<String>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
-            val stringReq = StringRequest(Request.Method.GET, ConstantsObject.vMasterObatGForm,
+            val stringReq: StringRequest = object : StringRequest(
+                Method.POST, ConstantsObject.vMasterObatExcel2,
                 { response ->
                     try {
                         response.let {
                             Timber.e("response $response")
-                            callback.onDataLoaded(JSONObject(it))
+                            callback.onDataLoaded(response.toString())
                         }
                     }catch (e :Exception){ callback.onDataError("error $e") }
                 },
                 {
-                    val errObj = JSONObject(it?.message.toString())
-                    callback.onDataError(errObj.getString("message"))
+                    callback.onDataError("error")
                 }
-            )
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val parmas: MutableMap<String, String> = HashMap()
+
+                    //here we pass params
+                    parmas["action"] = "addItem"
+                    parmas["KodeObat"] = model.kodeobat
+                    parmas["SatuanObat"] = model.satuanobat
+//                    parmas[ConstantsObject.piecesTypeJson] = model.satuanobat
+//                    parmas[ConstantsObject.piecesPrizeJson] = model.hargasatuan
+//                    parmas[ConstantsObject.medicineCategoryJson] = model.kategoriObat
+                    return parmas
+                }
+            }
+
+            val retryPolicy: RetryPolicy =
+                DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            stringReq.retryPolicy = retryPolicy
             queue.add(stringReq)
         }
     }

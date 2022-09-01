@@ -155,6 +155,7 @@ class NewMedicineActivity : AppCompatActivity() {
             cancelBsamButton.setOnClickListener {
                 if(bottomAddDialog.isShowing){
                     bottomAddDialog.dismiss()
+                    bottomAddDialog.cancel()
                 }
             }
             saveBsamButton.setOnClickListener {
@@ -162,9 +163,32 @@ class NewMedicineActivity : AppCompatActivity() {
                     piecesPrizeBsamTiet.text.toString().isNotEmpty() -> {
                         //                Timber.e("value "
 //                + ThousandSeparatorUtil.trimCommaOfString(piecesPrizeBsamTiet.text.toString()))
+                        binding.nmPg.visibility = View.VISIBLE
                         if(bottomAddDialog.isShowing){
                             bottomAddDialog.dismiss()
                         }
+                        newMedicineViewModel.postNewMedicine(MedicineMasterModel(
+                            Timestamp = "",
+                            kodeobat = medicineCodeBsamTiet.text.toString(),
+                            satuanobat = piecesTypeBsamTiet.text.toString(),
+                            hargasatuan = piecesPrizeBsamTiet.text.toString(),
+                            namaobat = medicineNameBsamTiet.text.toString(),
+                            kategoriObat = medicineCategoryBsamTiet.text.toString()
+
+                        ), object :NewMedicineViewModel.DataCallback<String>{
+                            override fun onDataLoaded(data: String?) {
+                                binding.nmPg.visibility = View.GONE
+                                if(!bottomAddDialog.isShowing){
+                                    bottomAddDialog.dismiss()
+                                    bottomAddDialog.cancel()
+                                }
+                            }
+
+                            override fun onDataError(error: String?) {
+                                Timber.e("error " +error.toString())
+                                binding.nmPg.visibility = View.GONE
+                            }
+                        })
                     }
                     else -> {
                         MedicalUtil.snackBarMessage("Mohon diisi harga satuan",

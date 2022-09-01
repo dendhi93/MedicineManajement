@@ -8,6 +8,7 @@ import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,6 +59,27 @@ class NewMedicineViewModel @Inject constructor(
             dataStoreRepo.saveMasterMedicine(stData)
         }
     }
+
+    fun postNewMedicine(postModel: MedicineMasterModel, callback :DataCallback<String>){
+        viewModelScope.launch {
+            apiRepository.postMedicineMaster(postModel, object :ApiRepository.ApiCallback<String>{
+                override fun onDataLoaded(data: String?) {
+                    data?.let {
+                        Timber.e("data post $data")
+                        callback.onDataLoaded(data.toString())
+                    }
+                }
+
+                override fun onDataError(error: String?) {
+                    error.let {
+                        Timber.e("error $error")
+                        callback.onDataError(error.toString())
+                    }
+                }
+            })
+        }
+    }
+
     //interface response from server
     interface DataCallback<T> {
         fun onDataLoaded(data: T?)

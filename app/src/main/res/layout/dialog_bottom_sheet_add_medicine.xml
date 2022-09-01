@@ -134,7 +134,7 @@
                 android:textColorHint="@color/border_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_bottom_bsam_tv">
+                app:layout_constraintTop_toBottomOf="@+id/pieces_prize_bsam_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/pieces_type_bsam_tiet"
@@ -156,7 +156,7 @@
                 android:textColorHint="@color/border_color2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pieces_type_bsam_til">
+                app:layout_constraintTop_toBottomOf="@+id/lbl_bottom_bsam_tv">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/pieces_prize_bsam_tiet"
@@ -191,7 +191,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/medicine_code_bsam_til"
                 app:layout_constraintStart_toEndOf="@+id/button_bsam_gd"
-                app:layout_constraintTop_toBottomOf="@id/pieces_prize_bsam_til" />
+                app:layout_constraintTop_toBottomOf="@id/pieces_type_bsam_til" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_bsam_button"
@@ -207,7 +207,7 @@
                 android:textColor="@color/text_gray1"
                 app:layout_constraintStart_toStartOf="@+id/medicine_code_bsam_til"
                 app:layout_constraintEnd_toStartOf="@+id/button_bsam_gd"
-                app:layout_constraintTop_toBottomOf="@id/pieces_prize_bsam_til"
+                app:layout_constraintTop_toBottomOf="@id/pieces_type_bsam_til"
                 app:strokeColor="@color/border_color2"
                 app:strokeWidth="1dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

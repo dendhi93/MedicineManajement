@@ -37,7 +37,8 @@ object ConstantsObject {
     const val medicineCodeJson = "entry.438343947"
     const val medicineNameJson = "entry.1827398503"
     const val piecesTypeJson = "entry.1875704685"
-    const val customerInput = "entry.1235443380"
+    const val piecesPrizeJson = "entry.1235443380"
+    const val medicineCategoryJson = "entry.559034742"
 
     //input mode
     const val vNewData = "New Data"
