@@ -30,7 +30,7 @@ object ConstantsObject {
 
     //url
     const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
-    const val vMasterObatExcel = "https://docs.google.com/spreadsheets/d/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/edit#gid=479952186"
+    const val vMasterObatPost = "https://script.google.com/macros/s/AKfycbzpIqee5pMXxAx8ebblmnL1lTrB6Hdf54dZPEqbWKEe6PU_MNnS6MnLfmS_6Zm1GqYFLA/exec"
     const val vMasterObatExcel2 = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
 
     //JSON POST master medicine
@@ -39,6 +39,15 @@ object ConstantsObject {
     const val piecesTypeJson = "entry.1875704685"
     const val piecesPrizeJson = "entry.1235443380"
     const val medicineCategoryJson = "entry.559034742"
+
+    //JSON POST master medicine v2
+    const val idMasterObat = "1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY"
+    const val timeStampJsonV2 = "1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY"
+    const val medicineCodeJsonV2 = "KodeObat"
+    const val medicinePieceTypeJsonV2 = "SatuanObat"
+    const val piecesPrizeJsonV2 = "HargaSatuan"
+    const val medicineNameJsonV2 = "NamaObat"
+    const val medicineCategoryJsonV2 = "KategoriObat"
 
     //input mode
     const val vNewData = "New Data"

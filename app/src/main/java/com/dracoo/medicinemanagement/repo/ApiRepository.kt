@@ -51,7 +51,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vMasterObatGForm,
+                Method.POST, ConstantsObject.vMasterObatPost,
                 { response ->
                     try {
                         response.let {
