@@ -28,7 +28,7 @@ object MedicalUtil {
                 snackBar.show()
             }
             else -> {
-                val snackBar = Snackbar.make(rootView, snackMessage, Snackbar.LENGTH_SHORT)
+                val snackBar = Snackbar.make(rootView, snackMessage, Snackbar.LENGTH_LONG)
                 snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 5
                 snackBar.setActionTextColor(Color.WHITE)
                 snackBar.show()

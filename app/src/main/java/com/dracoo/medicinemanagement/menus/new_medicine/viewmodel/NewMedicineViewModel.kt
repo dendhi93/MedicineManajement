@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
+import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -60,19 +61,19 @@ class NewMedicineViewModel @Inject constructor(
         }
     }
 
-    fun postNewMedicine(postModel: MedicineMasterModel, callback :DataCallback<String>){
+    fun postNewMedicine(postModel: MedicineMasterModel, callback :DataCallback<MedicineMasterModel>){
         viewModelScope.launch {
-            apiRepository.postMedicineMaster(postModel, object :ApiRepository.ApiCallback<String>{
-                override fun onDataLoaded(data: String?) {
+            apiRepository.postMedicineMaster(postModel, object :ApiRepository.ApiCallback<MedicineMasterModel>{
+                override fun onDataLoaded(data: MedicineMasterModel?) {
                     data?.let {
                         Timber.e("data post $data")
-                        callback.onDataLoaded(data.toString())
+                        callback.onDataLoaded(data)
                     }
                 }
 
                 override fun onDataError(error: String?) {
                     error.let {
-                        Timber.e("error $error")
+                        Timber.e("$error")
                         callback.onDataError(error.toString())
                     }
                 }

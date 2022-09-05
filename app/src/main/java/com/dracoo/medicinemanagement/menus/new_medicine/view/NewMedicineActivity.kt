@@ -35,6 +35,7 @@ class NewMedicineActivity : AppCompatActivity() {
     private var selectedInputMode = ""
     private val newMedicineViewModel : NewMedicineViewModel by viewModels()
     private lateinit var newMedicineAdapter: NewMedicineAdapter
+    private var aLMasterMedical: ArrayList<MedicineMasterModel> = ArrayList()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -66,6 +67,10 @@ class NewMedicineActivity : AppCompatActivity() {
             )
             setHasFixedSize(true)
             adapter = newMedicineAdapter
+        }
+
+        if(aLMasterMedical.isNotEmpty()){
+            aLMasterMedical.clear()
         }
 
         checkConnection.observe(this){
@@ -102,6 +107,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else ->{
+                                aLMasterMedical.addAll(it)
                                 newMedicineAdapter.initAdapter(it)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
@@ -163,30 +169,42 @@ class NewMedicineActivity : AppCompatActivity() {
                     piecesPrizeBsamTiet.text.toString().isNotEmpty() -> {
                         //                Timber.e("value "
 //                + ThousandSeparatorUtil.trimCommaOfString(piecesPrizeBsamTiet.text.toString()))
-                        binding.nmPg.visibility = View.VISIBLE
-                        if(bottomAddDialog.isShowing){
-                            bottomAddDialog.dismiss()
+                        bottomSheetAddBinding.bottomLp.visibility = View.VISIBLE
+                        bottomSheetAddBinding.saveBsamButton.isEnabled = false
+                        val stPrize = when(piecesPrizeBsamTiet.text.toString()){
+                            "1" -> "0"
+                            else -> piecesPrizeBsamTiet.text.toString()
                         }
                         newMedicineViewModel.postNewMedicine(MedicineMasterModel(
-                            Timestamp = "",
+                            Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                             kodeobat = medicineCodeBsamTiet.text.toString(),
                             satuanobat = piecesTypeBsamTiet.text.toString(),
-                            hargasatuan = piecesPrizeBsamTiet.text.toString(),
+                            hargasatuan = stPrize,
                             namaobat = medicineNameBsamTiet.text.toString(),
                             kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                        ), object :NewMedicineViewModel.DataCallback<String>{
-                            override fun onDataLoaded(data: String?) {
-                                binding.nmPg.visibility = View.GONE
-                                if(!bottomAddDialog.isShowing){
+                        ), object :NewMedicineViewModel.DataCallback<MedicineMasterModel>{
+                            override fun onDataLoaded(data: MedicineMasterModel?) {
+                                data?.let {
+                                    aLMasterMedical.add(data)
+                                    newMedicineAdapter.initAdapter(aLMasterMedical)
+                                }
+                                bottomSheetAddBinding.bottomLp.visibility = View.GONE
+                                bottomSheetAddBinding.saveBsamButton.isEnabled = true
+                                if(bottomAddDialog.isShowing){
                                     bottomAddDialog.dismiss()
                                     bottomAddDialog.cancel()
                                 }
                             }
 
                             override fun onDataError(error: String?) {
-                                Timber.e("error " +error.toString())
-                                binding.nmPg.visibility = View.GONE
+                                bottomSheetAddBinding.bottomLp.visibility = View.GONE
+                                bottomSheetAddBinding.saveBsamButton.isEnabled = true
+                                if(bottomAddDialog.isShowing){
+                                    bottomAddDialog.dismiss()
+                                    bottomAddDialog.cancel()
+                                }
+                                MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                             }
                         })
                     }

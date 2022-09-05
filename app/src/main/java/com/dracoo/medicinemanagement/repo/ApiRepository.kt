@@ -47,34 +47,33 @@ constructor(
          }
     }
 
-    suspend fun postMedicineMaster(model : MedicineMasterModel, callback: ApiCallback<String>){
+    suspend fun postMedicineMaster(model : MedicineMasterModel, callback: ApiCallback<MedicineMasterModel>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vMasterObatExcel,
+                Method.POST, ConstantsObject.vMasterObatGForm,
                 { response ->
                     try {
                         response.let {
                             Timber.e("response $response")
-                            callback.onDataLoaded(response.toString())
+                            callback.onDataLoaded(model)
                         }
                     }catch (e :Exception){ callback.onDataError("error $e") }
                 },
                 {
-                    callback.onDataError("error")
+                    callback.onDataError("$it")
                 }
             ) {
                 override fun getParams(): Map<String, String> {
-                    val parmas: MutableMap<String, String> = HashMap()
+                    val params : HashMap<String, String>  = HashMap()
 
                     //here we pass params
-                    parmas["action"] = "addItem"
-                    parmas["KodeObat"] = model.kodeobat
-                    parmas["SatuanObat"] = model.satuanobat
-//                    parmas[ConstantsObject.piecesTypeJson] = model.satuanobat
-//                    parmas[ConstantsObject.piecesPrizeJson] = model.hargasatuan
-//                    parmas[ConstantsObject.medicineCategoryJson] = model.kategoriObat
-                    return parmas
+                    params[ConstantsObject.medicineCodeJson] = model.kodeobat
+                    params[ConstantsObject.medicineNameJson] = model.namaobat
+                    params[ConstantsObject.piecesTypeJson] = model.satuanobat
+                    params[ConstantsObject.piecesPrizeJson] = model.hargasatuan
+                    params[ConstantsObject.medicineCategoryJson] = model.kategoriObat
+                    return params
                 }
             }
 

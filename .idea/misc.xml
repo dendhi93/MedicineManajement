@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Data/Project/MedicineManagement/app/src/main/res/layout/dialog_bottom_sheet_add_medicine.xml" value="0.25" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/bg_rounded_background.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_arrow_right_blue.xml" value="0.1935" />
@@ -18,7 +17,7 @@
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_main.xml" value="0.3531827515400411" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_new_medicine.xml" value="0.2938388625592417" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_splash.xml" value="0.3625" />
-        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_bottom_sheet_add_medicine.xml" value="0.5" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_bottom_sheet_add_medicine.xml" value="0.32639791937581275" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_bottom_sheet_info.xml" value="0.33" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/item_grid_home.xml" value="0.5" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/item_medicine_master.xml" value="0.5" />
@@ -28,7 +27,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

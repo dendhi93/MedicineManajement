@@ -177,6 +177,20 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:indeterminate="true"
+                android:id="@+id/bottom_lp"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintStart_toStartOf="@+id/pieces_prize_bsam_til"
+                app:layout_constraintEnd_toEndOf="@+id/pieces_prize_bsam_til"
+                app:layout_constraintBottom_toTopOf="@+id/save_bsam_button" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_bsam_button"
                 android:layout_width="0dp"
