@@ -21,6 +21,7 @@
 
     //new medicine activity
     <string name="empty_data">Data Kosong</string>
+    <string name="search_medicine_name">Cari Nama Obat</string>
 
     //dialog
     <string name="medicine_code">Kode Obat</string>
