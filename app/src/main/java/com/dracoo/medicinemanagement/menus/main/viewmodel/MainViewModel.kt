@@ -22,9 +22,10 @@ class MainViewModel @Inject constructor(
 
     fun getAddress() = storeRepository.getAddress().asLiveData()
 
-    fun updateUser(){
+    fun clearData(){
         viewModelScope.launch(Dispatchers.IO) {
             storeRepository.saveUser("", "")
+            storeRepository.clearDataStore()
         }
     }
 

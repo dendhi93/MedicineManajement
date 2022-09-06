@@ -6,7 +6,6 @@ import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.databinding.ActivityMainBinding
 import com.dracoo.medicinemanagement.databinding.DialogBottomSheetInfoBinding
 import com.dracoo.medicinemanagement.menus.main.adapter.CallBackExitApps
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
         MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
             "Apakah anda yakin ingin keluar aplikasi ?"
         ) {
-            mainViewModel.updateUser()
+            mainViewModel.clearData()
             finishAffinity()
         }
     }

@@ -42,6 +42,12 @@ constructor(
             preferences[vAddressKey] ?: ""
         }
 
+    suspend fun clearDataStore(){
+        context.dataStore.edit {
+            it.clear()
+        }
+    }
+
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userData")
         val vUserKey = stringPreferencesKey("user_key")
