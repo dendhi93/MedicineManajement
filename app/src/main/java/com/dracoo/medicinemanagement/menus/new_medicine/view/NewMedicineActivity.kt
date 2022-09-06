@@ -1,10 +1,12 @@
 package com.dracoo.medicinemanagement.menus.new_medicine.view
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -139,11 +141,22 @@ class NewMedicineActivity : AppCompatActivity() {
 
     private fun initBottomSheetAddMedicine(selectedModel : MedicineMasterModel?){
         val bottomAddDialog = BottomSheetDialog(this)
+        bottomAddDialog.setOnShowListener {
+            val bottomSheet: FrameLayout = bottomAddDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
+            val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+            if (bottomSheet.layoutParams != null) {
+                val layoutParams = bottomSheet.layoutParams
+                layoutParams.height = Resources.getSystem().displayMetrics.heightPixels
+                bottomSheet.layoutParams = layoutParams
+            }
+            bottomSheet.setBackgroundResource(android.R.color.transparent)
+            bottomSheetBehavior.skipCollapsed = true
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
         val bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
         val view = bottomSheetAddBinding.root
         bottomAddDialog.setContentView(view)
-//        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View>(view)
-//        behavior.state = BottomSheetBehavior.STATE_EXPANDED;
 
         if(!bottomAddDialog.isShowing){
             bottomAddDialog.show()
@@ -178,7 +191,7 @@ class NewMedicineActivity : AppCompatActivity() {
                         bottomSheetAddBinding.saveBsamButton.isEnabled = false
                         val stPrize = when(piecesPrizeBsamTiet.text.toString()){
                             "1" -> "0"
-                            else -> piecesPrizeBsamTiet.text.toString()
+                            else -> ThousandSeparatorUtil.trimCommaOfString(piecesPrizeBsamTiet.text.toString())
                         }
                         newMedicineViewModel.postNewMedicine(MedicineMasterModel(
                             Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
@@ -289,6 +302,3 @@ class NewMedicineActivity : AppCompatActivity() {
         finish()
     }
 }
-
-
-//to get value :  NumberTextWatcherForThousand.trimCommaOfString(editText.getText().toString())
