@@ -35,8 +35,7 @@ constructor(
                      }catch (e :Exception){ callback.onDataError("error $e") }
                  },
                  {
-                     val errObj = JSONObject(it?.message.toString())
-                     callback.onDataError(errObj.getString("message"))
+                     callback.onDataError(it.toString())
                  }
              )
              val retryPolicy: RetryPolicy =
@@ -56,7 +55,10 @@ constructor(
                     try {
                         response.let {
                             Timber.e("response $response")
-                            callback.onDataLoaded(model)
+                            when {
+                                response.contains("Success") -> callback.onDataLoaded(model)
+                                else -> callback.onDataError(it.toString())
+                            }
                         }
                     }catch (e :Exception){ callback.onDataError("error $e") }
                 },
@@ -68,11 +70,18 @@ constructor(
                     val params : HashMap<String, String>  = HashMap()
 
                     //here we pass params
-                    params[ConstantsObject.medicineCodeJson] = model.kodeobat
-                    params[ConstantsObject.medicineNameJson] = model.namaobat
-                    params[ConstantsObject.piecesTypeJson] = model.satuanobat
-                    params[ConstantsObject.piecesPrizeJson] = model.hargasatuan
-                    params[ConstantsObject.medicineCategoryJson] = model.kategoriObat
+//                    params[ConstantsObject.medicineCodeJson] = model.kodeobat
+//                    params[ConstantsObject.medicineNameJson] = model.namaobat
+//                    params[ConstantsObject.piecesTypeJson] = model.satuanobat
+//                    params[ConstantsObject.piecesPrizeJson] = model.hargasatuan
+//                    params[ConstantsObject.medicineCategoryJson] = model.kategoriObat
+                    params[ConstantsObject.idMasterJson] = ConstantsObject.idMasterObat
+                    params[ConstantsObject.medicineTimeStampJson] = model.Timestamp
+                    params[ConstantsObject.medicineCodeJsonV2] = model.kodeobat
+                    params[ConstantsObject.medicineNameJsonV2] = model.namaobat
+                    params[ConstantsObject.medicinePieceTypeJsonV2] = model.satuanobat
+                    params[ConstantsObject.piecesPrizeJsonV2] = model.hargasatuan
+                    params[ConstantsObject.medicineCategoryJsonV2] = model.kategoriObat
                     return params
                 }
             }

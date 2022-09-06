@@ -42,7 +42,8 @@ object ConstantsObject {
 
     //JSON POST master medicine v2
     const val idMasterObat = "1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY"
-    const val timeStampJsonV2 = "1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY"
+    const val idMasterJson = "id"
+    const val medicineTimeStampJson = "TimeStamp"
     const val medicineCodeJsonV2 = "KodeObat"
     const val medicinePieceTypeJsonV2 = "SatuanObat"
     const val piecesPrizeJsonV2 = "HargaSatuan"

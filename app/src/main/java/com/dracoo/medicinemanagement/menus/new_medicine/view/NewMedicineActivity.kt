@@ -21,9 +21,11 @@ import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.dracoo.medicinemanagement.utils.ThousandSeparatorUtil
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class NewMedicineActivity : AppCompatActivity() {
@@ -108,6 +110,7 @@ class NewMedicineActivity : AppCompatActivity() {
                             }
                             else ->{
                                 aLMasterMedical.addAll(it)
+                                Timber.e("size " +it.size)
                                 newMedicineAdapter.initAdapter(it)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
@@ -139,6 +142,8 @@ class NewMedicineActivity : AppCompatActivity() {
         val bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
         val view = bottomSheetAddBinding.root
         bottomAddDialog.setContentView(view)
+//        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View>(view)
+//        behavior.state = BottomSheetBehavior.STATE_EXPANDED;
 
         if(!bottomAddDialog.isShowing){
             bottomAddDialog.show()
