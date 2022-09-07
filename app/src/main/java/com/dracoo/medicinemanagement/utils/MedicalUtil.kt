@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
@@ -116,5 +117,20 @@ object MedicalUtil {
             val formatter: NumberFormat = DecimalFormat("#,###")
             formatter.format(input)
         }catch (e:Exception){ "" }
+    }
+
+    fun filterMedicineMaster(text: String?, displayedList: ArrayList<MedicineMasterModel>): ArrayList<MedicineMasterModel> {
+        val temp: ArrayList<MedicineMasterModel> = ArrayList()
+        for (d in displayedList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (text != null) {
+                if (d.namaobat.lowercase().contains(text.lowercase())) {
+                    temp.add(d)
+                }
+            }
+        }
+        //update recyclerview
+        return temp
     }
 }

@@ -1,5 +1,6 @@
 package com.dracoo.medicinemanagement.menus.new_medicine.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -44,7 +45,6 @@ class NewMedicineActivity : AppCompatActivity() {
         CheckConnectionUtil(application)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewMedicineBinding.inflate(layoutInflater)
@@ -58,25 +58,8 @@ class NewMedicineActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
-            selectedInputMode = ConstantsObject.vShowData
-            initBottomSheetAddMedicine(it)
-        })
 
-        binding.medicineBmRv.apply {
-            layoutManager = LinearLayoutManager(
-                this@NewMedicineActivity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            setHasFixedSize(true)
-            adapter = newMedicineAdapter
-        }
-
-        if(aLMasterMedical.isNotEmpty()){
-            aLMasterMedical.clear()
-        }
-
+        initListAdapter(aLMasterMedical)
         checkConnection.observe(this){
             isConnected = when {
                 !it -> {
@@ -96,6 +79,21 @@ class NewMedicineActivity : AppCompatActivity() {
                 getMedicineData()
             }
         }
+        binding.searchNmTiet.addTextChangedListener {
+            when(aLMasterMedical.size){
+                0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
+                    this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                else ->{
+                    when(it?.length){
+                        0 -> initListAdapter(aLMasterMedical)
+                        else -> {
+                            val selectedArrayList = MedicalUtil.filterMedicineMaster(it.toString(), aLMasterMedical)
+                            initListAdapter(selectedArrayList)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun getMedicineData(){
@@ -113,7 +111,7 @@ class NewMedicineActivity : AppCompatActivity() {
                             else ->{
                                 aLMasterMedical.addAll(it)
                                 Timber.e("size " +it.size)
-                                newMedicineAdapter.initAdapter(it)
+                                newMedicineAdapter = NewMedicineAdapter(it, this@NewMedicineActivity)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
                                 titleDataKosongAiscTv.visibility = View.GONE
@@ -205,7 +203,7 @@ class NewMedicineActivity : AppCompatActivity() {
                             override fun onDataLoaded(data: MedicineMasterModel?) {
                                 data?.let {
                                     aLMasterMedical.add(data)
-                                    newMedicineAdapter.initAdapter(aLMasterMedical)
+                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
                                 }
                                 bottomSheetAddBinding.bottomLp.visibility = View.GONE
                                 bottomSheetAddBinding.saveBsamButton.isEnabled = true
@@ -273,6 +271,23 @@ class NewMedicineActivity : AppCompatActivity() {
                     saveBsamButton.isEnabled = false
                 }
             }
+        }
+    }
+
+    private fun initListAdapter(list: ArrayList<MedicineMasterModel>){
+        newMedicineAdapter = NewMedicineAdapter(list, this,onItemClick = {
+            selectedInputMode = ConstantsObject.vShowData
+            initBottomSheetAddMedicine(it)
+        })
+
+        binding.medicineBmRv.apply {
+            layoutManager = LinearLayoutManager(
+                this@NewMedicineActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            setHasFixedSize(true)
+            adapter = newMedicineAdapter
         }
     }
 
