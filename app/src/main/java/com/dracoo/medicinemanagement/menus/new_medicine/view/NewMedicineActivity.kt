@@ -87,6 +87,7 @@ class NewMedicineActivity : AppCompatActivity() {
                     when(it?.length){
                         0 -> initListAdapter(aLMasterMedical)
                         else -> {
+                            //remove duplicate
                             val selectedArrayList = MedicalUtil.filterMedicineMaster(it.toString(), aLMasterMedical).distinct().toList()
                             initListAdapter(ArrayList(selectedArrayList))
                         }

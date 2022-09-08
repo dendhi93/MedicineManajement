@@ -48,6 +48,14 @@ class MainViewModel @Inject constructor(
                 ConstantsObject.vStockOpname
             ),
             MenuModel(
+                ConstantsObject.vDirectSales,
+                "Input Penjualan",
+                R.color.bg_menu_3,
+                R.drawable.ic_direct_sales_24,
+                R.drawable.ic_intersect3,
+                ConstantsObject.vDirectSales
+            ),
+            MenuModel(
                 ConstantsObject.vExitApps,
                 "",
                 R.color.red_1_transparanst,
