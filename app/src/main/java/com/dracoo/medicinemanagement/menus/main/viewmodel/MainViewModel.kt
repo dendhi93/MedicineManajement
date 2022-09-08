@@ -56,6 +56,22 @@ class MainViewModel @Inject constructor(
                 ConstantsObject.vDirectSales
             ),
             MenuModel(
+                ConstantsObject.vReportStockOpname,
+                "Laporan Stock",
+                R.color.bg_menu_2,
+                R.drawable.ic_report_1,
+                R.drawable.ic_intersect2,
+                ConstantsObject.vReportStockOpname
+            ),
+            MenuModel(
+                ConstantsObject.vReportDirectSales,
+                "Laporan Penjualan",
+                R.color.bg_menu_3,
+                R.drawable.ic_report_1,
+                R.drawable.ic_intersect3,
+                ConstantsObject.vReportDirectSales
+            ),
+            MenuModel(
                 ConstantsObject.vExitApps,
                 "",
                 R.color.red_1_transparanst,

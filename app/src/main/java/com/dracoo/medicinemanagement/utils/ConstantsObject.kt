@@ -26,12 +26,15 @@ object ConstantsObject {
     const val vExitApps = "Keluar Aplikasi"
     const val vInputMedicine = "Input Obat Baru"
     const val vStockOpname = "Stock Opname"
+    const val vReportStockOpname = "Laporan tock Opname"
     const val vDirectSales = "Penjualan Obat"
+    const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
     const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
     const val vMasterObatPost = "https://script.google.com/macros/s/AKfycbzpIqee5pMXxAx8ebblmnL1lTrB6Hdf54dZPEqbWKEe6PU_MNnS6MnLfmS_6Zm1GqYFLA/exec"
-    const val vMasterObatExcel2 = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
+    const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
+    const val vGetStockOpnameExcel = "https://sheets.googleapis.com/v4/spreadsheets/14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
 
     //JSON POST master medicine
     const val medicineCodeJson = "entry.438343947"

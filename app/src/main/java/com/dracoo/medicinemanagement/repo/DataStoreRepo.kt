@@ -42,6 +42,11 @@ constructor(
             preferences[vAddressKey] ?: ""
         }
 
+    fun getMasterMedicine(): Flow<String?> = context.dataStore.data
+        .map { preferences ->
+            preferences[vMasterMedicineKey] ?: ""
+        }
+
     suspend fun clearDataStore(){
         context.dataStore.edit {
             it.clear()

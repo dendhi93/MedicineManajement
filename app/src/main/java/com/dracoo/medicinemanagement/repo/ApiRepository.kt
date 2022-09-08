@@ -25,7 +25,7 @@ constructor(
      suspend fun getMedicineMaster(callback: ApiCallback<JSONObject>) {
          val queue = Volley.newRequestQueue(context)
          withContext(Dispatchers.IO) {
-             val stringReq = StringRequest(Request.Method.GET, ConstantsObject.vMasterObatExcel2,
+             val stringReq = StringRequest(Request.Method.GET, ConstantsObject.vGetMasterObatExcel,
                  { response ->
                      try {
                          response.let {
