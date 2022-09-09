@@ -10,13 +10,167 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:indeterminate="true"
-        android:id="@+id/nm_pg"
+        android:id="@+id/nm_so"
         android:layout_marginTop="2dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_top_so_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/stock_opname_input"
+        android:textColor="@color/text_gray1"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/faktur_no_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_top_so_tv">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/faktur_no_so_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="25"
+            android:hint="@string/faktur_no" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/medicine_code_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/faktur_no_so_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/medicine_code_so_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="5"
+            android:enabled="false"
+            android:hint="@string/medicine_code" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_search_so_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="@string/search"
+        android:textColor="@color/text_gray1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/medicine_code_so_til"
+        app:layout_constraintTop_toTopOf="@+id/medicine_code_so_til"
+        app:layout_constraintBottom_toBottomOf="@+id/medicine_code_so_til"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/medicine_name_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicine_code_so_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/medicine_name_so_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:maxLength="50"
+            android:hint="@string/medicine_name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/prize_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicine_name_so_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prize_so_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:maxLength="50"
+            android:hint="@string/piece_prize" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/qty_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prize_so_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/qty_so_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            android:hint="@string/qty_medicine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_so_btn"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:backgroundTint="@color/gray_button"
+        app:shapeAppearanceOverlay="@style/buttomShape"
+        android:textAllCaps="false"
+        android:padding="12dp"
+        android:text="@string/save_btn"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/qty_so_til" />
+
 
 
 

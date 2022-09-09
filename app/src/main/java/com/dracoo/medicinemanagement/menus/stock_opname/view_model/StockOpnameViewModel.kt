@@ -12,4 +12,10 @@ class StockOpnameViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo
 ):  ViewModel() {
 
+    fun getUserData() = dataStoreRepo.getUser()
+
+    fun getDataMedicine() = dataStoreRepo.getMasterMedicine()
+
+
+
 }

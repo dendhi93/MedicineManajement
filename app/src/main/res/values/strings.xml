@@ -24,6 +24,11 @@
     <string name="empty_data">Data Kosong</string>
     <string name="search_medicine_name">Cari Nama Obat</string>
 
+    // stock opname
+    <string name="stock_opname_input">Input No Faktur, Kode Obat, dan Jumlah</string>
+    <string name="search">Cari</string>
+    <string name="faktur_no">No Faktur</string>
+
     //dialog
     <string name="medicine_code">Kode Obat</string>
     <string name="medicine_name">Nama Obat</string>

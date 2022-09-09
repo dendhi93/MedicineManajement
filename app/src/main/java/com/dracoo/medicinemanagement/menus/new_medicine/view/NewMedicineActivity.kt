@@ -1,6 +1,5 @@
 package com.dracoo.medicinemanagement.menus.new_medicine.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -111,7 +110,6 @@ class NewMedicineActivity : AppCompatActivity() {
                             }
                             else ->{
                                 aLMasterMedical.addAll(it)
-                                Timber.e("size " +it.size)
                                 newMedicineAdapter = NewMedicineAdapter(it, this@NewMedicineActivity)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
