@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
-import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -19,15 +19,13 @@ class NewMedicineViewModel @Inject constructor(
 ):  ViewModel() {
 
     fun getMasterMedicine(
-        callback: DataCallback<List<MedicineMasterModel>>,
-        onCallBackString: ((String) -> Unit)? = null
+        callback: DataCallback<List<MedicineMasterModel>>
     ){
         viewModelScope.launch {
             apiRepository.getMedicineMaster(object :ApiRepository.ApiCallback<JSONObject>{
                 override fun onDataLoaded(data: JSONObject?) {
                     val list = ArrayList<MedicineMasterModel>()
                     data?.let {
-                        onCallBackString?.invoke(it.toString())
                         val jArrayValue = data.getJSONArray("values")
                         (0 until jArrayValue.length()).forEach { i ->
                             val stDate = jArrayValue[i].toString().split(",")[0]
@@ -42,6 +40,7 @@ class NewMedicineViewModel @Inject constructor(
 //                                    +stMedicinePrize+ "\nstMedicineName " +stMedicineName)
                             list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName,stMedicineCategory))
                         }
+                        saveDataMedicine(list)
                         callback.onDataLoaded(list)
                     }
                 }
@@ -55,8 +54,9 @@ class NewMedicineViewModel @Inject constructor(
         }
     }
 
-    fun saveDataMedicine(stData : String){
+    private fun saveDataMedicine(alData : List<MedicineMasterModel>){
         viewModelScope.launch {
+            val stData = Gson().toJson(alData)
             dataStoreRepo.saveMasterMedicine(stData)
         }
     }

@@ -79,8 +79,7 @@ class StockOpnameActivity : AppCompatActivity() {
                 }
             }
             lblSearchSoTv.setOnClickListener {
-                val obj = JSONObject(stockOpnameViewModel.getDataMedicine().toString())
-                Timber.e("jsonObject $obj")
+                Timber.e("jsonObject "+stockOpnameViewModel.getDataMedicine().toString())
             }
         }
     }

@@ -124,16 +124,11 @@ class NewMedicineActivity : AppCompatActivity() {
             override fun onDataError(error: String?) {
                 error?.let {
                     Timber.e("$error")
+                    MedicalUtil.snackBarMessage(it, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                 }
                 binding.nmPg.visibility = View.GONE
             }
-        }){
-            try {
-                newMedicineViewModel.saveDataMedicine(it)
-            }catch (e :Exception){
-                Timber.e("failed to save master " +e.printStackTrace())
-            }
-        }
+        })
     }
 
     private fun initBottomSheetAddMedicine(selectedModel : MedicineMasterModel?){
