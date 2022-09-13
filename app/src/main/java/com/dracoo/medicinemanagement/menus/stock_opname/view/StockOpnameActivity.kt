@@ -11,14 +11,14 @@ import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityStockOpnameBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.menus.stock_opname.view_model.StockOpnameViewModel
-import com.dracoo.medicinemanagement.model.MasterMedicineResponse
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.gson.JsonParser
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONArray
+import org.json.JSONTokener
 import timber.log.Timber
 
 
@@ -65,6 +65,9 @@ class StockOpnameActivity : AppCompatActivity() {
             }
         }
 
+//        if(isConnected){
+            //todo show master medicine
+//        }
         binding.apply {
             fakturNoSoTiet.addTextChangedListener {
                 isFakturNoEmpty = it.isNullOrBlank()
@@ -83,12 +86,7 @@ class StockOpnameActivity : AppCompatActivity() {
                 }
             }
             lblSearchSoTv.setOnClickListener {
-                val stMstMedicine = stockOpnameViewModel.getDataMedicine().toString()
-                Timber.e("st $stMstMedicine")
-                val type = object : TypeToken<ArrayList<MasterMedicineResponse?>?>() {}.type
-                alMstMedicine = Gson().fromJson(stMstMedicine, type)
-//                Timber.e("list $alMstMedicine")
-//                Timber.e("jsonObject "+stockOpnameViewModel.getDataMedicine().toString())
+                //todo show master medicine
             }
         }
     }
