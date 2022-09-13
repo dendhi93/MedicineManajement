@@ -11,11 +11,14 @@ import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityStockOpnameBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.menus.stock_opname.view_model.StockOpnameViewModel
+import com.dracoo.medicinemanagement.model.MasterMedicineResponse
+import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONObject
 import timber.log.Timber
 
 
@@ -29,6 +32,7 @@ class StockOpnameActivity : AppCompatActivity() {
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
+    private var alMstMedicine: ArrayList<MedicineMasterModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +83,12 @@ class StockOpnameActivity : AppCompatActivity() {
                 }
             }
             lblSearchSoTv.setOnClickListener {
-                Timber.e("jsonObject "+stockOpnameViewModel.getDataMedicine().toString())
+                val stMstMedicine = stockOpnameViewModel.getDataMedicine().toString()
+                Timber.e("st $stMstMedicine")
+                val type = object : TypeToken<ArrayList<MasterMedicineResponse?>?>() {}.type
+                alMstMedicine = Gson().fromJson(stMstMedicine, type)
+//                Timber.e("list $alMstMedicine")
+//                Timber.e("jsonObject "+stockOpnameViewModel.getDataMedicine().toString())
             }
         }
     }
