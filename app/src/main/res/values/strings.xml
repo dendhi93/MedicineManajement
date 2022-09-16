@@ -38,7 +38,10 @@
     <string name="piece_prize">Harga Satuan</string>
     <string name="save_btn">Simpan</string>
     <string name="cancel">Cancel</string>
+    <string name="choose">Pilih</string>
     <string name="medicine_input">Input Kode, Nama Obat dan Jenis Satuan</string>
     <string name="medicine_qty_input">Input Jenis dan Harga Satuan</string>
+    <string name="kolom_1">Kolom 1</string>
+    <string name="kolom_2">Kolom 2</string>
 
 </resources>

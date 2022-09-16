@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/bg_rounded_background.xml" value="0.1935" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/dialog_bg.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_arrow_right_blue.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_direct_sales_24.xml" value="0.1945" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_intersect2.xml" value="0.1935" />
@@ -12,6 +13,7 @@
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_intersect_logout.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_report_1.xml" value="0.1935" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_search.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/ic_user_circle.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/progress_bar_style.xml" value="0.1925" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/drawable/rounded_white_stroke_gray_background.xml" value="0.1995" />
@@ -23,8 +25,10 @@
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/activity_stock_opname.xml" value="0.33" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_bottom_sheet_add_medicine.xml" value="0.32639791937581275" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_bottom_sheet_info.xml" value="0.33" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/dialog_search_two_column.xml" value="0.18645833333333334" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/item_grid_home.xml" value="0.5" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/item_medicine_master.xml" value="0.5" />
+        <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/layout/item_search_two_column.xml" value="0.18645833333333334" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/menu/add_menu.xml" value="0.18541666666666667" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1935" />
         <entry key="..\:/Dedi Backup/Data/project_lainnya/MedicineManagement/MedicineManajement/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1935" />

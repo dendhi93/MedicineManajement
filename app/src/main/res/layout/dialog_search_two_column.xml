@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/dialog_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/search_label_s2cd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="17dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/search"
+            android:textColor="@color/text_black1"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_s2cd_til"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="17dp"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/search_label_s2cd_tv"
+            app:layout_constraintTop_toBottomOf="@id/search_label_s2cd_tv"
+            app:startIconDrawable="@drawable/ic_search">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_s2cd_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/col1_s2cd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/kolom_1"
+            android:textColor="@color/gray_1"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/search_s2cd_til"
+            app:layout_constraintTop_toBottomOf="@id/search_s2cd_til" />
+
+        <TextView
+            android:id="@+id/col2_s2cd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/kolom_2"
+            android:textColor="@color/gray_1"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/search_s2cd_til"
+            app:layout_constraintTop_toBottomOf="@id/search_s2cd_til" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_s2cd_rv"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            app:layout_constraintEnd_toEndOf="@id/search_s2cd_til"
+            app:layout_constraintStart_toStartOf="@id/search_s2cd_til"
+            app:layout_constraintTop_toBottomOf="@id/col1_s2cd_tv"
+            android:layoutAnimation="@anim/recyler_animation"
+            tools:listitem="@layout/item_search_two_column" />
+
+        <View
+            android:id="@+id/separator_s2cd_view"
+            android:layout_width="0dp"
+            android:layout_height="0.65dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/separator_color2"
+            app:layout_constraintEnd_toEndOf="@id/col2_s2cd_tv"
+            app:layout_constraintStart_toStartOf="@id/col1_s2cd_tv"
+            app:layout_constraintTop_toBottomOf="@id/list_s2cd_rv" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_s2cd_mb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:shapeAppearanceOverlay="@style/buttomShape"
+            android:layout_marginVertical="14dp"
+            android:layout_marginEnd="14dp"
+            android:backgroundTint="@color/white"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:text="@string/cancel"
+            android:textColor="@color/text_gray1"
+            app:layout_constraintEnd_toStartOf="@id/choose_s2cd_mb"
+            app:layout_constraintStart_toStartOf="@id/separator_s2cd_view"
+            app:layout_constraintTop_toBottomOf="@id/separator_s2cd_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeColor="@color/border_color2"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/choose_s2cd_mb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:shapeAppearanceOverlay="@style/buttomShape"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="@color/gray_button"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:text="@string/choose"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/separator_s2cd_view"
+            app:layout_constraintStart_toEndOf="@id/cancel_s2cd_mb"
+            app:layout_constraintTop_toBottomOf="@id/separator_s2cd_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

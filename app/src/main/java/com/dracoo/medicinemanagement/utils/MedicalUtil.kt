@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
+import com.dracoo.medicinemanagement.model.TwoColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
@@ -15,6 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object MedicalUtil {
+    private lateinit var search2ColumnAdapter: SearchTwoColumnAdapter
 
     fun snackBarMessage(snackMessage: String, activity: Activity, action: Int) {
         val rootView = activity.window.decorView.findViewById<View>(android.R.id.content)
@@ -90,7 +92,6 @@ object MedicalUtil {
         }
     }
 
-
     fun getCurrentDateTime(dateTimeFormat : String): String =
         SimpleDateFormat(dateTimeFormat, Locale.getDefault()).format(Date())
 
@@ -133,4 +134,27 @@ object MedicalUtil {
         //update recyclerview
         return temp
     }
+
+    private fun filter2Column(
+        text: String?,
+        displayedList: ArrayList<TwoColumnModel>): ArrayList<TwoColumnModel>
+    {
+        val temp: ArrayList<TwoColumnModel> = ArrayList()
+        for (d in displayedList) {
+            if (text != null) {
+                if (d.column1.lowercase().contains(text.lowercase()) || d.column2.lowercase()
+                        .contains(text.lowercase())
+                ) {
+                    temp.add(d)
+                }
+            }
+        }
+        //update recyclerview
+        return temp
+    }
+
+    interface TwoColumnInterface{
+        fun selectedTwoSearch(selectedData : TwoColumnModel)
+    }
+
 }

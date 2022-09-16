@@ -3,6 +3,7 @@ package com.dracoo.medicinemanagement.menus.stock_opname.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -10,6 +11,8 @@ import androidx.core.widget.addTextChangedListener
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityStockOpnameBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import com.dracoo.medicinemanagement.menus.new_medicine.adapter.NewMedicineAdapter
+import com.dracoo.medicinemanagement.menus.new_medicine.viewmodel.NewMedicineViewModel
 import com.dracoo.medicinemanagement.menus.stock_opname.view_model.StockOpnameViewModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
@@ -32,7 +35,7 @@ class StockOpnameActivity : AppCompatActivity() {
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
-    private var alMstMedicine: ArrayList<MedicineMasterModel>? = null
+    private var alMstMedicine =  ArrayList<MedicineMasterModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +68,8 @@ class StockOpnameActivity : AppCompatActivity() {
             }
         }
 
-//        if(isConnected){
-            //todo show master medicine
-//        }
+        if(isConnected){ getMedicineData() }
+
         binding.apply {
             fakturNoSoTiet.addTextChangedListener {
                 isFakturNoEmpty = it.isNullOrBlank()
@@ -86,11 +88,38 @@ class StockOpnameActivity : AppCompatActivity() {
                 }
             }
             lblSearchSoTv.setOnClickListener {
-                //todo show master medicine
+                when(alMstMedicine.size){
+                    0 -> MedicalUtil.snackBarMessage("Tidak ada data medicine",
+                        this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    else ->{
+                        //todo show master medicine
+                    }
+                }
             }
         }
     }
 
+    private fun getMedicineData(){
+        binding.nmSo.visibility = View.VISIBLE
+        stockOpnameViewModel.getMasterMedicine(object : StockOpnameViewModel.DataCallback<List<MedicineMasterModel>>{
+            override fun onDataLoaded(data: List<MedicineMasterModel>?) {
+                data?.let {
+                    if(it.isNotEmpty()){
+                        alMstMedicine.addAll(it)
+                    }
+                }
+                binding.nmSo.visibility = View.GONE
+            }
+
+            override fun onDataError(error: String?) {
+                error?.let {
+                    Timber.e("$error")
+                    MedicalUtil.snackBarMessage(it, this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                }
+                binding.nmSo.visibility = View.GONE
+            }
+        })
+    }
 
     private fun activeInActiveButton(isActive : Boolean){
         binding.saveSoBtn.apply {
