@@ -2,10 +2,20 @@ package com.dracoo.medicinemanagement.utils
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.TwoColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,6 +27,7 @@ import java.util.*
 
 object MedicalUtil {
     private lateinit var search2ColumnAdapter: SearchTwoColumnAdapter
+
 
     fun snackBarMessage(snackMessage: String, activity: Activity, action: Int) {
         val rootView = activity.window.decorView.findViewById<View>(android.R.id.content)
@@ -135,6 +146,72 @@ object MedicalUtil {
         return temp
     }
 
+    fun initPopUpSearch2Column(
+        activity: AppCompatActivity,
+        titleText: String,
+        listData: ArrayList<TwoColumnModel>,
+        col1Text: String,
+        col2Text: String,
+        twoColumnInterface: TwoColumnInterface
+    ): Dialog {
+        val dialogData = Dialog(activity)
+        dialogData.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogData.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogData.window!!.setGravity(Gravity.CENTER)
+
+        val bindingPopUpS2C = DialogSearch2ColumnBinding.inflate(activity.layoutInflater)
+        val view = bindingPopUpS2C.root
+        dialogData.setContentView(view)
+
+        val lpNumberPicker = WindowManager.LayoutParams()
+        val window: Window = dialogData.window!!
+        lpNumberPicker.copyFrom(window.attributes)
+
+        lpNumberPicker.width = WindowManager.LayoutParams.MATCH_PARENT
+        lpNumberPicker.height = WindowManager.LayoutParams.WRAP_CONTENT
+
+        window.setGravity(Gravity.CENTER)
+        window.attributes = lpNumberPicker
+
+        bindingPopUpS2C.apply {
+            searchLabelS2cdTv.text = titleText
+            searchS2cdEt.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    val listDisplayed2Data = filter2Column(s.toString(), listData).distinct().toList()
+                    search2ColumnAdapter =
+                        SearchTwoColumnAdapter(ArrayList(listDisplayed2Data), twoColumnInterface)
+                    listS2cdRv.apply {
+                        layoutManager =
+                            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                        adapter = search2ColumnAdapter
+                    }
+                }
+            })
+
+            search2ColumnAdapter = SearchTwoColumnAdapter(listData, twoColumnInterface)
+            listS2cdRv.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                adapter = search2ColumnAdapter
+            }
+            cancelS2cdMb.setOnClickListener {
+                dialogData.dismiss()
+                dialogData.cancel()
+            }
+            col1S2cdTv.text = col1Text
+            col2S2cdTv.text = col2Text
+        }
+        return dialogData
+    }
+
     private fun filter2Column(
         text: String?,
         displayedList: ArrayList<TwoColumnModel>): ArrayList<TwoColumnModel>
@@ -156,5 +233,6 @@ object MedicalUtil {
     interface TwoColumnInterface{
         fun selectedTwoSearch(selectedData : TwoColumnModel)
     }
+
 
 }

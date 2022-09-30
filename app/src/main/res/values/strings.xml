@@ -27,6 +27,7 @@
     // stock opname
     <string name="stock_opname_input">Input No Faktur, Kode Obat, dan Jumlah</string>
     <string name="search">Cari</string>
+    <string name="search_3_dot2">Cari&#8230;</string>
     <string name="faktur_no">No Faktur</string>
 
     //dialog
@@ -43,5 +44,6 @@
     <string name="medicine_qty_input">Input Jenis dan Harga Satuan</string>
     <string name="kolom_1">Kolom 1</string>
     <string name="kolom_2">Kolom 2</string>
+    <string name="find_medicine">Cari Obat</string>
 
 </resources>

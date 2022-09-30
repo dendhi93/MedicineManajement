@@ -1,5 +1,6 @@
 package com.dracoo.medicinemanagement.menus.stock_opname.view
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,27 +12,24 @@ import androidx.core.widget.addTextChangedListener
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityStockOpnameBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
-import com.dracoo.medicinemanagement.menus.new_medicine.adapter.NewMedicineAdapter
-import com.dracoo.medicinemanagement.menus.new_medicine.viewmodel.NewMedicineViewModel
 import com.dracoo.medicinemanagement.menus.stock_opname.view_model.StockOpnameViewModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
+import com.dracoo.medicinemanagement.model.TwoColumnModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
-import com.google.gson.JsonParser
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
-import org.json.JSONTokener
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class StockOpnameActivity : AppCompatActivity() {
+class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private val stockOpnameViewModel : StockOpnameViewModel by viewModels()
     private lateinit var binding: ActivityStockOpnameBinding
     private var isFakturNoEmpty = true
     private var isQtyEmpty = true
     private var isConnected = false
+    private lateinit var popUpSearchMedicine: Dialog
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -66,10 +64,8 @@ class StockOpnameActivity : AppCompatActivity() {
                     true
                 }
             }
+            if(isConnected){ getMedicineData() }
         }
-
-        if(isConnected){ getMedicineData() }
-
         binding.apply {
             fakturNoSoTiet.addTextChangedListener {
                 isFakturNoEmpty = it.isNullOrBlank()
@@ -92,7 +88,24 @@ class StockOpnameActivity : AppCompatActivity() {
                     0 -> MedicalUtil.snackBarMessage("Tidak ada data medicine",
                         this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
                     else ->{
+//                        alMstMedicine
                         //todo show master medicine
+                        val listVendor = ArrayList<TwoColumnModel>()
+                        alMstMedicine.forEach {
+                            listVendor.add(
+                                TwoColumnModel(
+                                it.namaobat, it.kodeobat)
+                            )
+                        }
+
+                        popUpSearchMedicine = MedicalUtil.initPopUpSearch2Column(
+                            this@StockOpnameActivity,getString(R.string.find_medicine),
+                            listVendor,"Nama Obat",
+                            "Kode Obat", this@StockOpnameActivity)
+
+                        if(::popUpSearchMedicine.isInitialized && !popUpSearchMedicine.isShowing){
+                            popUpSearchMedicine.show()
+                        }
                     }
                 }
             }
@@ -152,5 +165,14 @@ class StockOpnameActivity : AppCompatActivity() {
         super.onBackPressed()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    override fun selectedTwoSearch(selectedData: TwoColumnModel) {
+        Timber.e("selected " +selectedData.column1)
+        Timber.e("selected2 " +selectedData.column2)
+        if(popUpSearchMedicine.isShowing){
+            popUpSearchMedicine.dismiss()
+            popUpSearchMedicine.cancel()
+        }
     }
 }
