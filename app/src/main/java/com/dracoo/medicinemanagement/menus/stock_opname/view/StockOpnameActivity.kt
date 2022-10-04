@@ -14,7 +14,8 @@ import com.dracoo.medicinemanagement.databinding.ActivityStockOpnameBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.menus.stock_opname.view_model.StockOpnameViewModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
-import com.dracoo.medicinemanagement.model.TwoColumnModel
+import com.dracoo.medicinemanagement.model.StockOpnameModel
+import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
@@ -30,6 +31,8 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     private var isQtyEmpty = true
     private var isConnected = false
     private lateinit var popUpSearchMedicine: Dialog
+    private var stPiecesPrize = ""
+    private var stUser = ""
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -37,14 +40,16 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStockOpnameBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            binding = ActivityStockOpnameBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
+            supportActionBar?.let {
+                it.setDisplayHomeAsUpEnabled(true)
+                it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
+            }
+
+            stockOpnameViewModel.getUserData().observe(this){ stUser = it.toString() }
         }
-    }
 
     override fun onStart() {
         super.onStart()
@@ -88,13 +93,11 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                     0 -> MedicalUtil.snackBarMessage("Tidak ada data medicine",
                         this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
                     else ->{
-//                        alMstMedicine
-                        //todo show master medicine
-                        val listVendor = ArrayList<TwoColumnModel>()
+                        val listVendor = ArrayList<ThreeColumnModel>()
                         alMstMedicine.forEach {
                             listVendor.add(
-                                TwoColumnModel(
-                                it.namaobat, it.kodeobat)
+                                ThreeColumnModel(
+                                it.namaobat, it.kodeobat,it.hargasatuan)
                             )
                         }
 
@@ -107,6 +110,43 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                             popUpSearchMedicine.show()
                         }
                     }
+                }
+            }
+
+            saveSoBtn.setOnClickListener {
+                binding.apply {
+                    nmSo.visibility = View.VISIBLE
+                    saveSoBtn.isEnabled = false
+                    stockOpnameViewModel.transactionStockOpname(StockOpnameModel(
+                        medicineCodeSoTiet.text.toString(),
+                        medicineNameSoTiet.text.toString(),
+                        fakturNoSoTiet.text.toString(),
+                        stPiecesPrize,
+                        qtySoTiet.text.toString(),
+                        MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                        stUser
+                    ), object : StockOpnameViewModel.DataCallback<String>{
+                        override fun onDataLoaded(data: String?) {
+                            nmSo.visibility = View.GONE
+                            saveSoBtn.isEnabled = true
+                            medicineCodeSoTiet.setText("")
+                            medicineNameSoTiet.setText("")
+                            fakturNoSoTiet.setText("")
+                            prizeSoTiet.setText("")
+                            qtySoTiet.setText("")
+
+                            data?.let {
+                                MedicalUtil.snackBarMessage("Transaksi $it", this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                            }
+                        }
+
+                        override fun onDataError(error: String?) {
+                            nmSo.visibility = View.GONE
+                            saveSoBtn.isEnabled = true
+
+                            MedicalUtil.snackBarMessage("failed $error", this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                        }
+                    })
                 }
             }
         }
@@ -167,9 +207,12 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
         finish()
     }
 
-    override fun selectedTwoSearch(selectedData: TwoColumnModel) {
-        Timber.e("selected " +selectedData.column1)
-        Timber.e("selected2 " +selectedData.column2)
+    override fun selectedTwoSearch(selectedData: ThreeColumnModel) {
+        binding.medicineCodeSoTiet.setText(selectedData.column2)
+        binding.medicineNameSoTiet.setText(selectedData.column1)
+        binding.prizeSoTiet.setText(MedicalUtil.moneyFormat(selectedData.column3.toDouble()))
+        stPiecesPrize = selectedData.column3
+
         if(popUpSearchMedicine.isShowing){
             popUpSearchMedicine.dismiss()
             popUpSearchMedicine.cancel()

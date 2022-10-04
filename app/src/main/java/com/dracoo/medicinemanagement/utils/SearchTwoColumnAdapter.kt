@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemSearchTwoColumnBinding
-import com.dracoo.medicinemanagement.model.TwoColumnModel
+import com.dracoo.medicinemanagement.model.ThreeColumnModel
 
 class SearchTwoColumnAdapter(
-    private val listTwoColumn: ArrayList<TwoColumnModel>,
+    private val listTwoColumn: ArrayList<ThreeColumnModel>,
     private val twoColumnInterface : MedicalUtil.TwoColumnInterface
 ): RecyclerView.Adapter<SearchTwoColumnAdapter.ViewHolder>() {
     private lateinit var itemSearchTwoColumnBinding: ItemSearchTwoColumnBinding
@@ -46,9 +46,10 @@ class SearchTwoColumnAdapter(
                 }
                 root.setBackgroundResource(R.color.purple_200)
                 twoColumnInterface.selectedTwoSearch(
-                        TwoColumnModel(
+                        ThreeColumnModel(
                             listTwoColumn[position].column1,
-                            listTwoColumn[position].column2
+                            listTwoColumn[position].column2,
+                            listTwoColumn[position].column3
                         )
                     )
             }

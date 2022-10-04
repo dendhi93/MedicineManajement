@@ -35,6 +35,7 @@ object ConstantsObject {
     const val vMasterObatPost = "https://script.google.com/macros/s/AKfycbzpIqee5pMXxAx8ebblmnL1lTrB6Hdf54dZPEqbWKEe6PU_MNnS6MnLfmS_6Zm1GqYFLA/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
     const val vGetStockOpnameExcel = "https://sheets.googleapis.com/v4/spreadsheets/14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik/values/Sheet1!A2:H1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
+    const val vStockOpnamePost = "https://script.google.com/macros/s/AKfycbxbSQJQeXVahWoHnHogXS6b8epnmT29XE4tUsCUr3etUSG69__vci1qZHqdk6OEMfYr/exec"
 
     //JSON POST master medicine
     const val medicineCodeJson = "entry.438343947"
@@ -52,6 +53,14 @@ object ConstantsObject {
     const val piecesPrizeJsonV2 = "HargaSatuan"
     const val medicineNameJsonV2 = "NamaObat"
     const val medicineCategoryJsonV2 = "KategoriObat"
+
+
+    //JSON POST Stock Opname
+    const val idStockOpname = "14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik"
+    const val fakturJson = "NoFaktur"
+    const val qtyJson = "Jumlah"
+    const val createDateJson = "CreateDate"
+    const val userCreateJson = "UserCreate"
 
     //input mode
     const val vNewData = "New Data"

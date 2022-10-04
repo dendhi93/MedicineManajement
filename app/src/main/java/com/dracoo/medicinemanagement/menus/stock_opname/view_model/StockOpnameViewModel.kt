@@ -1,13 +1,16 @@
 package com.dracoo.medicinemanagement.menus.stock_opname.view_model
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
+import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,9 +19,9 @@ class StockOpnameViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo
 ):  ViewModel() {
 
-    fun getUserData() = dataStoreRepo.getUser()
+    fun getUserData() = dataStoreRepo.getUser().asLiveData()
 
-    fun getDataMedicine() = dataStoreRepo.getMasterMedicine()
+    fun getDataMedicine() = dataStoreRepo.getMasterMedicine().asLiveData()
 
     fun getMasterMedicine(
         callback: DataCallback<List<MedicineMasterModel>>
@@ -49,6 +52,25 @@ class StockOpnameViewModel @Inject constructor(
                 override fun onDataError(error: String?) {
                     error?.let {
                         callback.onDataError(it)
+                    }
+                }
+            })
+        }
+    }
+
+    fun transactionStockOpname(postModel : StockOpnameModel, callback: DataCallback<String>){
+        viewModelScope.launch {
+            apiRepository.postStockOpname(postModel, object :ApiRepository.ApiCallback<String>{
+                override fun onDataLoaded(data: String?) {
+                    data?.let {
+                        callback.onDataLoaded(it)
+                    }
+                }
+
+                override fun onDataError(error: String?) {
+                    error.let {
+                        Timber.e("$error")
+                        callback.onDataError(error.toString())
                     }
                 }
             })

@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
-import com.dracoo.medicinemanagement.model.TwoColumnModel
+import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
@@ -149,7 +149,7 @@ object MedicalUtil {
     fun initPopUpSearch2Column(
         activity: AppCompatActivity,
         titleText: String,
-        listData: ArrayList<TwoColumnModel>,
+        listData: ArrayList<ThreeColumnModel>,
         col1Text: String,
         col2Text: String,
         twoColumnInterface: TwoColumnInterface
@@ -214,9 +214,9 @@ object MedicalUtil {
 
     private fun filter2Column(
         text: String?,
-        displayedList: ArrayList<TwoColumnModel>): ArrayList<TwoColumnModel>
+        displayedList: ArrayList<ThreeColumnModel>): ArrayList<ThreeColumnModel>
     {
-        val temp: ArrayList<TwoColumnModel> = ArrayList()
+        val temp: ArrayList<ThreeColumnModel> = ArrayList()
         for (d in displayedList) {
             if (text != null) {
                 if (d.column1.lowercase().contains(text.lowercase()) || d.column2.lowercase()
@@ -231,8 +231,6 @@ object MedicalUtil {
     }
 
     interface TwoColumnInterface{
-        fun selectedTwoSearch(selectedData : TwoColumnModel)
+        fun selectedTwoSearch(selectedData : ThreeColumnModel)
     }
-
-
 }
