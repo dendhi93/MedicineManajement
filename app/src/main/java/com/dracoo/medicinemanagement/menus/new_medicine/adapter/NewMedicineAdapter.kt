@@ -27,6 +27,7 @@ class NewMedicineAdapter(
     private var listImage = ArrayList<ImageView>()
 
     fun initAdapter(list: List<MedicineMasterModel>?) {
+
         list?.let {
             val diffUtil = DiffUtils(listData, it)
             val diffUtilResult = DiffUtil.calculateDiff(diffUtil)

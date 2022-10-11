@@ -3,6 +3,8 @@ package com.dracoo.medicinemanagement.menus.new_medicine.view
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,8 +27,11 @@ import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.dracoo.medicinemanagement.utils.ThousandSeparatorUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.lang.reflect.Type
 
 
 @AndroidEntryPoint
@@ -55,8 +60,9 @@ class NewMedicineActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
+
         initListAdapter(aLMasterMedical)
         checkConnection.observe(this){
             isConnected = when {
@@ -73,33 +79,72 @@ class NewMedicineActivity : AppCompatActivity() {
                     true
                 }
             }
-            if(isConnected){
-                getMedicineData()
+
+            newMedicineViewModel.getDataMedicine().observe(this){ itObserve ->
+                itObserve.let {
+                    when{
+                        itObserve?.isNotEmpty() == true -> {
+                            val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
+                            val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itObserve, type)
+                            if(tempMedicineList.isNotEmpty()){
+                                aLMasterMedical.addAll(tempMedicineList)
+                                newMedicineAdapter.initAdapter(aLMasterMedical)
+
+                                binding.apply {
+                                    nmPg.visibility = View.GONE
+                                    medicineBmRv.visibility = View.VISIBLE
+                                    animEmptyNmGiv.visibility = View.GONE
+                                    titleDataKosongAiscTv.visibility = View.GONE
+                                }
+                            }
+                        }
+                        else -> if(isConnected){ getMedicineData(false) }
+                    }
+                }
             }
         }
-    }
-    override fun onStart() {
-        super.onStart()
-        binding.searchNmTiet.addTextChangedListener {
-            when(aLMasterMedical.size){
-                0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
-                    this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
-                else ->{
-                    when(it?.length){
-                        0 -> newMedicineAdapter.initAdapter(aLMasterMedical)
-                        else -> {
-                            //remove duplicate
-                            val selectedArrayList = MedicalUtil.filterMedicineMaster(it.toString(), aLMasterMedical).distinct().toList()
-                            newMedicineAdapter.initAdapter(ArrayList(selectedArrayList))
+
+        binding.apply {
+            searchNmTiet.addTextChangedListener {
+                when(aLMasterMedical.size){
+                    0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
+                        this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    else ->{
+                        when(it?.length){
+                            0 -> newMedicineAdapter.initAdapter(aLMasterMedical)
+                            else -> {
+                                //remove duplicate
+                                val selectedArrayList = MedicalUtil.filterMedicineMaster(it.toString(), aLMasterMedical).distinct().toList()
+                                newMedicineAdapter.initAdapter(ArrayList(selectedArrayList))
+                            }
                         }
+                    }
+                }
+            }
+
+            refreshNmSrl.setOnRefreshListener{
+                refreshNmSrl.isRefreshing = true
+                when(isConnected){
+                    true -> getMedicineData(true)
+                    else ->{
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            refreshNmSrl.isRefreshing = false
+                        },100)
                     }
                 }
             }
         }
     }
 
-    private fun getMedicineData(){
+    private fun getMedicineData(isFromSwipe : Boolean){
         binding.nmPg.visibility = View.VISIBLE
+        if(isFromSwipe){
+            aLMasterMedical.clear()
+            binding.medicineBmRv.visibility = View.GONE
+            binding.animEmptyNmGiv.visibility = View.VISIBLE
+            binding.titleDataKosongAiscTv.visibility = View.VISIBLE
+        }
+
         newMedicineViewModel.getMasterMedicine(object : NewMedicineViewModel.DataCallback<List<MedicineMasterModel>>{
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
                 data?.let {
@@ -112,7 +157,6 @@ class NewMedicineActivity : AppCompatActivity() {
                             }
                             else ->{
                                 aLMasterMedical.addAll(it)
-//                                newMedicineAdapter = NewMedicineAdapter(it, this@NewMedicineActivity)
                                 newMedicineAdapter.initAdapter(aLMasterMedical)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
@@ -121,7 +165,9 @@ class NewMedicineActivity : AppCompatActivity() {
                         }
                     }
                 }
+
                 binding.nmPg.visibility = View.GONE
+                if(isFromSwipe){ binding.refreshNmSrl.isRefreshing = false }
             }
 
             override fun onDataError(error: String?) {

@@ -42,39 +42,56 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/medicine_bm_rv"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_nm_srl"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="8dp"
-        android:visibility="gone"
-        android:layout_marginVertical="7dp"
-        android:paddingBottom="5dp"
-        android:layoutAnimation="@anim/recyler_animation"
-        app:layout_constraintTop_toBottomOf="@+id/search_nm_til"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_medicine_master" />
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/anim_empty_nm_giv"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/empty_data_anim"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/title_data_kosong_aisc_tv"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty_data"
-        android:textColor="@color/text_black1"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@id/anim_empty_nm_giv"
-        app:layout_constraintStart_toStartOf="@id/anim_empty_nm_giv"
-        app:layout_constraintTop_toBottomOf="@id/anim_empty_nm_giv" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_nm_til">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/medicine_bm_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:visibility="gone"
+                android:layout_marginVertical="7dp"
+                android:paddingBottom="5dp"
+                android:layoutAnimation="@anim/recyler_animation"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:listitem="@layout/item_medicine_master" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/anim_empty_nm_giv"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/empty_data_anim"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_data_kosong_aisc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_data"
+                android:textColor="@color/text_black1"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@id/anim_empty_nm_giv"
+                app:layout_constraintStart_toStartOf="@id/anim_empty_nm_giv"
+                app:layout_constraintTop_toBottomOf="@id/anim_empty_nm_giv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
