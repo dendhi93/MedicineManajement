@@ -1,6 +1,7 @@
 package com.dracoo.medicinemanagement.menus.new_medicine.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
@@ -60,6 +61,8 @@ class NewMedicineViewModel @Inject constructor(
             dataStoreRepo.saveMasterMedicine(stData)
         }
     }
+
+    fun getDataMedicine() = dataStoreRepo.getMasterMedicine().asLiveData()
 
     fun postNewMedicine(postModel: MedicineMasterModel, callback :DataCallback<MedicineMasterModel>){
         viewModelScope.launch {

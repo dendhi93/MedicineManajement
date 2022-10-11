@@ -55,9 +55,8 @@ class NewMedicineActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    override fun onResume() {
+        super.onResume()
         initListAdapter(aLMasterMedical)
         checkConnection.observe(this){
             isConnected = when {
@@ -78,17 +77,20 @@ class NewMedicineActivity : AppCompatActivity() {
                 getMedicineData()
             }
         }
+    }
+    override fun onStart() {
+        super.onStart()
         binding.searchNmTiet.addTextChangedListener {
             when(aLMasterMedical.size){
                 0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
                     this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                 else ->{
                     when(it?.length){
-                        0 -> initListAdapter(aLMasterMedical)
+                        0 -> newMedicineAdapter.initAdapter(aLMasterMedical)
                         else -> {
                             //remove duplicate
                             val selectedArrayList = MedicalUtil.filterMedicineMaster(it.toString(), aLMasterMedical).distinct().toList()
-                            initListAdapter(ArrayList(selectedArrayList))
+                            newMedicineAdapter.initAdapter(ArrayList(selectedArrayList))
                         }
                     }
                 }
@@ -110,7 +112,8 @@ class NewMedicineActivity : AppCompatActivity() {
                             }
                             else ->{
                                 aLMasterMedical.addAll(it)
-                                newMedicineAdapter = NewMedicineAdapter(it, this@NewMedicineActivity)
+//                                newMedicineAdapter = NewMedicineAdapter(it, this@NewMedicineActivity)
+                                newMedicineAdapter.initAdapter(aLMasterMedical)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
                                 titleDataKosongAiscTv.visibility = View.GONE
@@ -197,7 +200,8 @@ class NewMedicineActivity : AppCompatActivity() {
                             override fun onDataLoaded(data: MedicineMasterModel?) {
                                 data?.let {
                                     aLMasterMedical.add(data)
-                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
+//                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
+                                    newMedicineAdapter.initAdapter(aLMasterMedical)
                                 }
                                 bottomSheetAddBinding.bottomLp.visibility = View.GONE
                                 bottomSheetAddBinding.saveBsamButton.isEnabled = true
@@ -269,11 +273,12 @@ class NewMedicineActivity : AppCompatActivity() {
     }
 
     private fun initListAdapter(list: ArrayList<MedicineMasterModel>){
-        newMedicineAdapter = NewMedicineAdapter(list, this,onItemClick = {
+        newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
             selectedInputMode = ConstantsObject.vShowData
             initBottomSheetAddMedicine(it)
         })
 
+        newMedicineAdapter.initAdapter(list)
         binding.medicineBmRv.apply {
             layoutManager = LinearLayoutManager(
                 this@NewMedicineActivity,

@@ -8,40 +8,32 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemMedicineMasterBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
+import com.dracoo.medicinemanagement.utils.DiffUtils
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 
 class NewMedicineAdapter(
-    private val listData: List<MedicineMasterModel>,
     private val context: Context,
     private val onItemClick: ((MedicineMasterModel) -> Unit)? = null
 )
     : RecyclerView.Adapter<NewMedicineAdapter.ViewHolder>(){
-
+    private var listData = ArrayList<MedicineMasterModel>()
     private var listCv = ArrayList<CardView>()
     private var listImage = ArrayList<ImageView>()
 
-//    fun initAdapter(list: List<MedicineMasterModel>?) {
-//        list?.let {
-//            listData.clear()
-//            listData.addAll(list)
-//            when{
-//                listData.isEmpty() ->{
-//                    listData.addAll(it)
-//                }
-//                else -> {
-//                    val diffUtil = DiffUtils(listData, it)
-//                    val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
-//                    listData = it as ArrayList<MedicineMasterModel>
-//                    diffUtilResult.dispatchUpdatesTo(this)
-//                }
-//            }
-//        }
-//    }
+    fun initAdapter(list: List<MedicineMasterModel>?) {
+        list?.let {
+            val diffUtil = DiffUtils(listData, it)
+            val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
+            listData = it as ArrayList<MedicineMasterModel>
+            diffUtilResult.dispatchUpdatesTo(this)
+        }
+    }
 
     inner class ViewHolder(private val binding: ItemMedicineMasterBinding) :
         RecyclerView.ViewHolder(binding.root) {
