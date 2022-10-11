@@ -19,8 +19,11 @@ import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.lang.reflect.Type
 
 
 @AndroidEntryPoint
@@ -40,19 +43,13 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            binding = ActivityStockOpnameBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+        binding = ActivityStockOpnameBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            supportActionBar?.let {
-                it.setDisplayHomeAsUpEnabled(true)
-                it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
-            }
-
-            stockOpnameViewModel.getUserData().observe(this){ stUser = it.toString() }
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
         }
-
-    override fun onStart() {
-        super.onStart()
 
         checkConnection.observe(this){
             isConnected = when {
@@ -69,8 +66,26 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                     true
                 }
             }
-            if(isConnected){ getMedicineData() }
         }
+
+        stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
+        stockOpnameViewModel.getDataMedicine().observe(this) {
+            when {
+                it?.isNotEmpty() == true -> {
+                    val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
+                    val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(it, type)
+                    if(tempMedicineList.isNotEmpty()){
+                        alMstMedicine.addAll(tempMedicineList)
+                    }
+                }
+                else -> if(isConnected){ getMedicineData() }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         binding.apply {
             fakturNoSoTiet.addTextChangedListener {
                 isFakturNoEmpty = it.isNullOrBlank()
