@@ -60,7 +60,7 @@ class StockOpnameViewModel @Inject constructor(
 
     fun transactionStockOpname(postModel : StockOpnameModel, callback: DataCallback<String>){
         viewModelScope.launch {
-            apiRepository.postStockOpname(postModel, object :ApiRepository.ApiCallback<String>{
+            apiRepository.postTransStockOpname(postModel, object :ApiRepository.ApiCallback<String>{
                 override fun onDataLoaded(data: String?) {
                     data?.let {
                         callback.onDataLoaded(it)

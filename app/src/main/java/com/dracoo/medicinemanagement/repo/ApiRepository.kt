@@ -89,11 +89,11 @@ constructor(
         }
     }
 
-    suspend fun postStockOpname(model : StockOpnameModel, callback: ApiCallback<String>){
+    suspend fun postTransStockOpname(model : StockOpnameModel, callback: ApiCallback<String>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnamePost,
+                Method.POST, ConstantsObject.vStockOpnamePostTrans,
                 { response ->
                     try {
                         response.let {
@@ -121,6 +121,39 @@ constructor(
                     params[ConstantsObject.qtyJson] = model.Jumlah
                     params[ConstantsObject.createDateJson] = model.CreateDate
                     params[ConstantsObject.userCreateJson] = model.UserCreate
+                    return params
+                }
+            }
+
+            val retryPolicy: RetryPolicy =
+                DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            stringReq.retryPolicy = retryPolicy
+            queue.add(stringReq)
+        }
+    }
+
+    suspend fun postStockOpnameData(callback: ApiCallback<JSONObject>){
+        val queue = Volley.newRequestQueue(context)
+        withContext(Dispatchers.IO) {
+            val stringReq: StringRequest = object : StringRequest(
+                Method.POST, ConstantsObject.vStockOpnameGet,
+                { response ->
+                    try {
+                        response.let {
+                            Timber.e("response $response")
+                            callback.onDataLoaded(JSONObject(it))
+                        }
+                    }catch (e :Exception){ callback.onDataError("error $e") }
+                },
+                {
+                    callback.onDataError("$it")
+                }
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val params : HashMap<String, String>  = HashMap()
+
+                    //here we pass params
+                    params[ConstantsObject.idMasterJson] = ConstantsObject.idStockOpname
                     return params
                 }
             }
