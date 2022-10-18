@@ -17,8 +17,11 @@ import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.lang.reflect.Type
 
 @AndroidEntryPoint
 class ReportStockOpnameActivity : AppCompatActivity() {
@@ -79,7 +82,28 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 }
             }
 
-            if(isConnected){ getDataSO() }
+            reportSOViewModel.getSOStore().observe(this@ReportStockOpnameActivity){ itSOObserve ->
+                itSOObserve?.let { itLet ->
+                    when{
+                        itLet.isNotEmpty() ->{
+                            val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
+                            val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
+                            if(tempSOList.isNotEmpty()){
+                                aLSOReport.addAll(tempSOList)
+                                reportStockOpnameAdapter.initAdapter(aLSOReport)
+
+                                binding.apply {
+                                    rsoPg.visibility = View.GONE
+                                    medicineBmRv.visibility = View.VISIBLE
+                                    animEmptyRsoGiv.visibility = View.GONE
+                                    titleDataKosongAiscTv.visibility = View.GONE
+                                }
+                            }
+                        }
+                        else -> if(isConnected){ getDataSO() }
+                    }
+                }
+            }
         }
     }
 

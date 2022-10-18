@@ -78,9 +78,9 @@ class NewMedicineActivity : AppCompatActivity() {
             }
 
             newMedicineViewModel.getDataMedicine().observe(this){ itObserve ->
-                itObserve.let {
+                itObserve.let { itLet ->
                     when{
-                        itObserve?.isNotEmpty() == true -> {
+                        itLet?.isNotEmpty() == true -> {
                             val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
                             val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itObserve, type)
                             if(tempMedicineList.isNotEmpty()){

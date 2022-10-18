@@ -1,6 +1,7 @@
 package com.dracoo.medicinemanagement.menus.stock_opname.view_model
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
@@ -8,6 +9,7 @@ import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -41,6 +43,7 @@ class ReportStockOpnameViewModel @Inject constructor(
 
                             list.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput))
                         }
+                        saveJsonSO(list)
                         callback.onDataLoaded(list)
                     }
                 }
@@ -53,4 +56,13 @@ class ReportStockOpnameViewModel @Inject constructor(
             })
         }
     }
+
+    private fun saveJsonSO(alData : List<StockOpnameModel>){
+        viewModelScope.launch {
+            val stData = Gson().toJson(alData)
+            dataStoreRepo.saveSOData(stData)
+        }
+    }
+
+    fun getSOStore() = dataStoreRepo.getSOData().asLiveData()
 }

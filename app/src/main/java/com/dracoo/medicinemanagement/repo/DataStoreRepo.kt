@@ -32,6 +32,12 @@ constructor(
         }
     }
 
+    suspend fun saveSOData(stResponse : String){
+        context.dataStore.edit { preferences ->
+            preferences[vSODataKey] = stResponse
+        }
+    }
+
     fun getUser(): Flow<String?> = context.dataStore.data
         .map { preferences ->
             preferences[vUserKey] ?: ""
@@ -47,6 +53,11 @@ constructor(
             preferences[vMasterMedicineKey] ?: ""
         }
 
+    fun getSOData(): Flow<String?> = context.dataStore.data
+        .map { preferences ->
+            preferences[vSODataKey] ?: ""
+        }
+
     suspend fun clearDataStore(){
         context.dataStore.edit {
             it.clear()
@@ -58,6 +69,7 @@ constructor(
         val vUserKey = stringPreferencesKey("user_key")
         val vAddressKey = stringPreferencesKey("address_key")
         val vMasterMedicineKey = stringPreferencesKey("master_medicine")
+        val vSODataKey = stringPreferencesKey("stock_opname_data")
     }
 
 }
