@@ -18,6 +18,7 @@ import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
+import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -140,7 +141,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         qtySoTiet.text.toString(),
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                         stUser
-                    ), object : StockOpnameViewModel.DataCallback<String>{
+                    ), object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE
                             saveSoBtn.isEnabled = true
@@ -169,7 +170,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
 
     private fun getMedicineData(){
         binding.nmSo.visibility = View.VISIBLE
-        stockOpnameViewModel.getMasterMedicine(object : StockOpnameViewModel.DataCallback<List<MedicineMasterModel>>{
+        stockOpnameViewModel.getMasterMedicine(object : DataCallback<List<MedicineMasterModel>>{
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
                 data?.let {
                     if(it.isNotEmpty()){

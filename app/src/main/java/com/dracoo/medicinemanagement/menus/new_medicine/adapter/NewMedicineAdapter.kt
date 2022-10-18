@@ -104,9 +104,7 @@ class NewMedicineAdapter(
 
     override fun getItemCount(): Int = listData.size
 
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
+    override fun getItemViewType(position: Int) = position
 
     override fun setHasStableIds(hasStableIds: Boolean) {
         super.setHasStableIds(true)

@@ -21,10 +21,7 @@ import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.menus.new_medicine.adapter.NewMedicineAdapter
 import com.dracoo.medicinemanagement.menus.new_medicine.viewmodel.NewMedicineViewModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
-import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
-import com.dracoo.medicinemanagement.utils.ConstantsObject
-import com.dracoo.medicinemanagement.utils.MedicalUtil
-import com.dracoo.medicinemanagement.utils.ThousandSeparatorUtil
+import com.dracoo.medicinemanagement.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
@@ -145,7 +142,7 @@ class NewMedicineActivity : AppCompatActivity() {
             binding.titleDataKosongAiscTv.visibility = View.VISIBLE
         }
 
-        newMedicineViewModel.getMasterMedicine(object : NewMedicineViewModel.DataCallback<List<MedicineMasterModel>>{
+        newMedicineViewModel.getMasterMedicine(object : DataCallback<List<MedicineMasterModel>> {
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
                 data?.let {
                     binding.apply {
@@ -242,7 +239,7 @@ class NewMedicineActivity : AppCompatActivity() {
                             namaobat = medicineNameBsamTiet.text.toString(),
                             kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                        ), object :NewMedicineViewModel.DataCallback<MedicineMasterModel>{
+                        ), object :DataCallback<MedicineMasterModel>{
                             override fun onDataLoaded(data: MedicineMasterModel?) {
                                 data?.let {
                                     aLMasterMedical.add(data)

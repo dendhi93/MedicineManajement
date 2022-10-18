@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
+import com.dracoo.medicinemanagement.utils.DataCallback
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ class NewMedicineViewModel @Inject constructor(
 
     fun getDataMedicine() = dataStoreRepo.getMasterMedicine().asLiveData()
 
-    fun postNewMedicine(postModel: MedicineMasterModel, callback :DataCallback<MedicineMasterModel>){
+    fun postNewMedicine(postModel: MedicineMasterModel, callback : DataCallback<MedicineMasterModel>){
         viewModelScope.launch {
             apiRepository.postMedicineMaster(postModel, object :ApiRepository.ApiCallback<MedicineMasterModel>{
                 override fun onDataLoaded(data: MedicineMasterModel?) {
@@ -84,9 +85,4 @@ class NewMedicineViewModel @Inject constructor(
         }
     }
 
-    //interface response from server
-    interface DataCallback<T> {
-        fun onDataLoaded(data: T?)
-        fun onDataError(error: String?)
-    }
 }

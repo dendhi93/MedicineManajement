@@ -7,6 +7,7 @@ import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
+import com.dracoo.medicinemanagement.utils.DataCallback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -75,11 +76,5 @@ class StockOpnameViewModel @Inject constructor(
                 }
             })
         }
-    }
-
-    //interface response from server
-    interface DataCallback<T> {
-        fun onDataLoaded(data: T?)
-        fun onDataError(error: String?)
     }
 }

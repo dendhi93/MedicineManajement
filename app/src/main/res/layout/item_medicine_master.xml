@@ -22,27 +22,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gd_imm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.6" />
+
             <TextView
                 android:id="@+id/mendicine_value_mm_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_light_beta"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="2dp"
                 android:text="@string/content_description"
                 android:textColor="@color/text_orange2"
                 android:layout_marginStart="7dp"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/gd_imm"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/separator_mm_view"
                 android:layout_width="0.3dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="13dp"
                 android:background="@color/gray_1"
                 app:layout_constraintBottom_toBottomOf="@id/mendicine_value_mm_tv"
-                app:layout_constraintStart_toEndOf="@id/mendicine_value_mm_tv"
+                app:layout_constraintStart_toEndOf="@id/gd_imm"
                 app:layout_constraintTop_toTopOf="@id/mendicine_value_mm_tv" />
 
             <TextView
