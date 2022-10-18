@@ -89,7 +89,8 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                             val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
                             val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
                             if(tempSOList.isNotEmpty()){
-                                aLSOReport.addAll(tempSOList)
+                                val tempList = tempSOList.sortedByDescending { obj -> obj.CreateDate }
+                                aLSOReport.addAll(tempList)
                                 reportStockOpnameAdapter.initAdapter(aLSOReport)
 
                                 binding.apply {
@@ -119,7 +120,8 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else -> {
-                                aLSOReport.addAll(it)
+                                val tempList = it.sortedByDescending { obj -> obj.CreateDate }
+                                aLSOReport.addAll(tempList)
                                 reportStockOpnameAdapter.initAdapter(aLSOReport)
 
                                 medicineBmRv.visibility = View.VISIBLE

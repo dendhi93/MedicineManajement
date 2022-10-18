@@ -84,7 +84,8 @@ class NewMedicineActivity : AppCompatActivity() {
                             val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
                             val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itObserve, type)
                             if(tempMedicineList.isNotEmpty()){
-                                aLMasterMedical.addAll(tempMedicineList)
+                                val tempList = tempMedicineList.sortedByDescending { obj -> obj.Timestamp }
+                                aLMasterMedical.addAll(tempList)
                                 newMedicineAdapter.initAdapter(aLMasterMedical)
 
                                 binding.apply {
@@ -153,7 +154,8 @@ class NewMedicineActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else ->{
-                                aLMasterMedical.addAll(it)
+                                val tempList = it.sortedByDescending { obj -> obj.Timestamp }
+                                aLMasterMedical.addAll(tempList)
                                 newMedicineAdapter.initAdapter(aLMasterMedical)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
