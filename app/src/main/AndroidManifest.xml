@@ -20,9 +20,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".menus.stock_opname.view.ReportStockOpnameActivity"
+            android:exported="false"
+            android:label="@string/report_stock_opname_activity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".menus.stock_opname.view.StockOpnameActivity"
-            android:label="@string/stock_opname_activity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/stock_opname_activity" />
         <activity
             android:name=".menus.new_medicine.view.NewMedicineActivity"
             android:exported="false"

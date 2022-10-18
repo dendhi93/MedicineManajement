@@ -26,7 +26,7 @@ object ConstantsObject {
     const val vExitApps = "Keluar Aplikasi"
     const val vInputMedicine = "Input Obat Baru"
     const val vStockOpname = "Stock Opname"
-    const val vReportStockOpname = "Laporan tock Opname"
+    const val vReportStockOpname = "Laporan Stock Opname"
     const val vDirectSales = "Penjualan Obat"
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
