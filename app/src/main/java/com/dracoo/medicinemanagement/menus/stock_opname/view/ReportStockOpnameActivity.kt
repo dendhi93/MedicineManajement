@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
@@ -14,6 +15,7 @@ import com.dracoo.medicinemanagement.menus.stock_opname.view_model.ReportStockOp
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
+import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -77,7 +79,42 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 }
             }
 
+            if(isConnected){ getDataSO() }
         }
+    }
+
+    private fun getDataSO(){
+        reportSOViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
+            override fun onDataLoaded(data: List<StockOpnameModel>?) {
+                data?.let {
+                    binding.apply {
+                        when(it.size){
+                            0 -> {
+                                medicineBmRv.visibility = View.GONE
+                                animEmptyRsoGiv.visibility = View.VISIBLE
+                                titleDataKosongAiscTv.visibility = View.VISIBLE
+                            }
+                            else -> {
+                                aLSOReport.addAll(it)
+                                reportStockOpnameAdapter.initAdapter(aLSOReport)
+
+                                medicineBmRv.visibility = View.VISIBLE
+                                animEmptyRsoGiv.visibility = View.GONE
+                                titleDataKosongAiscTv.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+                binding.rsoPg.visibility = View.GONE
+            }
+
+            override fun onDataError(error: String?) {
+                error?.let {
+                    MedicalUtil.snackBarMessage(it, this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithTombol)
+                }
+                binding.rsoPg.visibility = View.GONE
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

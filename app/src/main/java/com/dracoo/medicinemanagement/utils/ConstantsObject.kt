@@ -12,6 +12,7 @@ object ConstantsObject {
     const val vTglGaring = "dd/MM/yyyy"
     const val vTahunGaring = "yyyy/MM/dd"
     const val vTglSpasiNamaBulan = "dd MMMM yyyy"
+    const val vSpecialDateJson = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
 
     //date time format
     const val vTahunJamSetrip = "yyyy-MM-dd HH:mm:ss"
@@ -34,7 +35,7 @@ object ConstantsObject {
     const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
     const val vMasterObatPost = "https://script.google.com/macros/s/AKfycbzpIqee5pMXxAx8ebblmnL1lTrB6Hdf54dZPEqbWKEe6PU_MNnS6MnLfmS_6Zm1GqYFLA/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
-    const val vStockOpnameGet = "https://script.google.com/macros/s/AKfycbzvSAsNTAlj8WwyryjxMNgQdC1KxMmMOsq-yaCozn1rRBt0OWGzFQ9vCntuDnWDWeDwJQ/exec"
+    const val vStockOpnameGet = "https://script.google.com/macros/s/AKfycbxLq9ebIHp6ITztKMSygfL7F0yVc5D7IGhAAjygurjriZaFkUgWCsErDgwvfG_0iwZmAg/exec"
     const val vStockOpnamePostTrans = "https://script.google.com/macros/s/AKfycbxbSQJQeXVahWoHnHogXS6b8epnmT29XE4tUsCUr3etUSG69__vci1qZHqdk6OEMfYr/exec"
 
     //JSON POST master medicine

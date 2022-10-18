@@ -60,7 +60,7 @@ class ReportStockOpnameAdapter(
                 }
 
                 mendicineValueMmTv.text = data.NamaObat
-                dateLblMmTv.text = data.NoFaktur
+                dateLblMmTv.text = "No Faktur " +data.NoFaktur
                 prizeLblMmTv.text = "Jumlah"
                 prizeValueItiTv.text = data.Jumlah
 
