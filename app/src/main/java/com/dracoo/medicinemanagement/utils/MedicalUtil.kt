@@ -8,13 +8,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
@@ -228,6 +227,24 @@ object MedicalUtil {
         }
         //update recyclerview
         return temp
+    }
+
+    fun showPopUpMenu(context: Context,
+                      view: View, fromMenu: String,
+                      onClickMenu: ((selectedItem : String) -> Unit)? = null) {
+        val popup = PopupMenu(context, view)
+        when (fromMenu) {
+            ConstantsObject.vInputMedicine -> popup.inflate(R.menu.master_medicine_menu)
+        }
+
+        popup.setOnMenuItemClickListener { item: MenuItem? ->
+            when (item?.itemId) {
+                R.id.mnu_edit -> onClickMenu?.invoke(context.getString(R.string.edit_mnu))
+                R.id.mnu_detail -> onClickMenu?.invoke(context.getString(R.string.detail_mnu))
+            }
+            true
+        }
+        popup.show()
     }
 
     interface TwoColumnInterface{

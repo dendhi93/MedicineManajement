@@ -1,5 +1,6 @@
 package com.dracoo.medicinemanagement.menus.new_medicine.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -179,6 +180,7 @@ class NewMedicineActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initBottomSheetAddMedicine(selectedModel : MedicineMasterModel?){
         val bottomAddDialog = BottomSheetDialog(this)
         bottomAddDialog.setOnShowListener {
@@ -229,43 +231,53 @@ class NewMedicineActivity : AppCompatActivity() {
 //                + ThousandSeparatorUtil.trimCommaOfString(piecesPrizeBsamTiet.text.toString()))
                         bottomSheetAddBinding.bottomLp.visibility = View.VISIBLE
                         bottomSheetAddBinding.saveBsamButton.isEnabled = false
+                        bottomSheetAddBinding.cancelBsamButton.isEnabled = false
                         val stPrize = when(piecesPrizeBsamTiet.text.toString()){
                             "1" -> "0"
                             else -> ThousandSeparatorUtil.trimCommaOfString(piecesPrizeBsamTiet.text.toString())
                         }
-                        newMedicineViewModel.postNewMedicine(MedicineMasterModel(
-                            Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
-                            kodeobat = medicineCodeBsamTiet.text.toString(),
-                            satuanobat = piecesTypeBsamTiet.text.toString(),
-                            hargasatuan = stPrize,
-                            namaobat = medicineNameBsamTiet.text.toString(),
-                            kategoriObat = medicineCategoryBsamTiet.text.toString()
+                        when(selectedInputMode){
+                            ConstantsObject.vNewData -> {
+                                newMedicineViewModel.postNewMedicine(MedicineMasterModel(
+                                    Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                                    kodeobat = medicineCodeBsamTiet.text.toString(),
+                                    satuanobat = piecesTypeBsamTiet.text.toString(),
+                                    hargasatuan = stPrize,
+                                    namaobat = medicineNameBsamTiet.text.toString(),
+                                    kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                        ), object :DataCallback<MedicineMasterModel>{
-                            override fun onDataLoaded(data: MedicineMasterModel?) {
-                                data?.let {
-                                    aLMasterMedical.add(data)
+                                ), object :DataCallback<MedicineMasterModel>{
+                                    override fun onDataLoaded(data: MedicineMasterModel?) {
+                                        data?.let {
+                                            aLMasterMedical.add(data)
 //                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
-                                    newMedicineAdapter.initAdapter(aLMasterMedical)
-                                }
-                                bottomSheetAddBinding.bottomLp.visibility = View.GONE
-                                bottomSheetAddBinding.saveBsamButton.isEnabled = true
-                                if(bottomAddDialog.isShowing){
-                                    bottomAddDialog.dismiss()
-                                    bottomAddDialog.cancel()
-                                }
-                            }
+                                            newMedicineAdapter.initAdapter(aLMasterMedical)
+                                        }
+                                        bottomSheetAddBinding.bottomLp.visibility = View.GONE
+                                        bottomSheetAddBinding.saveBsamButton.isEnabled = true
+                                        bottomSheetAddBinding.cancelBsamButton.isEnabled = true
+                                        if(bottomAddDialog.isShowing){
+                                            bottomAddDialog.dismiss()
+                                            bottomAddDialog.cancel()
+                                        }
+                                    }
 
-                            override fun onDataError(error: String?) {
-                                bottomSheetAddBinding.bottomLp.visibility = View.GONE
-                                bottomSheetAddBinding.saveBsamButton.isEnabled = true
-                                if(bottomAddDialog.isShowing){
-                                    bottomAddDialog.dismiss()
-                                    bottomAddDialog.cancel()
-                                }
-                                MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                    override fun onDataError(error: String?) {
+                                        bottomSheetAddBinding.bottomLp.visibility = View.GONE
+                                        bottomSheetAddBinding.saveBsamButton.isEnabled = true
+                                        bottomSheetAddBinding.cancelBsamButton.isEnabled = true
+                                        if(bottomAddDialog.isShowing){
+                                            bottomAddDialog.dismiss()
+                                            bottomAddDialog.cancel()
+                                        }
+                                        MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                    }
+                                })
                             }
-                        })
+                            else ->{
+                                Timber.e("edit belum")
+                            }
+                        }
                     }
                     else -> {
                         MedicalUtil.snackBarMessage("Mohon diisi harga satuan",
@@ -278,6 +290,27 @@ class NewMedicineActivity : AppCompatActivity() {
                 ConstantsObject.vNewData -> {
                     saveBsamButton.visibility = View.VISIBLE
                     cancelBsamButton.visibility = View.VISIBLE
+                }
+                ConstantsObject.vEditData ->{
+                    saveBsamButton.visibility = View.VISIBLE
+                    saveBsamButton.text = "Edit"
+                    cancelBsamButton.visibility = View.VISIBLE
+
+                    selectedModel?.let {
+                        medicineCodeBsamTiet.setText(it.kodeobat)
+                        medicineNameBsamTiet.setText(it.namaobat)
+                        medicineCategoryBsamTiet.setText(it.kategoriObat)
+                        piecesTypeBsamTiet.setText(it.satuanobat)
+                        when(val piecesPrize = it.hargasatuan){
+                            "0" -> piecesPrizeBsamTiet.setText(piecesPrize)
+                            else -> piecesPrizeBsamTiet.setText(MedicalUtil.moneyFormat(piecesPrize.toDouble()))
+                        }
+
+                        isCodeMedicineEmpty = false
+                        isMedicineNameEmpty = false
+                        isPieceTypeEmpty = false
+                        activeInActiveDialogButton(bottomSheetAddBinding)
+                    }
                 }
                 else -> {
                     saveBsamButton.visibility = View.GONE
@@ -319,8 +352,19 @@ class NewMedicineActivity : AppCompatActivity() {
 
     private fun initListAdapter(list: ArrayList<MedicineMasterModel>){
         newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
-            selectedInputMode = ConstantsObject.vShowData
-            initBottomSheetAddMedicine(it)
+            v, model ->
+            MedicalUtil.showPopUpMenu(this, v,ConstantsObject.vInputMedicine, onClickMenu = {
+                when(it){
+                    getString(R.string.detail_mnu) ->{
+                        selectedInputMode = ConstantsObject.vShowData
+                        initBottomSheetAddMedicine(model)
+                    }
+                    else -> {
+                        selectedInputMode = ConstantsObject.vEditData
+                        initBottomSheetAddMedicine(model)
+                    }
+                }
+            })
         })
 
         newMedicineAdapter.initAdapter(list)
