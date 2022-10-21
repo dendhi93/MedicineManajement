@@ -51,13 +51,15 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vMasterObatPost,
+                Method.POST, ConstantsObject.vMasterObatPostV3,
                 { response ->
                     try {
                         response.let {
                             Timber.e("response $response")
                             when {
-                                response.contains("Success") -> callback.onDataLoaded(model)
+                                response.contains("Success") || response.contains("Success Update") -> {
+                                    callback.onDataLoaded(model)
+                                }
                                 else -> callback.onDataError(it.toString())
                             }
                         }

@@ -35,6 +35,8 @@ import java.lang.reflect.Type
 @AndroidEntryPoint
 class NewMedicineActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewMedicineBinding
+    private var bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
+    private var bottomAddDialog = BottomSheetDialog(this)
     private var isCodeMedicineEmpty = true
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
@@ -182,7 +184,6 @@ class NewMedicineActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initBottomSheetAddMedicine(selectedModel : MedicineMasterModel?){
-        val bottomAddDialog = BottomSheetDialog(this)
         bottomAddDialog.setOnShowListener {
             val bottomSheet: FrameLayout = bottomAddDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
@@ -253,29 +254,40 @@ class NewMedicineActivity : AppCompatActivity() {
 //                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
                                             newMedicineAdapter.initAdapter(aLMasterMedical)
                                         }
-                                        bottomSheetAddBinding.bottomLp.visibility = View.GONE
-                                        bottomSheetAddBinding.saveBsamButton.isEnabled = true
-                                        bottomSheetAddBinding.cancelBsamButton.isEnabled = true
-                                        if(bottomAddDialog.isShowing){
-                                            bottomAddDialog.dismiss()
-                                            bottomAddDialog.cancel()
-                                        }
+                                        dismissLoading()
                                     }
 
                                     override fun onDataError(error: String?) {
-                                        bottomSheetAddBinding.bottomLp.visibility = View.GONE
-                                        bottomSheetAddBinding.saveBsamButton.isEnabled = true
-                                        bottomSheetAddBinding.cancelBsamButton.isEnabled = true
-                                        if(bottomAddDialog.isShowing){
-                                            bottomAddDialog.dismiss()
-                                            bottomAddDialog.cancel()
-                                        }
+                                        dismissLoading()
                                         MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                                     }
                                 })
                             }
                             else ->{
-                                Timber.e("edit belum")
+                                newMedicineViewModel.postNewMedicine(MedicineMasterModel(
+                                    Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                                    kodeobat = medicineCodeBsamTiet.text.toString(),
+                                    satuanobat = piecesTypeBsamTiet.text.toString(),
+                                    hargasatuan = stPrize,
+                                    namaobat = medicineNameBsamTiet.text.toString(),
+                                    kategoriObat = medicineCategoryBsamTiet.text.toString()
+
+                                ), object :DataCallback<MedicineMasterModel>{
+                                    override fun onDataLoaded(data: MedicineMasterModel?) {
+                                        data?.let {
+                                            //todo change value in arraylist
+//                                            aLMasterMedical.add(data)
+//                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
+                                            newMedicineAdapter.initAdapter(aLMasterMedical)
+                                        }
+                                        dismissLoading()
+                                    }
+
+                                    override fun onDataError(error: String?) {
+                                        dismissLoading()
+                                        MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                    }
+                                })
                             }
                         }
                     }
@@ -327,6 +339,16 @@ class NewMedicineActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun dismissLoading(){
+        bottomSheetAddBinding.bottomLp.visibility = View.GONE
+        bottomSheetAddBinding.saveBsamButton.isEnabled = true
+        bottomSheetAddBinding.cancelBsamButton.isEnabled = true
+        if(bottomAddDialog.isShowing){
+            bottomAddDialog.dismiss()
+            bottomAddDialog.cancel()
         }
     }
 
