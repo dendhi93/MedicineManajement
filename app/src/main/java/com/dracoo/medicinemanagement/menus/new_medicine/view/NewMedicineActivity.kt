@@ -277,6 +277,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
                                 ), object :DataCallback<MedicineMasterModel>{
+                                    @SuppressLint("NotifyDataSetChanged")
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
                                             //todo change value in arraylist
@@ -287,6 +288,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                             aLMasterMedical[selectedItemClick].namaobat = data.namaobat
 
                                             newMedicineAdapter.initAdapter(aLMasterMedical)
+                                            binding.medicineBmRv.adapter?.notifyDataSetChanged()
                                         }
                                         dismissLoading()
                                     }

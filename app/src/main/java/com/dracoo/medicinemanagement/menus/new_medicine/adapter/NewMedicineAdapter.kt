@@ -31,7 +31,8 @@ class NewMedicineAdapter(
         list?.let {
             val diffUtil = DiffUtils(listData, it)
             val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
-            listData = it as ArrayList<MedicineMasterModel>
+            listData.clear()
+            listData.addAll(list)
             diffUtilResult.dispatchUpdatesTo(this)
         }
     }
