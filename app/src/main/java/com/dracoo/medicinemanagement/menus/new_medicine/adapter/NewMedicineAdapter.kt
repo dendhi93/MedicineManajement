@@ -19,7 +19,7 @@ import com.dracoo.medicinemanagement.utils.MedicalUtil
 
 class NewMedicineAdapter(
     private val context: Context,
-    private val onItemClick: ((v : View, model : MedicineMasterModel) -> Unit)? = null
+    private val onItemClick: ((v : View, model : MedicineMasterModel, position : Int) -> Unit)? = null
 )
     : RecyclerView.Adapter<NewMedicineAdapter.ViewHolder>(){
     private var listData = ArrayList<MedicineMasterModel>()
@@ -83,7 +83,7 @@ class NewMedicineAdapter(
                             R.color.green_4
                         ))
                         rightImmIv.visibility = View.VISIBLE
-                        onItemClick?.invoke(it, data)
+                        onItemClick?.invoke(it, data, position)
                     }
                 }
             }

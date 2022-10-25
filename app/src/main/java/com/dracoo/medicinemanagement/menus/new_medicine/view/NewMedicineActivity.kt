@@ -35,13 +35,14 @@ import java.lang.reflect.Type
 @AndroidEntryPoint
 class NewMedicineActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewMedicineBinding
-    private var bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
-    private var bottomAddDialog = BottomSheetDialog(this)
+    private lateinit var bottomSheetAddBinding : DialogBottomSheetAddMedicineBinding
+    private lateinit var bottomAddDialog : BottomSheetDialog
     private var isCodeMedicineEmpty = true
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
     private var isConnected = false
     private var selectedInputMode = ""
+    private var selectedItemClick = 0
     private val newMedicineViewModel : NewMedicineViewModel by viewModels()
     private lateinit var newMedicineAdapter: NewMedicineAdapter
     private var aLMasterMedical: ArrayList<MedicineMasterModel> = ArrayList()
@@ -58,6 +59,8 @@ class NewMedicineActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
         }
+        bottomSheetAddBinding = DialogBottomSheetAddMedicineBinding.inflate(this.layoutInflater)
+        bottomAddDialog = BottomSheetDialog(this)
     }
 
     override fun onStart() {
@@ -157,9 +160,9 @@ class NewMedicineActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else ->{
-                                val tempList = it.sortedByDescending { obj -> obj.Timestamp }
+                                val tempList = it.sortedByDescending { obj -> obj.namaobat }
                                 aLMasterMedical.addAll(tempList)
-                                newMedicineAdapter.initAdapter(aLMasterMedical)
+                                newMedicineAdapter.initAdapter(ArrayList(tempList))
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
                                 titleDataKosongAiscTv.visibility = View.GONE
@@ -178,6 +181,7 @@ class NewMedicineActivity : AppCompatActivity() {
                     MedicalUtil.snackBarMessage(it, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                 }
                 binding.nmPg.visibility = View.GONE
+                if(isFromSwipe){ binding.refreshNmSrl.isRefreshing = false }
             }
         })
     }
@@ -276,8 +280,12 @@ class NewMedicineActivity : AppCompatActivity() {
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
                                             //todo change value in arraylist
-//                                            aLMasterMedical.add(data)
-//                                    newMedicineAdapter = NewMedicineAdapter(aLMasterMedical, this@NewMedicineActivity)
+                                            aLMasterMedical[selectedItemClick].hargasatuan = data.hargasatuan
+                                            aLMasterMedical[selectedItemClick].kategoriObat = data.kategoriObat
+                                            aLMasterMedical[selectedItemClick].Timestamp = data.Timestamp
+                                            aLMasterMedical[selectedItemClick].satuanobat = data.satuanobat
+                                            aLMasterMedical[selectedItemClick].namaobat = data.namaobat
+
                                             newMedicineAdapter.initAdapter(aLMasterMedical)
                                         }
                                         dismissLoading()
@@ -374,7 +382,8 @@ class NewMedicineActivity : AppCompatActivity() {
 
     private fun initListAdapter(list: ArrayList<MedicineMasterModel>){
         newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
-            v, model ->
+            v, model, position ->
+            selectedItemClick = position
             MedicalUtil.showPopUpMenu(this, v,ConstantsObject.vInputMedicine, onClickMenu = {
                 when(it){
                     getString(R.string.detail_mnu) ->{
