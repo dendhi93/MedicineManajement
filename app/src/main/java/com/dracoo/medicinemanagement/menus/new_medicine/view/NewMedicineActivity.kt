@@ -310,9 +310,11 @@ class NewMedicineActivity : AppCompatActivity() {
                 ConstantsObject.vNewData -> {
                     saveBsamButton.visibility = View.VISIBLE
                     cancelBsamButton.visibility = View.VISIBLE
+                    medicineCodeBsamTiet.isFocusable = true
                 }
                 ConstantsObject.vEditData ->{
                     saveBsamButton.visibility = View.VISIBLE
+                    medicineCodeBsamTiet.isFocusable = false
                     saveBsamButton.text = "Edit"
                     cancelBsamButton.visibility = View.VISIBLE
 
