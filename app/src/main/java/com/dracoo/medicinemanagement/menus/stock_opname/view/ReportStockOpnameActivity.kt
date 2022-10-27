@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityReportStockOpnameBinding
@@ -63,6 +64,26 @@ class ReportStockOpnameActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = reportStockOpnameAdapter
         }
+
+        binding.searchRsoTiet.addTextChangedListener { itInput ->
+            when(aLSOReport.size){
+                0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
+                    this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                else ->{
+                    when(itInput?.length){
+                        0 -> reportStockOpnameAdapter.initAdapter(aLSOReport)
+                        else -> {
+                            val selectedArrayList = MedicalUtil.filterSOAdapter(itInput.toString(), aLSOReport).distinct().toList()
+                            reportStockOpnameAdapter.initAdapter(ArrayList(selectedArrayList))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         checkConnection.observe(this) {
             isConnected = when {

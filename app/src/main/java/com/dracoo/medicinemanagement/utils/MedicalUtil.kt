@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
+import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -137,6 +138,21 @@ object MedicalUtil {
             //use .toLowerCase() for better matches
             if (text != null) {
                 if (d.namaobat.lowercase().contains(text.lowercase())) {
+                    temp.add(d)
+                }
+            }
+        }
+        //update recyclerview
+        return temp
+    }
+
+    fun filterSOAdapter(text: String?, displayedList: ArrayList<StockOpnameModel>): ArrayList<StockOpnameModel> {
+        val temp: ArrayList<StockOpnameModel> = ArrayList()
+        for (d in displayedList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (text != null) {
+                if (d.NamaObat.lowercase().contains(text.lowercase())) {
                     temp.add(d)
                 }
             }
