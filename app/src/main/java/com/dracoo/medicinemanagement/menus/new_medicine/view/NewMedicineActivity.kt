@@ -251,7 +251,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), object :DataCallback<MedicineMasterModel>{
+                                ), ConstantsObject.vAddEditAction,object :DataCallback<MedicineMasterModel>{
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
                                             aLMasterMedical.add(data)
@@ -276,11 +276,11 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), object :DataCallback<MedicineMasterModel>{
+                                ), ConstantsObject.vAddEditAction,object :DataCallback<MedicineMasterModel>{
                                     @SuppressLint("NotifyDataSetChanged")
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
-                                            //todo change value in arraylist
+                                            //change value in arraylist
                                             aLMasterMedical[selectedItemClick].hargasatuan = data.hargasatuan
                                             aLMasterMedical[selectedItemClick].kategoriObat = data.kategoriObat
                                             aLMasterMedical[selectedItemClick].Timestamp = data.Timestamp
@@ -393,6 +393,46 @@ class NewMedicineActivity : AppCompatActivity() {
                     getString(R.string.detail_mnu) ->{
                         selectedInputMode = ConstantsObject.vShowData
                         initBottomSheetAddMedicine(model)
+                    }
+                    getString(R.string.delete_mnu) ->{
+                        MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
+                            "Apakah anda yakin ingin hapus obat ${model.namaobat} ?"
+                        ) {
+                            when(isConnected){
+                                true ->{
+                                    binding.nmPg.visibility = View.VISIBLE
+                                    newMedicineViewModel.postNewMedicine(MedicineMasterModel(
+                                        Timestamp = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                                        kodeobat = model.kodeobat,
+                                        satuanobat = model.satuanobat,
+                                        hargasatuan = model.hargasatuan,
+                                        namaobat = model.namaobat,
+                                        kategoriObat = model.kategoriObat
+
+                                    ), ConstantsObject.vDeleteJson,object :DataCallback<MedicineMasterModel>{
+                                        @SuppressLint("NotifyDataSetChanged")
+                                        override fun onDataLoaded(data: MedicineMasterModel?) {
+                                            data?.let {
+                                                //delete array
+                                                aLMasterMedical.removeAt(selectedItemClick)
+
+                                                newMedicineAdapter.initAdapter(aLMasterMedical)
+                                                binding.medicineBmRv.adapter?.notifyDataSetChanged()
+                                            }
+                                            binding.nmPg.visibility = View.GONE
+                                        }
+
+                                        override fun onDataError(error: String?) {
+                                            binding.nmPg.visibility = View.GONE
+                                            MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        }
+                                    })
+                                }
+                                else -> MedicalUtil.alertDialogDismiss(
+                                    ConstantsObject.vNoConnectionTitle,
+                                    ConstantsObject.vNoConnectionMessage, this, true)
+                            }
+                        }
                     }
                     else -> {
                         selectedInputMode = ConstantsObject.vEditData

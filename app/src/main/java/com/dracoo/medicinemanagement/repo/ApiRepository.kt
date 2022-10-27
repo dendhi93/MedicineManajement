@@ -47,19 +47,21 @@ constructor(
          }
     }
 
-    suspend fun postMedicineMaster(model : MedicineMasterModel, callback: ApiCallback<MedicineMasterModel>){
+    suspend fun postMedicineMaster(
+        model : MedicineMasterModel,
+        actionPost : String,
+        callback: ApiCallback<MedicineMasterModel>
+    ){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vMasterObatPostV3,
+                Method.POST, ConstantsObject.vFinalMasterObatPost,
                 { response ->
                     try {
                         response.let {
                             Timber.e("response $response")
                             when {
-                                response.contains("Success") || response.contains("Success Update") -> {
-                                    callback.onDataLoaded(model)
-                                }
+                                response.contains("Success") -> callback.onDataLoaded(model)
                                 else -> callback.onDataError(it.toString())
                             }
                         }
@@ -73,7 +75,8 @@ constructor(
                     val params : HashMap<String, String>  = HashMap()
 
                     //here we pass params
-                    params[ConstantsObject.idMasterJson] = ConstantsObject.idMasterObat
+//                    params[ConstantsObject.idMasterJson] = ConstantsObject.idMasterObat
+                    params[ConstantsObject.actionJson] = actionPost
                     params[ConstantsObject.medicineTimeStampJson] = model.Timestamp
                     params[ConstantsObject.medicineCodeJsonV2] = model.kodeobat
                     params[ConstantsObject.medicineNameJsonV2] = model.namaobat

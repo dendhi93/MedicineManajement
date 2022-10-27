@@ -257,6 +257,7 @@ object MedicalUtil {
             when (item?.itemId) {
                 R.id.mnu_edit -> onClickMenu?.invoke(context.getString(R.string.edit_mnu))
                 R.id.mnu_detail -> onClickMenu?.invoke(context.getString(R.string.detail_mnu))
+                else -> onClickMenu?.invoke(context.getString(R.string.delete_mnu))
             }
             true
         }

@@ -6,4 +6,8 @@
     <item
         android:id="@+id/mnu_edit"
         android:title="@string/edit_mnu" />
+
+    <item
+        android:id="@+id/mnu_delete"
+        android:title="@string/delete_mnu" />
 </menu>
