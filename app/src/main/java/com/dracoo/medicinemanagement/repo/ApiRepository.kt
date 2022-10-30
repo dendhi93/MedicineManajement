@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
+import com.dracoo.medicinemanagement.model.UserModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -159,6 +160,49 @@ constructor(
 
                     //here we pass params
                     params[ConstantsObject.idMasterJson] = ConstantsObject.idStockOpname
+                    return params
+                }
+            }
+
+            val retryPolicy: RetryPolicy =
+                DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            stringReq.retryPolicy = retryPolicy
+            queue.add(stringReq)
+        }
+    }
+
+    suspend fun postLogin(model : UserModel, callback: ApiCallback<String>){
+        val queue = Volley.newRequestQueue(context)
+        withContext(Dispatchers.IO) {
+            val stringReq: StringRequest = object : StringRequest(
+                Method.POST, ConstantsObject.vStockOpnamePostTrans,
+                { response ->
+                    try {
+                        response.let {
+                            Timber.e("response $response")
+                            when {
+                                response.contains("Success") -> callback.onDataLoaded("Success")
+                                else -> callback.onDataError(it.toString())
+                            }
+                        }
+                    }catch (e :Exception){ callback.onDataError("error $e") }
+                },
+                {
+                    callback.onDataError("$it")
+                }
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val params : HashMap<String, String>  = HashMap()
+
+                    //here we pass params
+                    params[ConstantsObject.idMasterJson] = ConstantsObject.idStockOpname
+//                    params[ConstantsObject.medicineCodeJsonV2] = model.KodeObat
+//                    params[ConstantsObject.fakturJson] = model.NoFaktur
+//                    params[ConstantsObject.medicineNameJsonV2] = model.NamaObat
+//                    params[ConstantsObject.piecesPrizeJsonV2] = model.HargaSatuan
+//                    params[ConstantsObject.qtyJson] = model.Jumlah
+//                    params[ConstantsObject.createDateJson] = model.CreateDate
+//                    params[ConstantsObject.userCreateJson] = model.UserCreate
                     return params
                 }
             }
