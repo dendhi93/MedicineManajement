@@ -32,7 +32,7 @@ object ConstantsObject {
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
-    const val vLoginPost = "https://script.google.com/macros/s/AKfycbyWlCYqdkLqDWH4S2Ftk16Yy6vh2IOFMvQU1kZ_2KqgjpPolAU5ofN4iHbJ_QmDjpT4/exec"
+    const val vLoginPost = "https://script.google.com/macros/s/AKfycbzusPS1ogpPtbKiPuYlDmHtVy51c7xBtxXSVvOwyLLmLCa-ap9EZtjekJ60GD0j14W5/exec"
     const val vFinalMasterObatPost = "https://script.google.com/macros/s/AKfycbxYnDstP3HSmzCWtrCBFqZj7TjorqF_UToOE2_Uijw-8Z7mYy4ae-NyB6U6UqdmBD4kfQ/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
     const val vStockOpnameGet = "https://script.google.com/macros/s/AKfycbxLq9ebIHp6ITztKMSygfL7F0yVc5D7IGhAAjygurjriZaFkUgWCsErDgwvfG_0iwZmAg/exec"
@@ -59,6 +59,10 @@ object ConstantsObject {
     const val piecesPrizeJsonV2 = "HargaSatuan"
     const val medicineNameJsonV2 = "NamaObat"
     const val medicineCategoryJsonV2 = "KategoriObat"
+    const val usernameJson = "username"
+    const val passwordJson = "password"
+    const val vNewJson = "New"
+    const val vLoginJson = "Login"
 
     //JSON POST Stock Opname
     const val idStockOpname = "14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik"

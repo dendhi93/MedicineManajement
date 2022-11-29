@@ -171,19 +171,16 @@ constructor(
         }
     }
 
-    suspend fun postLogin(model : UserModel, callback: ApiCallback<String>){
+    suspend fun postLogin(model : UserModel,actionLogin : String, callback: ApiCallback<JSONObject>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnamePostTrans,
+                Method.POST, ConstantsObject.vLoginPost,
                 { response ->
                     try {
                         response.let {
-                            Timber.e("response $response")
-                            when {
-                                response.contains("Success") -> callback.onDataLoaded("Success")
-                                else -> callback.onDataError(it.toString())
-                            }
+                            Timber.e("response Login $response")
+                            callback.onDataLoaded(JSONObject(it))
                         }
                     }catch (e :Exception){ callback.onDataError("error $e") }
                 },
@@ -195,14 +192,10 @@ constructor(
                     val params : HashMap<String, String>  = HashMap()
 
                     //here we pass params
-                    params[ConstantsObject.idMasterJson] = ConstantsObject.idStockOpname
-//                    params[ConstantsObject.medicineCodeJsonV2] = model.KodeObat
-//                    params[ConstantsObject.fakturJson] = model.NoFaktur
-//                    params[ConstantsObject.medicineNameJsonV2] = model.NamaObat
-//                    params[ConstantsObject.piecesPrizeJsonV2] = model.HargaSatuan
-//                    params[ConstantsObject.qtyJson] = model.Jumlah
-//                    params[ConstantsObject.createDateJson] = model.CreateDate
-//                    params[ConstantsObject.userCreateJson] = model.UserCreate
+                    params[ConstantsObject.actionJson] = actionLogin
+                    params[ConstantsObject.usernameJson] = model.username
+                    params[ConstantsObject.passwordJson] = model.password
+
                     return params
                 }
             }

@@ -1,10 +1,7 @@
 package com.dracoo.medicinemanagement.menus.login.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -12,9 +9,10 @@ import androidx.core.widget.addTextChangedListener
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityLoginBinding
 import com.dracoo.medicinemanagement.menus.login.viewmodel.LoginViewModel
-import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import com.dracoo.medicinemanagement.model.UserModel
 import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
+import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -28,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     }
     private var isConnected = false
     private var isNameEmpty = true
-    private var isAddressEmpty = true
+    private var isPasswordEmpty = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,15 +58,15 @@ class LoginActivity : AppCompatActivity() {
             nameLoginEt.addTextChangedListener {
                 isNameEmpty = it.isNullOrBlank()
                 when {
-                    !isNameEmpty && !isAddressEmpty && isConnected-> activeInActiveButton(true)
+                    !isNameEmpty && !isPasswordEmpty && isConnected-> activeInActiveButton(true)
                     else -> activeInActiveButton(false)
                 }
             }
 
-            addressLoginTiet.addTextChangedListener {
-                isAddressEmpty = it.isNullOrBlank()
+            passwordLoginEt.addTextChangedListener {
+                isPasswordEmpty = it.isNullOrBlank()
                 when {
-                    !isNameEmpty && !isAddressEmpty && isConnected-> activeInActiveButton(true)
+                    !isNameEmpty && !isPasswordEmpty && isConnected-> activeInActiveButton(true)
                     else -> activeInActiveButton(false)
                 }
             }
@@ -76,13 +74,29 @@ class LoginActivity : AppCompatActivity() {
             loginBtn.setOnClickListener {
                 binding.loginLpi.apply {
                     visibility = View.VISIBLE
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        loginViewModel.saveUser(nameLoginEt.text.toString(), addressLoginTiet.text.toString())
-                        visibility = View.GONE
+                    Timber.e("un " +binding.nameLoginEt.text.toString())
+                    Timber.e("pass " +binding.passwordLoginEt.text.toString())
+                    loginViewModel.postLogin(UserModel(
+                        createDate = "",
+                        username = binding.nameLoginEt.text.toString(),
+                        password = binding.passwordLoginEt.text.toString()
+                    ), object :DataCallback<UserModel>{
+                        override fun onDataLoaded(data: UserModel?) {
+                            visibility = View.GONE
+                        }
 
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
-                    },950)
+                        override fun onDataError(error: String?) {
+                            visibility = View.GONE
+                        }
+
+                    })
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        loginViewModel.saveUser(nameLoginEt.text.toString(), addressLoginTiet.text.toString())
+//                        visibility = View.GONE
+//
+//                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//                        finish()
+//                    },950)
                 }
             }
         }

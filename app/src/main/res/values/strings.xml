@@ -14,6 +14,7 @@
     //login activity
     <string name="username">Nama Pengguna</string>
     <string name="address">Alamat</string>
+    <string name="password">Password</string>
     <string name="fill_in_address">Isi Alamat</string>
     <string name="login_btn">Login</string>
     <string name="copyright">Copyright 2022 By dracooCorp</string>
