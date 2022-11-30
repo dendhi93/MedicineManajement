@@ -19,10 +19,16 @@ constructor(
     @ApplicationContext private val context: Context
 )  {
 
-    suspend fun saveUser(name: String, address : String) {
+    suspend fun saveUser(name: String,
+                         pass : String,
+                         role : String,
+                         address : String
+    ) {
         context.dataStore.edit { preferences ->
             preferences[vUserKey] = name
             preferences[vAddressKey] = address
+            preferences[vPasswordKey] = pass
+            preferences[vUserRoleKey] = role
         }
     }
 
@@ -67,7 +73,9 @@ constructor(
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userData")
         val vUserKey = stringPreferencesKey("user_key")
+        val vPasswordKey = stringPreferencesKey("password_key")
         val vAddressKey = stringPreferencesKey("address_key")
+        val vUserRoleKey = stringPreferencesKey("user_role")
         val vMasterMedicineKey = stringPreferencesKey("master_medicine")
         val vSODataKey = stringPreferencesKey("stock_opname_data")
     }

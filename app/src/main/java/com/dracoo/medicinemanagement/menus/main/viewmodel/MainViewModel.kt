@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     fun clearData(){
         viewModelScope.launch(Dispatchers.IO) {
-            storeRepository.saveUser("", "")
+            storeRepository.saveUser("", "", "", "")
             storeRepository.clearDataStore()
         }
     }

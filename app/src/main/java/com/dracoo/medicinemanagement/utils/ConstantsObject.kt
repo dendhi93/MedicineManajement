@@ -32,11 +32,13 @@ object ConstantsObject {
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
-    const val vLoginPost = "https://script.google.com/macros/s/AKfycbzusPS1ogpPtbKiPuYlDmHtVy51c7xBtxXSVvOwyLLmLCa-ap9EZtjekJ60GD0j14W5/exec"
     const val vFinalMasterObatPost = "https://script.google.com/macros/s/AKfycbxYnDstP3HSmzCWtrCBFqZj7TjorqF_UToOE2_Uijw-8Z7mYy4ae-NyB6U6UqdmBD4kfQ/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
     const val vStockOpnameGet = "https://script.google.com/macros/s/AKfycbxLq9ebIHp6ITztKMSygfL7F0yVc5D7IGhAAjygurjriZaFkUgWCsErDgwvfG_0iwZmAg/exec"
     const val vStockOpnamePostTrans = "https://script.google.com/macros/s/AKfycbxbSQJQeXVahWoHnHogXS6b8epnmT29XE4tUsCUr3etUSG69__vci1qZHqdk6OEMfYr/exec"
+    const val vPostLogin = "https://script.google.com/macros/s/AKfycbyTHFkESbKHYrvQlLcto_lGHTjUBTQGk65CURuNhW9MTtsIDphKMM8Ra8NFKz49b6nt/exec"
+    const val vPostLoginV2 = "https://script.google.com/macros/s/AKfycbz5M05RmXlJt8yM3JO9IM1GvRzAjkZ-eXyyIaW8bRfPNItIQc3DT7FYmoj1oK0OlRL3/exec"
+    const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
 
 //    const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
 //    const val vMasterObatPostV2 = "https://script.google.com/macros/s/AKfycbxuz-RFhg4JS3eBDcgWEP5FQqVBsmJpBonvXxKrPltmlJS2KElqYOuDfuVX958hlSpCJw/exec"
@@ -75,6 +77,11 @@ object ConstantsObject {
     const val vNewData = "New Data"
     const val vShowData = "Show Data"
     const val vEditData = "Edit Data"
+
+    //response message API
+    const val vSuccessResponse = "Success"
+    const val vMessageKey = "message"
+
 
     //action API
     const val vAddEditAction = "Add Edit"

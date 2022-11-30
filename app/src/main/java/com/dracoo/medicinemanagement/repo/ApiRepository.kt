@@ -175,7 +175,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vLoginPost,
+                Method.POST, ConstantsObject.vPostLoginV3,
                 { response ->
                     try {
                         response.let {
