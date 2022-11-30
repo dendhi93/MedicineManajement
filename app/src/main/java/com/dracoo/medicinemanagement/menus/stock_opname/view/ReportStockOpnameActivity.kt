@@ -130,7 +130,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
     }
 
     private fun getDataSO(){
-        reportSOViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
+        reportSOViewModel.getDataSO("11-2022",object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {
                 data?.let {
                     binding.apply {

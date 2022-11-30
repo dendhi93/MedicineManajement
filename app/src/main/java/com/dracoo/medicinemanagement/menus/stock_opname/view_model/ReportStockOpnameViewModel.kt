@@ -23,9 +23,9 @@ class ReportStockOpnameViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo
 ):  ViewModel()  {
 
-    fun getDataSO(callback: DataCallback<List<StockOpnameModel>>){
+    fun getDataSO(monthYear : String, callback: DataCallback<List<StockOpnameModel>>){
         viewModelScope.launch {
-            apiRepository.postStockOpnameData(object :ApiRepository.ApiCallback<JSONObject>{
+            apiRepository.postStockOpnameData(monthYear,object :ApiRepository.ApiCallback<JSONObject>{
                 override fun onDataLoaded(data: JSONObject?) {
                     val list = ArrayList<StockOpnameModel>()
                     data?.let {

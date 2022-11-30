@@ -36,13 +36,14 @@ object ConstantsObject {
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
     const val vStockOpnameGet = "https://script.google.com/macros/s/AKfycbxLq9ebIHp6ITztKMSygfL7F0yVc5D7IGhAAjygurjriZaFkUgWCsErDgwvfG_0iwZmAg/exec"
     const val vStockOpnamePostTrans = "https://script.google.com/macros/s/AKfycbxbSQJQeXVahWoHnHogXS6b8epnmT29XE4tUsCUr3etUSG69__vci1qZHqdk6OEMfYr/exec"
-    const val vPostLogin = "https://script.google.com/macros/s/AKfycbyTHFkESbKHYrvQlLcto_lGHTjUBTQGk65CURuNhW9MTtsIDphKMM8Ra8NFKz49b6nt/exec"
-    const val vPostLoginV2 = "https://script.google.com/macros/s/AKfycbz5M05RmXlJt8yM3JO9IM1GvRzAjkZ-eXyyIaW8bRfPNItIQc3DT7FYmoj1oK0OlRL3/exec"
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
+    const val vStockOpnameGetV2 = "https://script.google.com/macros/s/AKfycbzBWwuTHHsad73L5JUCnXyuWzhBo3ncp6qk8O1zE4s4kCCPpocFUDSw6Msq1alzH53jTA/exec"
 
 //    const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
 //    const val vMasterObatPostV2 = "https://script.google.com/macros/s/AKfycbxuz-RFhg4JS3eBDcgWEP5FQqVBsmJpBonvXxKrPltmlJS2KElqYOuDfuVX958hlSpCJw/exec"
 //    const val vMasterObatPostV3 = "https://script.google.com/macros/s/AKfycbygl683bsvyzEXnGcfGTzTcTsecJXCWau4Q4T-prp3tvdZRwsuje-DAO_ZZLI37nOQ_ag/exec"
+//const val vPostLogin = "https://script.google.com/macros/s/AKfycbyTHFkESbKHYrvQlLcto_lGHTjUBTQGk65CURuNhW9MTtsIDphKMM8Ra8NFKz49b6nt/exec"
+//    const val vPostLoginV2 = "https://script.google.com/macros/s/AKfycbz5M05RmXlJt8yM3JO9IM1GvRzAjkZ-eXyyIaW8bRfPNItIQc3DT7FYmoj1oK0OlRL3/exec"
 
     //JSON POST master medicine
     const val medicineCodeJson = "entry.438343947"
@@ -65,6 +66,7 @@ object ConstantsObject {
     const val passwordJson = "password"
     const val vNewJson = "New"
     const val vLoginJson = "Login"
+    const val vMonthYearJson = "monthYear"
 
     //JSON POST Stock Opname
     const val idStockOpname = "14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik"
