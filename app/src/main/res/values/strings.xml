@@ -34,6 +34,7 @@
     <string name="search">Cari</string>
     <string name="search_3_dot2">Cari&#8230;</string>
     <string name="faktur_no">No Faktur</string>
+    <string name="choose_month_year">Pilih bulan tahun</string>
 
     //dialog
     <string name="medicine_code">Kode Obat</string>

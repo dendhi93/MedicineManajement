@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.dzmitry_lakisau.month_year_picker_dialog.MonthYearPickerDialog
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
@@ -23,7 +25,9 @@ import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.Year
 import java.util.*
+
 
 object MedicalUtil {
     private lateinit var search2ColumnAdapter: SearchTwoColumnAdapter
@@ -262,6 +266,36 @@ object MedicalUtil {
             true
         }
         popup.show()
+    }
+
+    fun monthAndYearPicker(
+        activity: Activity,
+        onSelected: ((
+            mSelectedMonth : String,
+            mSelectedYear : String,
+        ) -> Unit)? = null){
+        val calendar = Calendar.getInstance()
+        val mYear = when{
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> calendar.get(Calendar.YEAR)
+            else -> Year.now().value
+        }
+        MonthYearPickerDialog.Builder(
+            activity,
+            R.style.Style_MonthYearPickerDialog_Red,
+            { year, month ->
+                val selectedMonth = month + 1
+                when{
+                    selectedMonth < 10 -> onSelected?.invoke("0$selectedMonth", year.toString())
+                    else -> onSelected?.invoke(selectedMonth.toString(), year.toString())
+                }
+            },
+            mYear,
+            Calendar.JANUARY
+        )
+            .setMinMonth(Calendar.JANUARY)
+            .setMinYear(mYear)
+            .setMaxMonth(Calendar.DECEMBER)
+            .build().show()
     }
 
     interface TwoColumnInterface{

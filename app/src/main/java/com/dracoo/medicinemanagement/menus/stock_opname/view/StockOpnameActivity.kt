@@ -1,5 +1,6 @@
 package com.dracoo.medicinemanagement.menus.stock_opname.view
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -25,6 +26,8 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -37,6 +40,9 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     private lateinit var popUpSearchMedicine: Dialog
     private var stPiecesPrize = ""
     private var stUser = ""
+    private var stSelectedMonth = ""
+    private var stSelectedYear = ""
+    private val calendar = Calendar.getInstance()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -84,6 +90,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
 
@@ -128,6 +135,23 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                     }
                 }
             }
+
+            yearMonthAsoLn.setOnClickListener {
+                MedicalUtil.monthAndYearPicker(this@StockOpnameActivity, onSelected = {
+                        mSelectedMonth, mSelectedYear ->
+                    stSelectedMonth = mSelectedMonth
+                    stSelectedYear = mSelectedYear
+                    valueMonthYearLmpTv.text = "$mSelectedMonth-$mSelectedYear"
+                })
+            }
+
+            stSelectedYear = calendar.get(Calendar.YEAR).toString()
+            val intMonth = calendar.get(Calendar.MONTH) + 1
+            stSelectedMonth = when{
+                intMonth < 10 -> "0$intMonth"
+                else -> intMonth.toString()
+            }
+            valueMonthYearLmpTv.text = "$stSelectedMonth - $stSelectedYear"
 
             saveSoBtn.setOnClickListener {
                 binding.apply {
