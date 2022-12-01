@@ -164,7 +164,8 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         stPiecesPrize,
                         qtySoTiet.text.toString(),
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
-                        stUser
+                        stUser,
+                        valueMonthYearLmpTv.text.toString()
                     ), object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE

@@ -41,7 +41,7 @@ class ReportStockOpnameViewModel @Inject constructor(
                             val dateSO = MedicalUtil.getChangeDateFormat(jo.getString("CreateDate"),
                             ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
 
-                            list.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput))
+                            list.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput, monthYear))
                         }
                         saveJsonSO(list)
                         callback.onDataLoaded(list)

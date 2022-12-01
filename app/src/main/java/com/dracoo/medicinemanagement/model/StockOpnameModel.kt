@@ -7,5 +7,6 @@ data class StockOpnameModel(
     val HargaSatuan : String,
     val Jumlah : String,
     val CreateDate : String,
-    val UserCreate : String
+    val UserCreate : String,
+    val monthYear : String
 )

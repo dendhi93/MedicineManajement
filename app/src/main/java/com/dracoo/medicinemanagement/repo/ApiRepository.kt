@@ -99,7 +99,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnamePostTrans,
+                Method.POST, ConstantsObject.vStockOpnamePostTransV2,
                 { response ->
                     try {
                         response.let {
@@ -127,6 +127,7 @@ constructor(
                     params[ConstantsObject.qtyJson] = model.Jumlah
                     params[ConstantsObject.createDateJson] = model.CreateDate
                     params[ConstantsObject.userCreateJson] = model.UserCreate
+                    params[ConstantsObject.vMonthYearJson] = model.monthYear
                     return params
                 }
             }
