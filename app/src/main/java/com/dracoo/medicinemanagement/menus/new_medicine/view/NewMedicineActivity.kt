@@ -388,7 +388,7 @@ class NewMedicineActivity : AppCompatActivity() {
         newMedicineAdapter = NewMedicineAdapter(this,onItemClick = {
             v, model, position ->
             selectedItemClick = position
-            MedicalUtil.showPopUpMenu(this, v,ConstantsObject.vInputMedicine, onClickMenu = {
+            MedicalUtil.showPopUpMenu(this, v, onClickMenu = {
                 when(it){
                     getString(R.string.detail_mnu) ->{
                         selectedInputMode = ConstantsObject.vShowData

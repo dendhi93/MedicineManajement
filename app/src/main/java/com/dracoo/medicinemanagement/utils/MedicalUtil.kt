@@ -250,13 +250,10 @@ object MedicalUtil {
     }
 
     fun showPopUpMenu(context: Context,
-                      view: View, fromMenu: String,
+                      view: View,
                       onClickMenu: ((selectedItem : String) -> Unit)? = null) {
         val popup = PopupMenu(context, view)
-        when (fromMenu) {
-            ConstantsObject.vInputMedicine -> popup.inflate(R.menu.master_medicine_menu)
-        }
-
+        popup.inflate(R.menu.master_medicine_menu)
         popup.setOnMenuItemClickListener { item: MenuItem? ->
             when (item?.itemId) {
                 R.id.mnu_edit -> onClickMenu?.invoke(context.getString(R.string.edit_mnu))

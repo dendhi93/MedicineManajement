@@ -51,7 +51,25 @@ class ReportStockOpnameActivity : AppCompatActivity() {
         super.onStart()
 
         reportStockOpnameAdapter = ReportStockOpnameAdapter(this,onItemClick = {
-            Timber.e("data " +it.NamaObat)
+                v, model ->
+            Timber.e("data " +model.NamaObat)
+            MedicalUtil.showPopUpMenu(this, v, onClickMenu = { itMenu ->
+                when(itMenu){
+                    getString(R.string.detail_mnu) ->{}
+                    getString(R.string.edit_mnu) ->{}
+                    else ->{
+                        MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
+                            "Apakah anda yakin ingin hapus stock opname obat ${model.NamaObat} ?"
+                        ) {
+
+                        }
+                    }
+                }
+            })
+//            val intentToStockOpname = Intent(this, StockOpnameActivity::class.java)
+//            intentToStockOpname.putExtra(ConstantsObject.vExtrasStockOpname,it)
+//            startActivity(intentToStockOpname)
+//            finish()
         })
 
         reportStockOpnameAdapter.initAdapter(aLSOReport)

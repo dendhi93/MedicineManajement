@@ -85,8 +85,11 @@ object ConstantsObject {
     const val vSuccessResponse = "Success"
     const val vMessageKey = "message"
 
-
     //action API
     const val vAddEditAction = "Add Edit"
     const val vDeleteJson = "Delete"
+
+    //extras
+    const val vExtrasStockOpname = "extras_Stock_Opname"
+    const val vExtrasActionForm = "extras_Stock_Opname"
 }

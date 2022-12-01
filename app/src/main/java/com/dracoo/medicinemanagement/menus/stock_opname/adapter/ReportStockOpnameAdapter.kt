@@ -17,7 +17,7 @@ import com.dracoo.medicinemanagement.utils.DiffUtils
 
 class ReportStockOpnameAdapter(
     private val context: Context,
-    private val onItemClick: ((StockOpnameModel) -> Unit)? = null
+    private val onItemClick: ((v : View, model : StockOpnameModel) -> Unit)? = null
 ) : RecyclerView.Adapter<ReportStockOpnameAdapter.ViewHolder>(){
     private var listData = ArrayList<StockOpnameModel>()
     private var listCv = ArrayList<CardView>()
@@ -76,7 +76,7 @@ class ReportStockOpnameAdapter(
                             R.color.green_4
                         ))
                     rightImmIv.visibility = View.VISIBLE
-                    onItemClick?.invoke(data)
+                    onItemClick?.invoke(it, data)
                 }
             }
         }

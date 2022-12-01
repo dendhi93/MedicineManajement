@@ -42,6 +42,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     private var stUser = ""
     private var stSelectedMonth = ""
     private var stSelectedYear = ""
+    private var intentActionForm = ""
     private val calendar = Calendar.getInstance()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -58,6 +59,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
             it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
         }
 
+        intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
         checkConnection.observe(this){
             isConnected = when {
                 !it -> {

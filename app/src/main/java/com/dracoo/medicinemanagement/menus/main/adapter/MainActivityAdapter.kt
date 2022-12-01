@@ -45,7 +45,9 @@ class MainActivityAdapter(private val listMenu: ArrayList<MenuModel>,
                         activity.finish()
                     }
                     ConstantsObject.vStockOpname ->{
-                        activity.startActivity(Intent(activity, StockOpnameActivity::class.java))
+                        val intentNewStock = Intent(activity, StockOpnameActivity::class.java)
+                        intentNewStock.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vNewData)
+                        activity.startActivity(intentNewStock)
                         activity.finish()
                     }
                     ConstantsObject.vReportStockOpname ->{
