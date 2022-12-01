@@ -160,48 +160,47 @@
         android:id="@+id/lbl_choose_month_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:text="@string/choose_month_year"
         android:textColor="@color/text_gray1"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/lbl_top_so_tv"
         app:layout_constraintTop_toBottomOf="@+id/qty_so_til" />
 
-    <LinearLayout
-        android:id="@+id/year_month_aso_ln"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/calendar_aso_til"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="9dp"
-        android:paddingEnd="3dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="@drawable/bg_capsule_yellow"
-        android:gravity="start|center_vertical"
-        app:layout_constraintEnd_toEndOf="@+id/qty_so_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginStart="5dp"
+        app:boxBackgroundColor="@color/white"
         app:layout_constraintTop_toTopOf="@+id/lbl_choose_month_year"
         app:layout_constraintBottom_toBottomOf="@+id/lbl_choose_month_year"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toEndOf="@+id/lbl_choose_month_year"
+        app:layout_constraintEnd_toEndOf="@+id/qty_so_til">
 
-        <TextView
-            android:id="@+id/value_month_year_lmp_tv"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/calendar_aso_tiet"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="3dp"
-            android:layout_marginStart="3dp"
-            android:text="@string/choose_month_year"
             android:textColor="@color/text_black1"
             android:textSize="14sp"
-            android:fontFamily="@font/inter_light_beta" />
+            android:focusable="false" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bottom_from_date_chh_iv"
-            android:layout_width="4dp"
-            android:layout_height="4dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="3dp"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_arrow_down_filter" />
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/tgl_from_iv"
+        android:contentDescription="@string/content_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/calendar_aso_til"
+        app:layout_constraintTop_toTopOf="@+id/calendar_aso_til"
+        app:layout_constraintEnd_toEndOf="@+id/calendar_aso_til"/>
 
 
     <com.google.android.material.button.MaterialButton

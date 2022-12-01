@@ -73,21 +73,21 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                     true
                 }
             }
-        }
 
-        stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
-        stockOpnameViewModel.getDataMedicine().observe(this) {
-            when {
-                it?.isNotEmpty() == true -> {
-                    val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
-                    val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(it, type)
-                    if(tempMedicineList.isNotEmpty()){
-                        alMstMedicine.addAll(tempMedicineList)
+            stockOpnameViewModel.getDataMedicine().observe(this) { itList ->
+                when {
+                    itList?.isNotEmpty() == true -> {
+                        val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
+                        val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itList, type)
+                        if(tempMedicineList.isNotEmpty()){
+                            alMstMedicine.addAll(tempMedicineList)
+                        }
                     }
+                    else -> if(isConnected){ getMedicineData() }
                 }
-                else -> if(isConnected){ getMedicineData() }
             }
         }
+        stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
     }
 
     @SuppressLint("SetTextI18n")
@@ -136,12 +136,12 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                 }
             }
 
-            yearMonthAsoLn.setOnClickListener {
+            tglFromIv.setOnClickListener {
                 MedicalUtil.monthAndYearPicker(this@StockOpnameActivity, onSelected = {
                         mSelectedMonth, mSelectedYear ->
                     stSelectedMonth = mSelectedMonth
                     stSelectedYear = mSelectedYear
-                    valueMonthYearLmpTv.text = "$mSelectedMonth-$mSelectedYear"
+                    calendarAsoTiet.setText("$mSelectedMonth-$mSelectedYear")
                 })
             }
 
@@ -151,7 +151,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                 intMonth < 10 -> "0$intMonth"
                 else -> intMonth.toString()
             }
-            valueMonthYearLmpTv.text = "$stSelectedMonth - $stSelectedYear"
+            calendarAsoTiet.setText("$stSelectedMonth-$stSelectedYear")
 
             saveSoBtn.setOnClickListener {
                 binding.apply {
@@ -165,7 +165,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         qtySoTiet.text.toString(),
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                         stUser,
-                        valueMonthYearLmpTv.text.toString()
+                        calendarAsoTiet.text.toString()
                     ), object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE
@@ -195,6 +195,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
 
     private fun getMedicineData(){
         binding.nmSo.visibility = View.VISIBLE
+        Timber.e("ke get medicine")
         stockOpnameViewModel.getMasterMedicine(object : DataCallback<List<MedicineMasterModel>>{
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
                 data?.let {
