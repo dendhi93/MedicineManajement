@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="5"
-            android:enabled="false"
+            android:focusable="false"
             android:hint="@string/medicine_code" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +104,7 @@
             android:id="@+id/medicine_name_so_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
+            android:focusable="false"
             android:maxLength="50"
             android:hint="@string/medicine_name" />
 
@@ -127,7 +127,7 @@
             android:id="@+id/prize_so_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
+            android:focusable="false"
             android:maxLength="50"
             android:hint="@string/piece_prize" />
 

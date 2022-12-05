@@ -91,16 +91,6 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
         }
 
         stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
-        try {
-            intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
-            Timber.e("intent $intentActionForm")
-            intentStockOpnameModel = intent.getParcelableExtra(ConstantsObject.vExtrasStockOpname)
-            intentStockOpnameModel?.let {
-                Timber.e("modelIntent " +it.NamaObat)
-            }
-        }catch (e : Exception){
-            Timber.e("null model " +e.printStackTrace())
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -204,15 +194,34 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                 }
             }
 
+            intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
+            Timber.e("intent $intentActionForm")
+            intentStockOpnameModel = intent.getParcelableExtra(ConstantsObject.vExtrasStockOpname)
+            intentStockOpnameModel?.let {
+                fakturNoSoTiet.setText(it.NoFaktur)
+                medicineCodeSoTiet.setText(it.KodeObat)
+                medicineNameSoTiet.setText(it.NamaObat)
+                prizeSoTiet.setText("Rp. " + MedicalUtil.moneyFormat(it.HargaSatuan.toDouble()))
+                qtySoTiet.setText(it.Jumlah)
+                calendarAsoTiet.setText(it.monthYear)
+                stPiecesPrize = it.HargaSatuan
+            }
+
             when(intentActionForm){
                 ConstantsObject.vNewData ->{
                     saveSoBtn.text = getString(R.string.save_btn)
                 }
                 ConstantsObject.vEditData ->{
                     saveSoBtn.text = getString(R.string.edit_btn)
+                    fakturNoSoTiet.isFocusable = false
+                    activeInActiveButton(true)
                 }
                 else ->{
                     saveSoBtn.visibility = View.GONE
+                    lblSearchSoTv.visibility = View.GONE
+                    tglFromIv.visibility = View.GONE
+                    fakturNoSoTiet.isFocusable = false
+                    qtySoTiet.isFocusable = false
                 }
             }
         }
