@@ -8,6 +8,7 @@ import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import com.dracoo.medicinemanagement.utils.DataCallback
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -46,6 +47,8 @@ class StockOpnameViewModel @Inject constructor(
 //                                    +stMedicinePrize+ "\nstMedicineName " +stMedicineName)
                             list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName,stMedicineCategory))
                         }
+
+                        saveDataMedicine(list)
                         callback.onDataLoaded(list)
                     }
                 }
@@ -56,6 +59,13 @@ class StockOpnameViewModel @Inject constructor(
                     }
                 }
             })
+        }
+    }
+
+    private fun saveDataMedicine(alData : List<MedicineMasterModel>){
+        viewModelScope.launch {
+            val stData = Gson().toJson(alData)
+            dataStoreRepo.saveMasterMedicine(stData)
         }
     }
 

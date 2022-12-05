@@ -43,6 +43,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     private var stSelectedMonth = ""
     private var stSelectedYear = ""
     private var intentActionForm = ""
+    private var intentStockOpnameModel : StockOpnameModel? = null
     private val calendar = Calendar.getInstance()
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -90,6 +91,10 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
             }
         }
         stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
+//        intentStockOpnameModel = intent.getSerializableExtra(ConstantsObject.vExtrasStockOpname) as? StockOpnameModel
+//        intentStockOpnameModel?.let {
+//            Timber.e("model " +it.NamaObat)
+//        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -190,6 +195,17 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                             MedicalUtil.snackBarMessage("failed $error", this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
                         }
                     })
+                }
+            }
+            when(intentActionForm){
+                ConstantsObject.vNewData ->{
+                    saveSoBtn.text = getString(R.string.save_btn)
+                }
+                ConstantsObject.vEditData ->{
+                    saveSoBtn.text = getString(R.string.edit_btn)
+                }
+                else ->{
+                    saveSoBtn.visibility = View.GONE
                 }
             }
         }

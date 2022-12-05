@@ -47,11 +47,11 @@ object ConstantsObject {
 //    const val vStockOpnamePostTrans = "https://script.google.com/macros/s/AKfycbxbSQJQeXVahWoHnHogXS6b8epnmT29XE4tUsCUr3etUSG69__vci1qZHqdk6OEMfYr/exec"
 
     //JSON POST master medicine
-    const val medicineCodeJson = "entry.438343947"
-    const val medicineNameJson = "entry.1827398503"
-    const val piecesTypeJson = "entry.1875704685"
-    const val piecesPrizeJson = "entry.1235443380"
-    const val medicineCategoryJson = "entry.559034742"
+//    const val medicineCodeJson = "entry.438343947"
+//    const val medicineNameJson = "entry.1827398503"
+//    const val piecesTypeJson = "entry.1875704685"
+//    const val piecesPrizeJson = "entry.1235443380"
+//    const val medicineCategoryJson = "entry.559034742"
 
     //JSON POST master medicine v2
 //    const val idMasterObat = "1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY"
