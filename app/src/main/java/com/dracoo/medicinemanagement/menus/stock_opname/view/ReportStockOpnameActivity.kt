@@ -22,7 +22,6 @@ import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,20 +58,22 @@ class ReportStockOpnameActivity : AppCompatActivity() {
 
         reportStockOpnameAdapter = ReportStockOpnameAdapter(this,onItemClick = {
                 v, model ->
-            Timber.e("data " +model.NamaObat)
             MedicalUtil.showPopUpMenu(this, v, onClickMenu = { itMenu ->
                 val intentToStockOpname = Intent(this, StockOpnameActivity::class.java)
                 when(itMenu){
                     getString(R.string.detail_mnu) ->{
-                        Timber.e("obat " +model.NamaObat)
-                        intentToStockOpname.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vShowData)
-                        intentToStockOpname.putExtra(ConstantsObject.vExtrasStockOpname,model)
+                        val bundle = Bundle()
+                        bundle.putString(ConstantsObject.vExtrasActionForm, ConstantsObject.vShowData)
+                        bundle.putParcelable(ConstantsObject.vExtrasStockOpname,model)
+                        intentToStockOpname.putExtras(bundle)
                         startActivity(intentToStockOpname)
                         finish()
                     }
                     getString(R.string.edit_mnu) ->{
-                        intentToStockOpname.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vEditData)
-                        intentToStockOpname.putExtra(ConstantsObject.vExtrasStockOpname,model)
+                        val bundle = Bundle()
+                        bundle.putString(ConstantsObject.vExtrasActionForm, ConstantsObject.vEditData)
+                        bundle.putParcelable(ConstantsObject.vExtrasStockOpname,model)
+                        intentToStockOpname.putExtras(bundle)
                         startActivity(intentToStockOpname)
                         finish()
                     }

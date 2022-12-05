@@ -91,5 +91,5 @@ object ConstantsObject {
 
     //extras
     const val vExtrasStockOpname = "extras_Stock_Opname"
-    const val vExtrasActionForm = "extras_Stock_Opname"
+    const val vExtrasActionForm = "extras_Action_Form"
 }

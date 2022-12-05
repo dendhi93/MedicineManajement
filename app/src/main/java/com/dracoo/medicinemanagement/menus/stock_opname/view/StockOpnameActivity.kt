@@ -42,7 +42,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     private var stUser = ""
     private var stSelectedMonth = ""
     private var stSelectedYear = ""
-    private var intentActionForm = ""
+    private var intentActionForm : String? = null
     private var intentStockOpnameModel : StockOpnameModel? = null
     private val calendar = Calendar.getInstance()
     private val checkConnection by lazy {
@@ -60,7 +60,6 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
             it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
         }
 
-        intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
         checkConnection.observe(this){
             isConnected = when {
                 !it -> {
@@ -90,11 +89,18 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                 }
             }
         }
+
         stockOpnameViewModel.getUserData().observe(this) { stUser = it.toString() }
-//        intentStockOpnameModel = intent.getSerializableExtra(ConstantsObject.vExtrasStockOpname) as? StockOpnameModel
-//        intentStockOpnameModel?.let {
-//            Timber.e("model " +it.NamaObat)
-//        }
+        try {
+            intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
+            Timber.e("intent $intentActionForm")
+            intentStockOpnameModel = intent.getParcelableExtra(ConstantsObject.vExtrasStockOpname)
+            intentStockOpnameModel?.let {
+                Timber.e("modelIntent " +it.NamaObat)
+            }
+        }catch (e : Exception){
+            Timber.e("null model " +e.printStackTrace())
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -197,6 +203,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                     })
                 }
             }
+
             when(intentActionForm){
                 ConstantsObject.vNewData ->{
                     saveSoBtn.text = getString(R.string.save_btn)
