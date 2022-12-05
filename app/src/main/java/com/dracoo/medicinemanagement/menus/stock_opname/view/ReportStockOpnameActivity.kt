@@ -1,5 +1,6 @@
 package com.dracoo.medicinemanagement.menus.stock_opname.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,8 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ReportStockOpnameActivity : AppCompatActivity() {
@@ -30,7 +33,10 @@ class ReportStockOpnameActivity : AppCompatActivity() {
     private lateinit var reportStockOpnameAdapter: ReportStockOpnameAdapter
     private val reportSOViewModel : ReportStockOpnameViewModel by viewModels()
     private var aLSOReport: ArrayList<StockOpnameModel> = ArrayList()
+    private val calendar = Calendar.getInstance()
     private var isConnected = false
+    private var stSelectedMonth = ""
+    private var stSelectedYear = ""
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -47,6 +53,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
 
@@ -98,6 +105,24 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.tglRsoIv.setOnClickListener {
+            MedicalUtil.monthAndYearPicker(this, onSelected = {
+                    mSelectedMonth, mSelectedYear ->
+                stSelectedMonth = mSelectedMonth
+                stSelectedYear = mSelectedYear
+                binding.calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
+                if(isConnected){ getDataSO() }
+            })
+        }
+
+        stSelectedYear = calendar.get(Calendar.YEAR).toString()
+        val intMonth = calendar.get(Calendar.MONTH) + 1
+        stSelectedMonth = when{
+            intMonth < 10 -> "0$intMonth"
+            else -> intMonth.toString()
+        }
+        binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
     }
 
     override fun onResume() {
@@ -148,7 +173,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
     }
 
     private fun getDataSO(){
-        reportSOViewModel.getDataSO("11-2022",object :DataCallback<List<StockOpnameModel>>{
+        reportSOViewModel.getDataSO("$stSelectedMonth-$stSelectedYear",object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {
                 data?.let {
                     binding.apply {
@@ -160,6 +185,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                             }
                             else -> {
                                 val tempList = it.sortedByDescending { obj -> obj.CreateDate }
+                                aLSOReport.clear()
                                 aLSOReport.addAll(tempList)
                                 reportStockOpnameAdapter.initAdapter(aLSOReport)
 

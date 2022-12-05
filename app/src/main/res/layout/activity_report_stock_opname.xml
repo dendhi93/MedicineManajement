@@ -18,18 +18,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/lbl_choose_month_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/choose_month_year"
+        android:textColor="@color/text_gray1"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/calendar_rso_til"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="@+id/lbl_choose_month_year"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_choose_month_year"
+        app:layout_constraintStart_toEndOf="@+id/lbl_choose_month_year"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/calendar_rso_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black1"
+            android:textSize="14sp"
+            android:focusable="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/tgl_rso_iv"
+        android:contentDescription="@string/content_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/calendar_rso_til"
+        app:layout_constraintTop_toTopOf="@+id/calendar_rso_til"
+        app:layout_constraintEnd_toEndOf="@+id/calendar_rso_til"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_rso_til"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="12dp"
         app:boxBackgroundColor="@color/white"
         android:textColorHint="@color/border_color2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/calendar_rso_til">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_rso_tiet"

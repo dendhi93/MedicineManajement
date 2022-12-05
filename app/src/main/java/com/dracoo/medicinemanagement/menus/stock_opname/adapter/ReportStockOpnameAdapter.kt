@@ -28,7 +28,8 @@ class ReportStockOpnameAdapter(
         list?.let {
             val diffUtil = DiffUtils(listData, it)
             val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
-            listData = it as ArrayList<StockOpnameModel>
+            listData.clear()
+            listData.addAll(it)
             diffUtilResult.dispatchUpdatesTo(this)
         }
     }
