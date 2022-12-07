@@ -91,6 +91,7 @@ class NewMedicineActivity : AppCompatActivity() {
                             val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itObserve, type)
                             if(tempMedicineList.isNotEmpty()){
                                 val tempList = tempMedicineList.sortedByDescending { obj -> obj.Timestamp }
+                                aLMasterMedical.clear()
                                 aLMasterMedical.addAll(tempList)
                                 newMedicineAdapter.initAdapter(aLMasterMedical)
 
@@ -160,9 +161,10 @@ class NewMedicineActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else ->{
-                                val tempList = it.sortedByDescending { obj -> obj.namaobat }
-                                aLMasterMedical.addAll(tempList)
-                                newMedicineAdapter.initAdapter(ArrayList(tempList))
+//                                val tempList = it.sortedByDescending { obj -> obj.namaobat }
+//                                aLMasterMedical.addAll(tempList)
+//                                newMedicineAdapter.initAdapter(ArrayList(tempList))
+//                                Timber.e("size on act " +it.size)
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
                                 titleDataKosongAiscTv.visibility = View.GONE

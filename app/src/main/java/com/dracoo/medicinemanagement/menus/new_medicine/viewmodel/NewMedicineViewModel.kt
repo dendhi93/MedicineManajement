@@ -42,6 +42,7 @@ class NewMedicineViewModel @Inject constructor(
 //                                    +stMedicinePrize+ "\nstMedicineName " +stMedicineName)
                             list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName,stMedicineCategory))
                         }
+                        Timber.e("size in vm " +list.size)
                         saveDataMedicine(list)
                         callback.onDataLoaded(list)
                     }

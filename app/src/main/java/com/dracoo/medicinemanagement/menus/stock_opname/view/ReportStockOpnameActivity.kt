@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -99,39 +101,53 @@ class ReportStockOpnameActivity : AppCompatActivity() {
             adapter = reportStockOpnameAdapter
         }
 
-        binding.searchRsoTiet.addTextChangedListener { itInput ->
-            when(aLSOReport.size){
-                0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
-                    this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
-                else ->{
-                    when(itInput?.length){
-                        0 -> reportStockOpnameAdapter.initAdapter(aLSOReport)
-                        else -> {
-                            val selectedArrayList = MedicalUtil.filterSOAdapter(itInput.toString(), aLSOReport).distinct().toList()
-                            reportStockOpnameAdapter.initAdapter(ArrayList(selectedArrayList))
+        binding.apply {
+            searchRsoTiet.addTextChangedListener { itInput ->
+                when(aLSOReport.size){
+                    0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
+                        this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    else ->{
+                        when(itInput?.length){
+                            0 -> reportStockOpnameAdapter.initAdapter(aLSOReport)
+                            else -> {
+                                val selectedArrayList = MedicalUtil.filterSOAdapter(itInput.toString(), aLSOReport).distinct().toList()
+                                reportStockOpnameAdapter.initAdapter(ArrayList(selectedArrayList))
+                            }
                         }
                     }
                 }
             }
-        }
 
-        binding.tglRsoIv.setOnClickListener {
-            MedicalUtil.monthAndYearPicker(this, onSelected = {
-                    mSelectedMonth, mSelectedYear ->
-                stSelectedMonth = mSelectedMonth
-                stSelectedYear = mSelectedYear
-                binding.calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
-                if(isConnected){ getDataSO() }
-            })
-        }
+            tglRsoIv.setOnClickListener {
+                MedicalUtil.monthAndYearPicker(this@ReportStockOpnameActivity, onSelected = {
+                        mSelectedMonth, mSelectedYear ->
+                    stSelectedMonth = mSelectedMonth
+                    stSelectedYear = mSelectedYear
+                    calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
+                    if(isConnected){ getDataSO(true) }
+                })
+            }
 
-        stSelectedYear = calendar.get(Calendar.YEAR).toString()
-        val intMonth = calendar.get(Calendar.MONTH) + 1
-        stSelectedMonth = when{
-            intMonth < 10 -> "0$intMonth"
-            else -> intMonth.toString()
+            stSelectedYear = calendar.get(Calendar.YEAR).toString()
+            val intMonth = calendar.get(Calendar.MONTH) + 1
+            stSelectedMonth = when{
+                intMonth < 10 -> "0$intMonth"
+                else -> intMonth.toString()
+            }
+            calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
+
+            refreshRsoSrl.setOnRefreshListener{
+                refreshRsoSrl.isRefreshing = true
+                when(isConnected){
+                    true -> getDataSO(true)
+                    else ->{
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            refreshRsoSrl.isRefreshing = false
+                        },100)
+                    }
+                }
+            }
         }
-        binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
     }
 
     override fun onResume() {
@@ -163,6 +179,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                             val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
                             if(tempSOList.isNotEmpty()){
                                 val tempList = tempSOList.sortedByDescending { obj -> obj.CreateDate }
+                                aLSOReport.clear()
                                 aLSOReport.addAll(tempList)
                                 reportStockOpnameAdapter.initAdapter(aLSOReport)
 
@@ -174,14 +191,21 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                        else -> if(isConnected){ getDataSO() }
+                        else -> if(isConnected){ getDataSO(false) }
                     }
                 }
             }
         }
     }
 
-    private fun getDataSO(){
+    private fun getDataSO(isSwipeRefresh : Boolean){
+        binding.rsoPg.visibility = View.VISIBLE
+        if(isSwipeRefresh){
+            aLSOReport.clear()
+            binding.medicineBmRv.visibility = View.GONE
+            binding.animEmptyRsoGiv.visibility = View.VISIBLE
+            binding.titleDataKosongAiscTv.visibility = View.VISIBLE
+        }
         reportSOViewModel.getDataSO("$stSelectedMonth-$stSelectedYear",object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {
                 data?.let {
@@ -193,10 +217,10 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else -> {
-                                val tempList = it.sortedByDescending { obj -> obj.CreateDate }
-                                aLSOReport.clear()
-                                aLSOReport.addAll(tempList)
-                                reportStockOpnameAdapter.initAdapter(aLSOReport)
+//                                val tempList = it.sortedByDescending { obj -> obj.CreateDate }
+//                                aLSOReport.clear()
+//                                aLSOReport.addAll(tempList)
+//                                reportStockOpnameAdapter.initAdapter(aLSOReport)
 
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyRsoGiv.visibility = View.GONE
@@ -205,6 +229,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                         }
                     }
                 }
+                if(isSwipeRefresh){binding.refreshRsoSrl.isRefreshing = false}
                 binding.rsoPg.visibility = View.GONE
             }
 
