@@ -128,14 +128,6 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 })
             }
 
-            stSelectedYear = calendar.get(Calendar.YEAR).toString()
-            val intMonth = calendar.get(Calendar.MONTH) + 1
-            stSelectedMonth = when{
-                intMonth < 10 -> "0$intMonth"
-                else -> intMonth.toString()
-            }
-            calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
-
             refreshRsoSrl.setOnRefreshListener{
                 refreshRsoSrl.isRefreshing = true
                 when(isConnected){
@@ -150,6 +142,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
 
@@ -172,6 +165,13 @@ class ReportStockOpnameActivity : AppCompatActivity() {
             }
 
             reportSOViewModel.getSOStore().observe(this@ReportStockOpnameActivity){ itSOObserve ->
+                stSelectedYear = calendar.get(Calendar.YEAR).toString()
+                val intMonth = calendar.get(Calendar.MONTH) + 1
+                stSelectedMonth = when{
+                    intMonth < 10 -> "0$intMonth"
+                    else -> intMonth.toString()
+                }
+
                 itSOObserve?.let { itLet ->
                     when{
                         itLet.isNotEmpty() ->{
@@ -188,10 +188,14 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                     medicineBmRv.visibility = View.VISIBLE
                                     animEmptyRsoGiv.visibility = View.GONE
                                     titleDataKosongAiscTv.visibility = View.GONE
+                                    calendarRsoTiet.setText(tempList[0].monthYear)
                                 }
                             }
                         }
-                        else -> if(isConnected){ getDataSO(false) }
+                        else -> {
+                            if(isConnected){ getDataSO(false) }
+                            binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
+                        }
                     }
                 }
             }

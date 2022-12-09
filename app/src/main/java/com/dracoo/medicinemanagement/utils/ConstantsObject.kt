@@ -26,18 +26,19 @@ object ConstantsObject {
     //menus
     const val vExitApps = "Keluar Aplikasi"
     const val vInputMedicine = "Input Obat Baru"
-    const val vStockOpname = "Stock Opname"
-    const val vReportStockOpname = "Laporan Stock Opname"
+    const val vStockOpname = "Input Stock"
+    const val vReportStockOpname = "Laporan Input Stock"
     const val vDirectSales = "Penjualan Obat"
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
     const val vFinalMasterObatPost = "https://script.google.com/macros/s/AKfycbxYnDstP3HSmzCWtrCBFqZj7TjorqF_UToOE2_Uijw-8Z7mYy4ae-NyB6U6UqdmBD4kfQ/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
-    const val vStockOpnamePostTransV2 ="https://script.google.com/macros/s/AKfycbxEy8woh3t8Qlv2TwzdtB6xiwXdUzB_lVvSQSWeSG3gmPlRbF-0GJVAokBMHJCYXzqA/exec"
+    const val vStockOpnamePostTransV3 ="https://script.google.com/macros/s/AKfycbyDXIlQL1XbpyWIFwq1A8WWRQCrfLkEEs4FzGa9QpNWsPQIDl3-VKHq3t7eo723nQeH/exec"
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
     const val vStockOpnameGetV2 = "https://script.google.com/macros/s/AKfycbzBWwuTHHsad73L5JUCnXyuWzhBo3ncp6qk8O1zE4s4kCCPpocFUDSw6Msq1alzH53jTA/exec"
 
+//    const val vStockOpnamePostTransV2 ="https://script.google.com/macros/s/AKfycbxEy8woh3t8Qlv2TwzdtB6xiwXdUzB_lVvSQSWeSG3gmPlRbF-0GJVAokBMHJCYXzqA/exec"
 //    const val vMasterObatGForm = "https://docs.google.com/forms/d/e/1FAIpQLSfwOK5HQthl2TC9IhvqrIQo-5tshIog2gdluBBSnPZhLlUO9w/formResponse"
 //    const val vMasterObatPostV2 = "https://script.google.com/macros/s/AKfycbxuz-RFhg4JS3eBDcgWEP5FQqVBsmJpBonvXxKrPltmlJS2KElqYOuDfuVX958hlSpCJw/exec"
 //    const val vMasterObatPostV3 = "https://script.google.com/macros/s/AKfycbygl683bsvyzEXnGcfGTzTcTsecJXCWau4Q4T-prp3tvdZRwsuje-DAO_ZZLI37nOQ_ag/exec"

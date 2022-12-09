@@ -169,7 +169,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                         stUser,
                         calendarAsoTiet.text.toString()
-                    ), object : DataCallback<String> {
+                    ), intentActionForm.toString(),object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE
                             saveSoBtn.isEnabled = true
@@ -178,9 +178,10 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                             fakturNoSoTiet.setText("")
                             prizeSoTiet.setText("")
                             qtySoTiet.setText("")
+                            calendarAsoTiet.setText("")
 
                             data?.let {
-                                MedicalUtil.snackBarMessage("Transaksi $it", this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                MedicalUtil.snackBarMessage(it, this@StockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
                             }
                         }
 

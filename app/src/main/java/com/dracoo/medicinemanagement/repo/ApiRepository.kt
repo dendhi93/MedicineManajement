@@ -95,11 +95,11 @@ constructor(
         }
     }
 
-    suspend fun postTransStockOpname(model : StockOpnameModel, callback: ApiCallback<String>){
+    suspend fun postTransStockOpname(model : StockOpnameModel, actionRequest : String,callback: ApiCallback<String>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnamePostTransV2,
+                Method.POST, ConstantsObject.vStockOpnamePostTransV3,
                 { response ->
                     try {
                         response.let {
@@ -128,6 +128,7 @@ constructor(
                     params[ConstantsObject.createDateJson] = model.CreateDate
                     params[ConstantsObject.userCreateJson] = model.UserCreate
                     params[ConstantsObject.vMonthYearJson] = model.monthYear
+                    params[ConstantsObject.actionJson] = actionRequest
                     return params
                 }
             }
