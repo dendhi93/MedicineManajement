@@ -51,12 +51,13 @@ constructor(
     suspend fun postMedicineMaster(
         model : MedicineMasterModel,
         actionPost : String,
+        monthYear : String,
         callback: ApiCallback<MedicineMasterModel>
     ){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vFinalMasterObatPost,
+                Method.POST, ConstantsObject.vFinalMasterObatPostV10,
                 { response ->
                     try {
                         response.let {
@@ -84,6 +85,7 @@ constructor(
                     params[ConstantsObject.medicinePieceTypeJsonV2] = model.satuanobat
                     params[ConstantsObject.piecesPrizeJsonV2] = model.hargasatuan
                     params[ConstantsObject.medicineCategoryJsonV2] = model.kategoriObat
+                    params[ConstantsObject.vMonthYearJson] = monthYear
                     return params
                 }
             }

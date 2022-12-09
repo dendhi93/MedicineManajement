@@ -30,6 +30,8 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -37,15 +39,18 @@ class NewMedicineActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewMedicineBinding
     private lateinit var bottomSheetAddBinding : DialogBottomSheetAddMedicineBinding
     private lateinit var bottomAddDialog : BottomSheetDialog
+    private val calendar = Calendar.getInstance()
+    private val newMedicineViewModel : NewMedicineViewModel by viewModels()
+    private lateinit var newMedicineAdapter: NewMedicineAdapter
+    private var aLMasterMedical: ArrayList<MedicineMasterModel> = ArrayList()
     private var isCodeMedicineEmpty = true
     private var isMedicineNameEmpty = true
     private var isPieceTypeEmpty = true
     private var isConnected = false
     private var selectedInputMode = ""
     private var selectedItemClick = 0
-    private val newMedicineViewModel : NewMedicineViewModel by viewModels()
-    private lateinit var newMedicineAdapter: NewMedicineAdapter
-    private var aLMasterMedical: ArrayList<MedicineMasterModel> = ArrayList()
+    private var stSelectedMonth = ""
+    private var stSelectedYear = ""
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -138,6 +143,13 @@ class NewMedicineActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            stSelectedYear = calendar.get(Calendar.YEAR).toString()
+            val intMonth = calendar.get(Calendar.MONTH) + 1
+            stSelectedMonth = when{
+                intMonth < 10 -> "0$intMonth"
+                else -> intMonth.toString()
+            }
         }
     }
 
@@ -161,10 +173,10 @@ class NewMedicineActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else ->{
-//                                val tempList = it.sortedByDescending { obj -> obj.namaobat }
-//                                aLMasterMedical.addAll(tempList)
-//                                newMedicineAdapter.initAdapter(ArrayList(tempList))
-//                                Timber.e("size on act " +it.size)
+                                val tempList = it.sortedByDescending { obj -> obj.namaobat }
+                                aLMasterMedical.clear()
+                                aLMasterMedical.addAll(tempList)
+                                newMedicineAdapter.initAdapter(ArrayList(tempList))
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyNmGiv.visibility = View.GONE
                                 titleDataKosongAiscTv.visibility = View.GONE
@@ -253,7 +265,8 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), ConstantsObject.vAddEditAction,object :DataCallback<MedicineMasterModel>{
+                                ), ConstantsObject.vAddEditAction, "$stSelectedMonth-$stSelectedYear",
+                                    object :DataCallback<MedicineMasterModel>{
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
                                             aLMasterMedical.add(data)
@@ -265,7 +278,9 @@ class NewMedicineActivity : AppCompatActivity() {
 
                                     override fun onDataError(error: String?) {
                                         dismissLoading()
-                                        MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        error?.let {
+                                            MedicalUtil.snackBarMessage(it, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        }
                                     }
                                 })
                             }
@@ -278,7 +293,8 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), ConstantsObject.vAddEditAction,object :DataCallback<MedicineMasterModel>{
+                                ), ConstantsObject.vAddEditAction,"$stSelectedMonth-$stSelectedYear",
+                                    object :DataCallback<MedicineMasterModel>{
                                     @SuppressLint("NotifyDataSetChanged")
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
@@ -297,7 +313,9 @@ class NewMedicineActivity : AppCompatActivity() {
 
                                     override fun onDataError(error: String?) {
                                         dismissLoading()
-                                        MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        error?.let {
+                                            MedicalUtil.snackBarMessage(it, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        }
                                     }
                                 })
                             }
@@ -411,7 +429,8 @@ class NewMedicineActivity : AppCompatActivity() {
                                         namaobat = model.namaobat,
                                         kategoriObat = model.kategoriObat
 
-                                    ), ConstantsObject.vDeleteJson,object :DataCallback<MedicineMasterModel>{
+                                    ), ConstantsObject.vDeleteJson,"$stSelectedMonth-$stSelectedYear",
+                                        object :DataCallback<MedicineMasterModel>{
                                         @SuppressLint("NotifyDataSetChanged")
                                         override fun onDataLoaded(data: MedicineMasterModel?) {
                                             data?.let {

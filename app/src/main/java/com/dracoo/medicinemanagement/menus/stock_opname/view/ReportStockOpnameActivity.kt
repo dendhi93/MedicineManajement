@@ -240,10 +240,10 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                 titleDataKosongAiscTv.visibility = View.VISIBLE
                             }
                             else -> {
-//                                val tempList = it.sortedByDescending { obj -> obj.CreateDate }
-//                                aLSOReport.clear()
-//                                aLSOReport.addAll(tempList)
-//                                reportStockOpnameAdapter.initAdapter(aLSOReport)
+                                val tempList = it.sortedByDescending { obj -> obj.CreateDate }
+                                aLSOReport.clear()
+                                aLSOReport.addAll(tempList)
+                                reportStockOpnameAdapter.initAdapter(aLSOReport)
 
                                 medicineBmRv.visibility = View.VISIBLE
                                 animEmptyRsoGiv.visibility = View.GONE
