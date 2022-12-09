@@ -169,7 +169,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                         stUser,
                         calendarAsoTiet.text.toString()
-                    ), intentActionForm.toString(),object : DataCallback<String> {
+                    ), ConstantsObject.vAddEditAction,object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE
                             saveSoBtn.isEnabled = true

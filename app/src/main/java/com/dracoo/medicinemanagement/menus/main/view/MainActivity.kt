@@ -52,11 +52,6 @@ class MainActivity : AppCompatActivity(), CallBackExitApps {
 
                 val alListMainMenu = ArrayList<MenuModel>()
                 alListMainMenu.addAll(mainViewModel.initMenu())
-//                chooseMenuHomeRv.layoutManager = LinearLayoutManager(
-//                    this@MainActivity,
-//                    LinearLayoutManager.VERTICAL,
-//                    false
-//                )
                 chooseMenuHomeRv.layoutManager = GridLayoutManager(this@MainActivity, 2)
                 chooseMenuHomeRv.setHasFixedSize(true)
                 chooseMenuHomeRv.adapter = MainActivityAdapter(alListMainMenu, this@MainActivity,

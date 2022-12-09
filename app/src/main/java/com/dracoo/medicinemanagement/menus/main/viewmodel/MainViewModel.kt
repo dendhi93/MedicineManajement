@@ -32,14 +32,6 @@ class MainViewModel @Inject constructor(
     fun initMenu(): ArrayList<MenuModel> {
         return arrayListOf(
             MenuModel(
-                ConstantsObject.vInputMedicine,
-                "Isi nama obat",
-                R.color.bg_menu_1,
-                R.mipmap.baseline_medication_white_48,
-                R.drawable.intersect_1,
-                ConstantsObject.vInputMedicine
-            ),
-            MenuModel(
                 ConstantsObject.vStockOpname,
                 "Isi stock obat",
                 R.color.bg_menu_2,
@@ -54,6 +46,14 @@ class MainViewModel @Inject constructor(
                 R.drawable.ic_direct_sales_24,
                 R.drawable.ic_intersect3,
                 ConstantsObject.vDirectSales
+            ),
+            MenuModel(
+                ConstantsObject.vInputMedicine,
+                "Isi nama obat",
+                R.color.bg_menu_1,
+                R.mipmap.baseline_medication_white_48,
+                R.drawable.intersect_1,
+                ConstantsObject.vInputMedicine
             ),
             MenuModel(
                 ConstantsObject.vReportStockOpname,

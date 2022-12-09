@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -65,4 +66,23 @@ class ReportStockOpnameViewModel @Inject constructor(
     }
 
     fun getSOStore() = dataStoreRepo.getSOData().asLiveData()
+
+    fun transactionStockOpname(postModel : StockOpnameModel, actionRequest : String,callback: DataCallback<String>){
+        viewModelScope.launch {
+            apiRepository.postTransStockOpname(postModel, actionRequest,object :ApiRepository.ApiCallback<String>{
+                override fun onDataLoaded(data: String?) {
+                    data?.let {
+                        callback.onDataLoaded(it)
+                    }
+                }
+
+                override fun onDataError(error: String?) {
+                    error.let {
+                        Timber.e("$error")
+                        callback.onDataError(error.toString())
+                    }
+                }
+            })
+        }
+    }
 }

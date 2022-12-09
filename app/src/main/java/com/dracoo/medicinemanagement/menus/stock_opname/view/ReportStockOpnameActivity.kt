@@ -83,7 +83,26 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                         MedicalUtil.showDialogConfirmation(this,"Konfirmasi",
                             "Apakah anda yakin ingin hapus stock opname obat ${model.NamaObat} ?"
                         ) {
-                            //todo delete stock opname
+                            binding.rsoPg.visibility = View.VISIBLE
+                            reportSOViewModel.transactionStockOpname(
+                                model, ConstantsObject.vDeleteJson, object :DataCallback<String>{
+                                    override fun onDataLoaded(data: String?) {
+                                        binding.rsoPg.visibility = View.GONE
+                                        data?.let {
+                                            aLSOReport.remove(model)
+                                            reportStockOpnameAdapter.initAdapter(aLSOReport)
+                                            MedicalUtil.snackBarMessage(it, this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        }
+                                    }
+
+                                    override fun onDataError(error: String?) {
+                                        binding.rsoPg.visibility = View.GONE
+                                        error?.let {
+                                            MedicalUtil.snackBarMessage("failed $it", this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                        }
+                                    }
+                                }
+                            )
                         }
                     }
                 }
