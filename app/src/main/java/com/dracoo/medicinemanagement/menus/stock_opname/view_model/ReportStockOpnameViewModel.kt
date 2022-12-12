@@ -24,9 +24,9 @@ class ReportStockOpnameViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo
 ):  ViewModel()  {
 
-    fun getDataSO(monthYear : String, callback: DataCallback<List<StockOpnameModel>>){
+    fun getDataSO(callback: DataCallback<List<StockOpnameModel>>){
         viewModelScope.launch {
-            apiRepository.postStockOpnameData(monthYear,object :ApiRepository.ApiCallback<JSONObject>{
+            apiRepository.postStockOpnameData(object :ApiRepository.ApiCallback<JSONObject>{
                 override fun onDataLoaded(data: JSONObject?) {
                     val list = ArrayList<StockOpnameModel>()
                     data?.let {
@@ -42,7 +42,7 @@ class ReportStockOpnameViewModel @Inject constructor(
                             val dateSO = MedicalUtil.getChangeDateFormat(jo.getString("CreateDate"),
                             ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
 
-                            list.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput, monthYear))
+                            list.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput))
                         }
                         saveJsonSO(list)
                         callback.onDataLoaded(list)

@@ -168,7 +168,6 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                         qtySoTiet.text.toString(),
                         MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
                         stUser,
-                        calendarAsoTiet.text.toString()
                     ), ConstantsObject.vAddEditAction,object : DataCallback<String> {
                         override fun onDataLoaded(data: String?) {
                             nmSo.visibility = View.GONE
@@ -204,7 +203,7 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
                 medicineNameSoTiet.setText(it.NamaObat)
                 prizeSoTiet.setText("Rp. " + MedicalUtil.moneyFormat(it.HargaSatuan.toDouble()))
                 qtySoTiet.setText(it.Jumlah)
-                calendarAsoTiet.setText(it.monthYear)
+//                calendarAsoTiet.setText(it.monthYear)
                 stPiecesPrize = it.HargaSatuan
             }
 

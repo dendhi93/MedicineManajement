@@ -32,12 +32,13 @@ object ConstantsObject {
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
-    const val vFinalMasterObatPostV9 = "https://script.google.com/macros/s/AKfycbwMsIzWBBWQ88L-__5MQb_CEGKe6LkFryoVxOpYjlMf3meNZ_ccFf2IOdwix0s6kMFj4A/exec"
     const val vFinalMasterObatPostV10 = "https://script.google.com/macros/s/AKfycbze5aFFN0D6PH3YB7cyXjI4t78M-Gbu6Js7kZhpzGog7npqmB1TvrckcG-_Q0Mei9eYow/exec"
+    const val vFinalMasterObatPostV11 = "https://script.google.com/macros/s/AKfycbwQ6S_65nqAmgHKE2H2lekhU6qwevv8ruebLiljvDOLDtpzWrpS6luzqeNB3lV-HMej/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
     const val vStockOpnamePostTransV3 ="https://script.google.com/macros/s/AKfycbyDXIlQL1XbpyWIFwq1A8WWRQCrfLkEEs4FzGa9QpNWsPQIDl3-VKHq3t7eo723nQeH/exec"
+    const val vStockOpnamePostTransV4 ="https://script.google.com/macros/s/AKfycbz03efzmfjeTbxxwL24KfA3IDVmP3lQY8Qby7ADR0THMqxya09dO0ZuKbE-mCpoHCN1/exec"
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
-    const val vStockOpnameGetV2 = "https://script.google.com/macros/s/AKfycbzBWwuTHHsad73L5JUCnXyuWzhBo3ncp6qk8O1zE4s4kCCPpocFUDSw6Msq1alzH53jTA/exec"
+    const val vStockOpnameGetV3 = "https://script.google.com/macros/s/AKfycbzklfRJr8gw6u2kOIIXakKodmGNNbc660gif1mitSu_liM02IM9gLcc5fH4LTGBdoMElQ/exec"
 
     //JSON POST master medicine
 //    const val medicineCodeJson = "entry.438343947"

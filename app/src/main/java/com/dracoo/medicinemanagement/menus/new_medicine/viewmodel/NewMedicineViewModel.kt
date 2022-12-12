@@ -69,10 +69,9 @@ class NewMedicineViewModel @Inject constructor(
     fun postNewMedicine(
         postModel: MedicineMasterModel,
         actionPost : String,
-        monthYear : String,
         callback : DataCallback<MedicineMasterModel>){
         viewModelScope.launch {
-            apiRepository.postMedicineMaster(postModel, actionPost,monthYear,object :ApiRepository.ApiCallback<MedicineMasterModel>{
+            apiRepository.postMedicineMaster(postModel, actionPost,object :ApiRepository.ApiCallback<MedicineMasterModel>{
                 override fun onDataLoaded(data: MedicineMasterModel?) {
                     data?.let {
                         Timber.e("data post $data")

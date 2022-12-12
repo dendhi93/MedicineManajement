@@ -207,7 +207,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                                     medicineBmRv.visibility = View.VISIBLE
                                     animEmptyRsoGiv.visibility = View.GONE
                                     titleDataKosongAiscTv.visibility = View.GONE
-                                    calendarRsoTiet.setText(tempList[0].monthYear)
+//                                    calendarRsoTiet.setText(tempList[0].monthYear)
                                 }
                             }
                         }
@@ -229,7 +229,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
             binding.animEmptyRsoGiv.visibility = View.VISIBLE
             binding.titleDataKosongAiscTv.visibility = View.VISIBLE
         }
-        reportSOViewModel.getDataSO("$stSelectedMonth-$stSelectedYear",object :DataCallback<List<StockOpnameModel>>{
+        reportSOViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {
                 data?.let {
                     binding.apply {

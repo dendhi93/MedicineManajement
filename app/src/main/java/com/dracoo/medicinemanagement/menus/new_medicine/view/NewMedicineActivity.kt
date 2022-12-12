@@ -39,7 +39,6 @@ class NewMedicineActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewMedicineBinding
     private lateinit var bottomSheetAddBinding : DialogBottomSheetAddMedicineBinding
     private lateinit var bottomAddDialog : BottomSheetDialog
-    private val calendar = Calendar.getInstance()
     private val newMedicineViewModel : NewMedicineViewModel by viewModels()
     private lateinit var newMedicineAdapter: NewMedicineAdapter
     private var aLMasterMedical: ArrayList<MedicineMasterModel> = ArrayList()
@@ -49,8 +48,6 @@ class NewMedicineActivity : AppCompatActivity() {
     private var isConnected = false
     private var selectedInputMode = ""
     private var selectedItemClick = 0
-    private var stSelectedMonth = ""
-    private var stSelectedYear = ""
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -142,13 +139,6 @@ class NewMedicineActivity : AppCompatActivity() {
                         },100)
                     }
                 }
-            }
-
-            stSelectedYear = calendar.get(Calendar.YEAR).toString()
-            val intMonth = calendar.get(Calendar.MONTH) + 1
-            stSelectedMonth = when{
-                intMonth < 10 -> "0$intMonth"
-                else -> intMonth.toString()
             }
         }
     }
@@ -265,7 +255,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), ConstantsObject.vAddEditAction, "$stSelectedMonth-$stSelectedYear",
+                                ), ConstantsObject.vAddEditAction,
                                     object :DataCallback<MedicineMasterModel>{
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
                                         data?.let {
@@ -293,7 +283,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                     namaobat = medicineNameBsamTiet.text.toString(),
                                     kategoriObat = medicineCategoryBsamTiet.text.toString()
 
-                                ), ConstantsObject.vAddEditAction,"$stSelectedMonth-$stSelectedYear",
+                                ), ConstantsObject.vAddEditAction,
                                     object :DataCallback<MedicineMasterModel>{
                                     @SuppressLint("NotifyDataSetChanged")
                                     override fun onDataLoaded(data: MedicineMasterModel?) {
@@ -429,7 +419,7 @@ class NewMedicineActivity : AppCompatActivity() {
                                         namaobat = model.namaobat,
                                         kategoriObat = model.kategoriObat
 
-                                    ), ConstantsObject.vDeleteJson,"$stSelectedMonth-$stSelectedYear",
+                                    ), ConstantsObject.vDeleteJson,
                                         object :DataCallback<MedicineMasterModel>{
                                         @SuppressLint("NotifyDataSetChanged")
                                         override fun onDataLoaded(data: MedicineMasterModel?) {

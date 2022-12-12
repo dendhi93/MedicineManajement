@@ -51,13 +51,12 @@ constructor(
     suspend fun postMedicineMaster(
         model : MedicineMasterModel,
         actionPost : String,
-        monthYear : String,
         callback: ApiCallback<MedicineMasterModel>
     ){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vFinalMasterObatPostV10,
+                Method.POST, ConstantsObject.vFinalMasterObatPostV11,
                 { response ->
                     try {
                         response.let {
@@ -85,7 +84,6 @@ constructor(
                     params[ConstantsObject.medicinePieceTypeJsonV2] = model.satuanobat
                     params[ConstantsObject.piecesPrizeJsonV2] = model.hargasatuan
                     params[ConstantsObject.medicineCategoryJsonV2] = model.kategoriObat
-                    params[ConstantsObject.vMonthYearJson] = monthYear
                     return params
                 }
             }
@@ -101,7 +99,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnamePostTransV3,
+                Method.POST, ConstantsObject.vStockOpnamePostTransV4,
                 { response ->
                     try {
                         response.let {
@@ -129,7 +127,7 @@ constructor(
                     params[ConstantsObject.qtyJson] = model.Jumlah
                     params[ConstantsObject.createDateJson] = model.CreateDate
                     params[ConstantsObject.userCreateJson] = model.UserCreate
-                    params[ConstantsObject.vMonthYearJson] = model.monthYear
+//                    params[ConstantsObject.vMonthYearJson] = model.monthYear
                     params[ConstantsObject.actionJson] = actionRequest
                     return params
                 }
@@ -142,11 +140,11 @@ constructor(
         }
     }
 
-    suspend fun postStockOpnameData(monthYear: String, callback: ApiCallback<JSONObject>){
+    suspend fun postStockOpnameData(callback: ApiCallback<JSONObject>){
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vStockOpnameGetV2,
+                Method.POST, ConstantsObject.vStockOpnameGetV3,
                 { response ->
                     try {
                         response.let {
@@ -164,8 +162,6 @@ constructor(
 
                     //here we pass params
                     params[ConstantsObject.idMasterJson] = ConstantsObject.idStockOpname
-                    params[ConstantsObject.vMonthYearJson] = monthYear
-
                     return params
                 }
             }
