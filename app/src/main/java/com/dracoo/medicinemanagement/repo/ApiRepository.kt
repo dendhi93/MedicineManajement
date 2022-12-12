@@ -63,7 +63,7 @@ constructor(
                             Timber.e("response $response")
                             when {
                                 response.contains("Success") -> callback.onDataLoaded(model)
-                                else -> callback.onDataError(it.toString())
+                                else -> callback.onDataError(it)
                             }
                         }
                     }catch (e :Exception){ callback.onDataError("error $e") }

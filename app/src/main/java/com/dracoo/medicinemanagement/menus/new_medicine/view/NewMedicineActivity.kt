@@ -28,7 +28,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
@@ -181,7 +180,6 @@ class NewMedicineActivity : AppCompatActivity() {
 
             override fun onDataError(error: String?) {
                 error?.let {
-                    Timber.e("$error")
                     MedicalUtil.snackBarMessage(it, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
                 }
                 binding.nmPg.visibility = View.GONE
@@ -435,7 +433,13 @@ class NewMedicineActivity : AppCompatActivity() {
 
                                         override fun onDataError(error: String?) {
                                             binding.nmPg.visibility = View.GONE
-                                            MedicalUtil.snackBarMessage("failed $error", this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                            error?.let { itError ->
+                                                val stReplace = when {
+                                                    itError.contains("\"") -> itError.replace("\"", "")
+                                                    else -> itError
+                                                }
+                                                MedicalUtil.snackBarMessage(stReplace, this@NewMedicineActivity, ConstantsObject.vSnackBarWithOutTombol)
+                                            }
                                         }
                                     })
                                 }
