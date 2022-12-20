@@ -1,4 +1,4 @@
-package com.dracoo.medicinemanagement.menus.direct_sale
+package com.dracoo.medicinemanagement.menus.direct_sale.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

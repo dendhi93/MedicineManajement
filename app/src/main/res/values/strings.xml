@@ -54,4 +54,6 @@
     <string name="kolom_2">Kolom 2</string>
     <string name="find_medicine">Cari Obat</string>
 
+    //direct sale
+    <string name="direct_sale_input">Cari Obat dan Input Jumlah Obat</string>
 </resources>

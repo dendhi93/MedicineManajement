@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".menus.direct_sale.DirectSaleActivity"
+            android:name=".menus.direct_sale.view.DirectSaleActivity"
             android:exported="false"
             android:label="@string/direct_sale_activity">
             <meta-data

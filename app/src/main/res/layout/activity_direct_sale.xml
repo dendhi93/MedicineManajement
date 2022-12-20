@@ -4,6 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menus.direct_sale.DirectSaleActivity">
+    tools:context=".menus.direct_sale.view.DirectSaleActivity"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/lbl_top_ads_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/direct_sale_input"
+        android:textColor="@color/text_gray1"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/medicine_name_ads_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lbl_top_ads_tv"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_top_ads_tv">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/medicine_name_ads_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="50"
+            android:hint="@string/medicine_name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_search_adm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="@string/search"
+        android:textColor="@color/text_gray1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/medicine_name_ads_til"
+        app:layout_constraintTop_toTopOf="@+id/medicine_name_ads_til"
+        app:layout_constraintBottom_toBottomOf="@+id/medicine_name_ads_til"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/qty_adm_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="@+id/medicine_name_ads_til"
+        app:layout_constraintStart_toStartOf="@+id/medicine_name_ads_til"
+        app:layout_constraintTop_toBottomOf="@+id/medicine_name_ads_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/qty_adm_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            android:hint="@string/qty_medicine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
