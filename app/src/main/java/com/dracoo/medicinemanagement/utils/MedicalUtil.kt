@@ -22,6 +22,7 @@ import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -293,6 +294,26 @@ object MedicalUtil {
             .setMinYear(mYear)
             .setMaxMonth(Calendar.DECEMBER)
             .build().show()
+    }
+
+    fun initReturnMedical(jsonObject: JSONObject) : ArrayList<MedicineMasterModel>{
+        val list = ArrayList<MedicineMasterModel>()
+        val jArrayValue = jsonObject.getJSONArray("values")
+        (0 until jArrayValue.length()).forEach { i ->
+            val stDate = jArrayValue[i].toString().split(",")[0]
+                .split("[")[1].replace("\"", "").replace("\\", "")
+            val stMedicineCode = jArrayValue[i].toString().split(",")[1].replace("\"", "")
+            val stMedicineType = jArrayValue[i].toString().split(",")[2].replace("\"", "")
+            val stMedicinePrize = jArrayValue[i].toString().split(",")[3].replace("\"", "")
+            val stMedicineName = jArrayValue[i].toString().split(",")[4].split("]")[0].replace("\"", "")
+            val stMedicineCategory = jArrayValue[i].toString().split(",")[5].split("]")[0].replace("\"", "")
+//                            Timber.e("split result date "  + stDate + "\ncode " + stMedicineCode + " " +
+//                                    "\nstMedicineType " + stMedicineType + "\nstMedicinePrize"
+//                                    +stMedicinePrize+ "\nstMedicineName " +stMedicineName)
+            list.add(MedicineMasterModel(stDate, stMedicineCode,stMedicineType,stMedicinePrize, stMedicineName,stMedicineCategory))
+        }
+
+        return list
     }
 
     interface TwoColumnInterface{

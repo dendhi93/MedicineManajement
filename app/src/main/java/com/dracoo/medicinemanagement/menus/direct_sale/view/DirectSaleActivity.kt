@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DirectSaleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
