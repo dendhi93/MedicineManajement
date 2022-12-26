@@ -70,19 +70,11 @@ class NewMedicineActivity : AppCompatActivity() {
         initListAdapter(aLMasterMedical)
         checkConnection.observe(this){
             isConnected = when {
-                !it -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, false)
-                    false
-                }
-                else -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, true)
-                    true
-                }
+                !it -> false
+                else -> true
             }
+
+            initNotConnectedDialog()
 
             newMedicineViewModel.getDataMedicine().observe(this){ itObserve ->
                 itObserve.let { itLet ->
@@ -369,6 +361,17 @@ class NewMedicineActivity : AppCompatActivity() {
         if(bottomAddDialog.isShowing){
             bottomAddDialog.dismiss()
             bottomAddDialog.cancel()
+        }
+    }
+
+    private fun initNotConnectedDialog(){
+        when(isConnected){
+            false -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, false)
+            true -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, true)
         }
     }
 

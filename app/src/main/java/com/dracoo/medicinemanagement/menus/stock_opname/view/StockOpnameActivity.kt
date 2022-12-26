@@ -62,19 +62,11 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
 
         checkConnection.observe(this){
             isConnected = when {
-                !it -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, false)
-                    false
-                }
-                else -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, true)
-                    true
-                }
+                !it -> false
+                else -> true
             }
+
+            initNotConnectedDialog()
 
             stockOpnameViewModel.getDataMedicine().observe(this) { itList ->
                 when {
@@ -267,6 +259,17 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
         }
     }
 
+    private fun initNotConnectedDialog(){
+        when(isConnected){
+            false -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, false)
+            true -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, true)
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -284,14 +287,16 @@ class StockOpnameActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface 
     }
 
     override fun selectedTwoSearch(selectedData: ThreeColumnModel) {
-        binding.medicineCodeSoTiet.setText(selectedData.column2)
-        binding.medicineNameSoTiet.setText(selectedData.column1)
-        binding.prizeSoTiet.setText(MedicalUtil.moneyFormat(selectedData.column3.toDouble()))
-        stPiecesPrize = selectedData.column3
+        binding.apply {
+            medicineCodeSoTiet.setText(selectedData.column2)
+            medicineNameSoTiet.setText(selectedData.column1)
+            prizeSoTiet.setText(MedicalUtil.moneyFormat(selectedData.column3.toDouble()))
+            stPiecesPrize = selectedData.column3
 
-        if(popUpSearchMedicine.isShowing){
-            popUpSearchMedicine.dismiss()
-            popUpSearchMedicine.cancel()
+            if(popUpSearchMedicine.isShowing){
+                popUpSearchMedicine.dismiss()
+                popUpSearchMedicine.cancel()
+            }
         }
     }
 }
