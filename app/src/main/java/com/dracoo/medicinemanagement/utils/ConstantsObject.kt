@@ -6,6 +6,10 @@ object ConstantsObject {
     const val vSnackBarWithTombol = 11
     const val vSnackBarWithOutTombol = 22
 
+    //toast
+    const val vLongToast = "long_toast"
+    const val vShortToast = "short_toast"
+
     //date format
     const val vTglSetrip = "dd-MM-yyyy"
     const val vTahunSetrip = "yyyy-MM-dd"

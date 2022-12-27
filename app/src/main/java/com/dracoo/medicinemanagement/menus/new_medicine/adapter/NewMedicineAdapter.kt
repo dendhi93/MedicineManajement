@@ -17,6 +17,7 @@ import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DiffUtils
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 
+
 class NewMedicineAdapter(
     private val context: Context,
     private val onItemClick: ((v : View, model : MedicineMasterModel, position : Int) -> Unit)? = null

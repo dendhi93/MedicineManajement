@@ -4,8 +4,8 @@ data class DirectSaleModel(
     var noTagihan : String,
     var kodeObat : String,
     var namaObat : String,
-    var hargaSatuan : Double,
-    var jumlah : Double,
+    var hargaSatuan : String,
+    var jumlah : String,
     var total : String,
     var createDate : String,
     var userCreate : String

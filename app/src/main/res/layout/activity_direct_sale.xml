@@ -104,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/qty_adm_til" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/anim_empty_rso_giv"
+        android:id="@+id/anim_empty_ds_giv"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/empty_data_anim"
@@ -115,16 +115,16 @@
         app:layout_constraintTop_toBottomOf="@+id/qty_adm_til" />
 
     <TextView
-        android:id="@+id/title_data_kosong_aisc_tv"
+        android:id="@+id/title_data_kosong_ds_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_data"
         android:visibility="visible"
         android:textColor="@color/text_black1"
         android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@id/anim_empty_rso_giv"
-        app:layout_constraintStart_toStartOf="@id/anim_empty_rso_giv"
-        app:layout_constraintTop_toBottomOf="@id/anim_empty_rso_giv" />
+        app:layout_constraintEnd_toEndOf="@id/anim_empty_ds_giv"
+        app:layout_constraintStart_toStartOf="@id/anim_empty_ds_giv"
+        app:layout_constraintTop_toBottomOf="@id/anim_empty_ds_giv" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sale_ds_rv"

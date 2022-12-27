@@ -11,6 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,14 @@ object MedicalUtil {
                 snackBar.show()
             }
         }
+    }
+
+    fun toastMessage(context: Context, message: String, toastType: String) {
+        val toast = when (toastType) {
+            ConstantsObject.vLongToast -> Toast.makeText(context, message, Toast.LENGTH_LONG)
+            else -> Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        }
+        toast.show()
     }
 
     fun alertDialogDismiss(alertMessage : String,

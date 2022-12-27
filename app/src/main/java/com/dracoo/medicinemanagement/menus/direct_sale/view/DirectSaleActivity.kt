@@ -1,30 +1,33 @@
 package com.dracoo.medicinemanagement.menus.direct_sale.view
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityDirectSaleBinding
+import com.dracoo.medicinemanagement.menus.direct_sale.adapter.DirectSalesAdapter
 import com.dracoo.medicinemanagement.menus.direct_sale.viewmodel.DirectSalesViewModel
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
-import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
-import com.dracoo.medicinemanagement.utils.ConstantsObject
-import com.dracoo.medicinemanagement.utils.DataCallback
-import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.dracoo.medicinemanagement.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.reflect.Type
+
 
 @AndroidEntryPoint
 class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
@@ -33,10 +36,12 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private val directSalesViewModel : DirectSalesViewModel by viewModels()
     private lateinit var popUpSearchMedicine: Dialog
     private var alMstMedicine =  ArrayList<MedicineMasterModel>()
+    private lateinit var directSalesAdapter: DirectSalesAdapter
     private var directSaleMl = mutableListOf<DirectSaleModel>()
     private var stUser = ""
-    private var dbPiecesPrize = 0.0
+    private var dbPiecesPrize = "0"
     private var stMedicineCode = ""
+    private var intBillTotal = 0
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -50,8 +55,37 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_arrow_back_32)
         }
+
+        directSalesAdapter = DirectSalesAdapter(this@DirectSaleActivity)
+        directSalesAdapter.initAdapter(directSaleMl)
+        initRecyleDirectSale()
+        binding.saleDsRv.apply {
+            layoutManager = LinearLayoutManager(
+                this@DirectSaleActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            setHasFixedSize(true)
+            adapter = directSalesAdapter
+        }
+
+        val swipeToDeleteCallback: SwipeToDeleteCallback = object : SwipeToDeleteCallback(this) {
+            @SuppressLint("SetTextI18n")
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
+                val position = viewHolder.adapterPosition
+                val item :DirectSaleModel = directSalesAdapter.getData()[position]
+                intBillTotal -= item.total.toInt()
+                binding.valueDsTotalTv.text = "Rp. "+MedicalUtil.moneyFormat(intBillTotal.toDouble()).toString()
+                directSalesAdapter.removeItem(position)
+                directSaleMl.remove(item)
+                initRecyleDirectSale()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(binding.saleDsRv)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
         checkConnection.observe(this) {
@@ -77,37 +111,81 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                 }
             }
 
-            binding.lblSearchAdmTv.setOnClickListener {
-                when(alMstMedicine.size){
-                    0 -> MedicalUtil.snackBarMessage("Tidak ada data medicine",
-                        this, ConstantsObject.vSnackBarWithOutTombol)
-                    else ->{
-                        val listThree = ArrayList<ThreeColumnModel>()
-                        alMstMedicine.forEach { itLoop ->
-                            listThree.add(
-                                ThreeColumnModel(
-                                    itLoop.namaobat, itLoop.kodeobat,itLoop.hargasatuan)
-                            )
-                        }
+            binding.apply {
+                lblSearchAdmTv.setOnClickListener {
+                    when(alMstMedicine.size){
+                        0 -> MedicalUtil.snackBarMessage("Tidak ada data medicine",
+                            this@DirectSaleActivity, ConstantsObject.vSnackBarWithOutTombol)
+                        else ->{
+                            val listThree = ArrayList<ThreeColumnModel>()
+                            alMstMedicine.forEach { itLoop ->
+                                listThree.add(
+                                    ThreeColumnModel(
+                                        itLoop.namaobat, itLoop.hargasatuan,itLoop.kodeobat)
+                                )
+                            }
 
-                        popUpSearchMedicine = MedicalUtil.initPopUpSearch2Column(
-                            this,getString(R.string.find_medicine),
-                            listThree,"Nama Obat",
-                            "Kode Obat", this)
+                            popUpSearchMedicine = MedicalUtil.initPopUpSearch2Column(
+                                this@DirectSaleActivity,getString(R.string.find_medicine),
+                                listThree,"Nama Obat",
+                                "Harga Obat", this@DirectSaleActivity)
 
-                        if(::popUpSearchMedicine.isInitialized && !popUpSearchMedicine.isShowing){
-                            popUpSearchMedicine.show()
+                            if(::popUpSearchMedicine.isInitialized && !popUpSearchMedicine.isShowing){
+                                popUpSearchMedicine.show()
+                            }
                         }
                     }
                 }
-            }
 
-            binding.qtyAdmTiet.addTextChangedListener {
-                when{
-                    !it.isNullOrBlank() && stMedicineCode.isNotEmpty() ->{
-                        activeInActiveAddButton(true)
+                qtyAdmTiet.addTextChangedListener { itEditable ->
+                    when{
+                        !itEditable.isNullOrBlank() && stMedicineCode.isNotEmpty() ->{
+                            activeInActiveAddButton(true)
+                        }
+                        else -> activeInActiveAddButton(false)
                     }
-                    else -> activeInActiveAddButton(false)
+                }
+
+                addDsBtn.setOnClickListener {
+                    MedicalUtil.showDialogConfirmation(
+                        this@DirectSaleActivity, "Konfirmasi",
+                        "Apakah anda yakin ingin menambahkan "+medicineNameAdsTiet.text.toString() + " ?"
+                    ){
+                        val isSameData = directSaleMl.find { itFind ->
+                            stMedicineCode == itFind.kodeObat
+                        }
+                        when(isSameData != null){
+                            false ->{
+                                directSaleMl.add(DirectSaleModel(
+                                    noTagihan = "",
+                                    kodeObat = stMedicineCode,
+                                    namaObat = medicineNameAdsTiet.text.toString(),
+                                    hargaSatuan = dbPiecesPrize,
+                                    jumlah = qtyAdmTiet.text.toString() ,
+                                    total = (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt()).toString(),
+                                    createDate = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                                    userCreate = stUser
+                                ))
+                                intBillTotal += (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt())
+                                dbPiecesPrize = "0"
+                                valueDsTotalTv.text = "Rp. "+MedicalUtil.moneyFormat(intBillTotal.toDouble()).toString()
+                                medicineNameAdsTiet.setText("")
+                                qtyAdmTiet.setText("")
+                                directSalesAdapter.initAdapter(directSaleMl)
+                                initRecyleDirectSale()
+                            }
+                            else -> {
+                                MedicalUtil.toastMessage(this@DirectSaleActivity, "obat sudah ada dalam daftar obat", ConstantsObject.vShortToast)
+                                medicineNameAdsTiet.setText("")
+                                qtyAdmTiet.setText("")
+                                activeInActiveAddButton(false)
+                            }
+                        }
+                    }
+                }
+
+                saveDsBtn.setOnClickListener {
+                    Timber.e("size " +directSaleMl.size)
                 }
             }
         }
@@ -151,13 +229,36 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                     backgroundTintList =
                         ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.text_blue1)
                     isEnabled = true
-                    binding.bottomDsCl.visibility = View.VISIBLE
                 }
                 else -> {
                     backgroundTintList =
                         ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.gray_button)
                     isEnabled = false
-                    binding.bottomDsCl.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun initRecyleDirectSale(){
+        binding.apply {
+            when(directSaleMl.size){
+                0 ->{
+                    animEmptyDsGiv.visibility = View.VISIBLE
+                    titleDataKosongDsTv.visibility = View.VISIBLE
+                    saleDsRv.visibility = View.GONE
+                    bottomDsCl.visibility = View.GONE
+                    saveDsBtn.backgroundTintList =
+                        ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.gray_button)
+                    saveDsBtn.isEnabled = false
+                }
+                else ->{
+                    animEmptyDsGiv.visibility = View.GONE
+                    titleDataKosongDsTv.visibility = View.GONE
+                    saleDsRv.visibility = View.VISIBLE
+                    bottomDsCl.visibility = View.VISIBLE
+                    saveDsBtn.backgroundTintList =
+                        ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.text_blue1)
+                    saveDsBtn.isEnabled = true
                 }
             }
         }
@@ -181,9 +282,9 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
     override fun selectedTwoSearch(selectedData: ThreeColumnModel) {
         binding.apply {
-            stMedicineCode = selectedData.column2
+            stMedicineCode = selectedData.column3
             medicineNameAdsTiet.setText(selectedData.column1)
-            dbPiecesPrize = selectedData.column3.toDouble()
+            dbPiecesPrize = selectedData.column2
 
             if(popUpSearchMedicine.isShowing){
                 popUpSearchMedicine.dismiss()

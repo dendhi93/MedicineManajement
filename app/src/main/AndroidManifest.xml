@@ -22,6 +22,7 @@
         <activity
             android:name=".menus.direct_sale.view.DirectSaleActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/direct_sale_activity">
             <meta-data
                 android:name="android.app.lib_name"
