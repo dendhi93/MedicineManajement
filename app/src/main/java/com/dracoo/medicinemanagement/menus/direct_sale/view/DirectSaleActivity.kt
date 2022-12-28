@@ -42,6 +42,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private var dbPiecesPrize = "0"
     private var stMedicineCode = ""
     private var intBillTotal = 0
+    private var selectedStock = 0
     private lateinit var stBillNo : String
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -129,7 +130,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                             alMstMedicine.forEach { itLoop ->
                                 listThree.add(
                                     ThreeColumnModel(
-                                        itLoop.NamaObat, itLoop.HargaSatuan,itLoop.KodeObat)
+                                        itLoop.NamaObat, itLoop.HargaSatuan,itLoop.KodeObat, itLoop.Jumlah)
                                 )
                             }
 
@@ -164,23 +165,32 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                         }
                         when(isSameData != null){
                             false ->{
-                                directSaleMl.add(DirectSaleModel(
-                                    noTagihan = stBillNo,
-                                    kodeObat = stMedicineCode,
-                                    namaObat = medicineNameAdsTiet.text.toString(),
-                                    hargaSatuan = dbPiecesPrize,
-                                    jumlah = qtyAdmTiet.text.toString() ,
-                                    total = (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt()).toString(),
-                                    createDate = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
-                                    userCreate = stUser
-                                ))
-                                intBillTotal += (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt())
-                                dbPiecesPrize = "0"
-                                valueDsTotalTv.text = "Rp. "+MedicalUtil.moneyFormat(intBillTotal.toDouble()).toString()
-                                medicineNameAdsTiet.setText("")
-                                qtyAdmTiet.setText("")
-                                directSalesAdapter.initAdapter(directSaleMl)
-                                initRecyleDirectSale()
+                                when {
+                                    qtyAdmTiet.text.toString().toInt() > selectedStock -> {
+                                        MedicalUtil.toastMessage(this@DirectSaleActivity, "Stock tidak mencukupi", ConstantsObject.vShortToast)
+                                    }
+                                    else -> {
+                                       directSaleMl.add(DirectSaleModel(
+                                            noTagihan = stBillNo,
+                                            kodeObat = stMedicineCode,
+                                            namaObat = medicineNameAdsTiet.text.toString(),
+                                            hargaSatuan = dbPiecesPrize,
+                                            jumlah = qtyAdmTiet.text.toString() ,
+                                            total = (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt()).toString(),
+                                            createDate = MedicalUtil.getCurrentDateTime(ConstantsObject.vDateGaringJam),
+                                            userCreate = stUser
+                                        ))
+                                        intBillTotal += (qtyAdmTiet.text.toString().toInt() * dbPiecesPrize.toInt())
+                                        dbPiecesPrize = "0"
+                                        valueDsTotalTv.text = "Rp. "+MedicalUtil.moneyFormat(intBillTotal.toDouble()).toString()
+                                        medicineNameAdsTiet.setText("")
+                                        qtyAdmTiet.setText("")
+                                        directSalesAdapter.initAdapter(directSaleMl)
+                                        initRecyleDirectSale()
+                                        selectedStock = 0
+                                    }
+                                }
+
                             }
                             else -> {
                                 MedicalUtil.toastMessage(this@DirectSaleActivity, "obat sudah ada dalam daftar obat", ConstantsObject.vShortToast)
@@ -304,6 +314,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
             stMedicineCode = selectedData.column3
             medicineNameAdsTiet.setText(selectedData.column1)
             dbPiecesPrize = selectedData.column2
+            selectedStock = selectedData.column4.toInt()
 
             if(popUpSearchMedicine.isShowing){
                 popUpSearchMedicine.dismiss()
