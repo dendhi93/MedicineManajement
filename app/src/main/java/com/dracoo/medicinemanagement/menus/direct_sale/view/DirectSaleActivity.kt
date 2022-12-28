@@ -19,7 +19,7 @@ import com.dracoo.medicinemanagement.menus.direct_sale.adapter.DirectSalesAdapte
 import com.dracoo.medicinemanagement.menus.direct_sale.viewmodel.DirectSalesViewModel
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.model.DirectSaleModel
-import com.dracoo.medicinemanagement.model.MedicineMasterModel
+import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.*
 import com.google.gson.Gson
@@ -35,7 +35,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private lateinit var binding: ActivityDirectSaleBinding
     private val directSalesViewModel : DirectSalesViewModel by viewModels()
     private lateinit var popUpSearchMedicine: Dialog
-    private var alMstMedicine =  mutableListOf<MedicineMasterModel>()
+    private var alMstMedicine =  mutableListOf<StockOpnameModel>()
     private lateinit var directSalesAdapter: DirectSalesAdapter
     private var directSaleMl = mutableListOf<DirectSaleModel>()
     private var stUser = ""
@@ -99,22 +99,23 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
             directSalesViewModel.getUserData().observe(this) { itUSer -> stUser = itUSer.toString() }
 
-            directSalesViewModel.getDataMedicine().observe(this) { itList ->
-                when {
-                    itList?.isNotEmpty() == true -> {
-                        binding.dsPg.visibility = View.GONE
-                        val type: Type = object : TypeToken<List<MedicineMasterModel?>?>() {}.type
-                        val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itList, type)
-                        if(tempMedicineList.isNotEmpty()){
-                            alMstMedicine.addAll(tempMedicineList)
-                            tempMedicineList.forEach { itLoop ->
-                                if(itLoop.hargasatuan == "0"){
-                                    alMstMedicine.remove(itLoop)
+            directSalesViewModel.getSOStore().observe(this){ itObserve ->
+                itObserve?.let { itLet ->
+                    when{
+                        itLet.isNotEmpty() ->{
+                            val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
+                            val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
+                            if(tempSOList.isNotEmpty()){
+                                alMstMedicine.addAll(tempSOList)
+                                tempSOList.forEach { itLoop ->
+                                    if(itLoop.HargaSatuan == "0"){
+                                        alMstMedicine.remove(itLoop)
+                                    }
                                 }
                             }
                         }
+                        else -> if(isConnected){ getMedicineData() }
                     }
-                    else -> if(isConnected){ getMedicineData() }
                 }
             }
 
@@ -128,7 +129,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                             alMstMedicine.forEach { itLoop ->
                                 listThree.add(
                                     ThreeColumnModel(
-                                        itLoop.namaobat, itLoop.hargasatuan,itLoop.kodeobat)
+                                        itLoop.NamaObat, itLoop.HargaSatuan,itLoop.KodeObat)
                                 )
                             }
 
@@ -207,13 +208,13 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
     private fun getMedicineData(){
         binding.dsPg.visibility = View.VISIBLE
-        directSalesViewModel.getMasterMedicine(object : DataCallback<List<MedicineMasterModel>> {
-            override fun onDataLoaded(data: List<MedicineMasterModel>?) {
-                data?.let { itData ->
-                    if(itData.isNotEmpty()){
-                        alMstMedicine.addAll(itData)
-                        itData.forEach { itLoop ->
-                            if(itLoop.hargasatuan == "0"){ alMstMedicine.remove(itLoop) }
+        directSalesViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
+            override fun onDataLoaded(data: List<StockOpnameModel>?) {
+                data?.let {
+                    if(it.isNotEmpty()){
+                        alMstMedicine.addAll(it)
+                        it.forEach { itLoop ->
+                            if(itLoop.HargaSatuan == "0"){ alMstMedicine.remove(itLoop) }
                         }
                     }
                 }
@@ -222,8 +223,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
             override fun onDataError(error: String?) {
                 error?.let {
-                    Timber.e("$error")
-                    MedicalUtil.snackBarMessage(it, this@DirectSaleActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    MedicalUtil.snackBarMessage(it, this@DirectSaleActivity, ConstantsObject.vSnackBarWithTombol)
                 }
                 binding.dsPg.visibility = View.GONE
             }
