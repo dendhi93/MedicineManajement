@@ -35,13 +35,14 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private lateinit var binding: ActivityDirectSaleBinding
     private val directSalesViewModel : DirectSalesViewModel by viewModels()
     private lateinit var popUpSearchMedicine: Dialog
-    private var alMstMedicine =  ArrayList<MedicineMasterModel>()
+    private var alMstMedicine =  mutableListOf<MedicineMasterModel>()
     private lateinit var directSalesAdapter: DirectSalesAdapter
     private var directSaleMl = mutableListOf<DirectSaleModel>()
     private var stUser = ""
     private var dbPiecesPrize = "0"
     private var stMedicineCode = ""
     private var intBillTotal = 0
+    private lateinit var stBillNo : String
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -83,6 +84,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.saleDsRv)
+        stBillNo = MedicalUtil.getRandomString(6)
     }
 
     @SuppressLint("SetTextI18n")
@@ -105,6 +107,11 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                         val tempMedicineList: List<MedicineMasterModel> = Gson().fromJson(itList, type)
                         if(tempMedicineList.isNotEmpty()){
                             alMstMedicine.addAll(tempMedicineList)
+                            tempMedicineList.forEach { itLoop ->
+                                if(itLoop.hargasatuan == "0"){
+                                    alMstMedicine.remove(itLoop)
+                                }
+                            }
                         }
                     }
                     else -> if(isConnected){ getMedicineData() }
@@ -157,7 +164,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                         when(isSameData != null){
                             false ->{
                                 directSaleMl.add(DirectSaleModel(
-                                    noTagihan = "",
+                                    noTagihan = stBillNo,
                                     kodeObat = stMedicineCode,
                                     namaObat = medicineNameAdsTiet.text.toString(),
                                     hargaSatuan = dbPiecesPrize,
@@ -185,7 +192,14 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                 }
 
                 saveDsBtn.setOnClickListener {
-                    Timber.e("size " +directSaleMl.size)
+                    MedicalUtil.showDialogConfirmation(
+                        this@DirectSaleActivity, "Konfirmasi",
+                        "Apakah anda yakin ingin simpan transaksi ini ?"
+                    ){
+                        Timber.e("transaksi")
+                        MedicalUtil.snackBarMessage("No Tagihan anda " +directSaleMl[0].noTagihan,
+                            this@DirectSaleActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    }
                 }
             }
         }
@@ -195,8 +209,13 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
         binding.dsPg.visibility = View.VISIBLE
         directSalesViewModel.getMasterMedicine(object : DataCallback<List<MedicineMasterModel>> {
             override fun onDataLoaded(data: List<MedicineMasterModel>?) {
-                data?.let {
-                    if(it.isNotEmpty()){ alMstMedicine.addAll(it) }
+                data?.let { itData ->
+                    if(itData.isNotEmpty()){
+                        alMstMedicine.addAll(itData)
+                        itData.forEach { itLoop ->
+                            if(itLoop.hargasatuan == "0"){ alMstMedicine.remove(itLoop) }
+                        }
+                    }
                 }
                 binding.dsPg.visibility = View.GONE
             }
