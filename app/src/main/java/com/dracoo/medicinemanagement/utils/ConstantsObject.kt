@@ -48,6 +48,8 @@ object ConstantsObject {
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
     const val vStockOpnameGetV3 = "https://script.google.com/macros/s/AKfycbzklfRJr8gw6u2kOIIXakKodmGNNbc660gif1mitSu_liM02IM9gLcc5fH4LTGBdoMElQ/exec"
 
+    const val vDirectSale ="https://script.google.com/macros/s/AKfycbwiqESWGDPoIsAD-HsRnUpcGx5H6QuCXjRlOM5_7wGobrBzGgF1NnGHUupKEgBRS3xrcw/exec"
+
     //JSON POST master medicine
 //    const val medicineCodeJson = "entry.438343947"
 //    const val medicineNameJson = "entry.1827398503"

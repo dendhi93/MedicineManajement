@@ -97,28 +97,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
             directSalesViewModel.getUserData().observe(this) { itUSer -> stUser = itUSer.toString() }
 
-            if(isConnected){ getMedicineData() }
-
-//            directSalesViewModel.getSOStore().observe(this){ itObserve ->
-//                itObserve?.let { itLet ->
-//                    when{
-//                        itLet.isNotEmpty() ->{
-//                            val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
-//                            val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
-//                            if(tempSOList.isNotEmpty()){
-//                                alMstMedicine.addAll(tempSOList)
-//                                tempSOList.forEach { itLoop ->
-//                                    if(itLoop.HargaSatuan == "0"){
-//                                        alMstMedicine.remove(itLoop)
-//                                    }
-//                                }
-//                            }
-//                            binding.dsPg.visibility = View.GONE
-//                        }
-//                        else ->
-//                    }
-//                }
-//            }
+            if(isConnected){ getMedicineStock() }
 
             binding.apply {
                 lblSearchAdmTv.setOnClickListener {
@@ -216,7 +195,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
         }
     }
 
-    private fun getMedicineData(){
+    private fun getMedicineStock(){
         binding.dsPg.visibility = View.VISIBLE
         directSalesViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {

@@ -8,5 +8,6 @@ data class DirectSaleModel(
     var jumlah : String,
     var total : String,
     var createDate : String,
-    var userCreate : String
+    var userCreate : String,
+    var isReverse : String = "0"
 )
