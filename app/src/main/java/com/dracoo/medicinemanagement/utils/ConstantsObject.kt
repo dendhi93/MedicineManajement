@@ -27,6 +27,10 @@ object ConstantsObject {
     const val vNoConnectionTitle = "Tidak Terkoneksi"
     const val vNoConnectionMessage = "Handphone anda tidak terkoneksi jaringan"
 
+    //dialog type
+    const val vConfirmTitle = "Konfirmasi"
+    const val vWarningTitle = "Warning"
+
     //menus
     const val vExitApps = "Keluar Aplikasi"
     const val vInputMedicine = "Input Obat Baru"

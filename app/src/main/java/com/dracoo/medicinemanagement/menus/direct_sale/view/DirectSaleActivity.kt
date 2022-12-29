@@ -22,11 +22,8 @@ import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.lang.reflect.Type
 
 
 @AndroidEntryPoint
@@ -100,25 +97,28 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
             directSalesViewModel.getUserData().observe(this) { itUSer -> stUser = itUSer.toString() }
 
-            directSalesViewModel.getSOStore().observe(this){ itObserve ->
-                itObserve?.let { itLet ->
-                    when{
-                        itLet.isNotEmpty() ->{
-                            val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
-                            val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
-                            if(tempSOList.isNotEmpty()){
-                                alMstMedicine.addAll(tempSOList)
-                                tempSOList.forEach { itLoop ->
-                                    if(itLoop.HargaSatuan == "0"){
-                                        alMstMedicine.remove(itLoop)
-                                    }
-                                }
-                            }
-                        }
-                        else -> if(isConnected){ getMedicineData() }
-                    }
-                }
-            }
+            if(isConnected){ getMedicineData() }
+
+//            directSalesViewModel.getSOStore().observe(this){ itObserve ->
+//                itObserve?.let { itLet ->
+//                    when{
+//                        itLet.isNotEmpty() ->{
+//                            val type: Type = object : TypeToken<List<StockOpnameModel?>?>() {}.type
+//                            val tempSOList: List<StockOpnameModel> = Gson().fromJson(itLet, type)
+//                            if(tempSOList.isNotEmpty()){
+//                                alMstMedicine.addAll(tempSOList)
+//                                tempSOList.forEach { itLoop ->
+//                                    if(itLoop.HargaSatuan == "0"){
+//                                        alMstMedicine.remove(itLoop)
+//                                    }
+//                                }
+//                            }
+//                            binding.dsPg.visibility = View.GONE
+//                        }
+//                        else ->
+//                    }
+//                }
+//            }
 
             binding.apply {
                 lblSearchAdmTv.setOnClickListener {
@@ -157,7 +157,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
                 addDsBtn.setOnClickListener {
                     MedicalUtil.showDialogConfirmation(
-                        this@DirectSaleActivity, "Konfirmasi",
+                        this@DirectSaleActivity, ConstantsObject.vConfirmTitle,
                         "Apakah anda yakin ingin menambahkan "+medicineNameAdsTiet.text.toString() + " ?"
                     ){
                         val isSameData = directSaleMl.find { itFind ->
@@ -166,9 +166,9 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                         when(isSameData != null){
                             false ->{
                                 when {
-                                    qtyAdmTiet.text.toString().toInt() > selectedStock -> {
-                                        MedicalUtil.toastMessage(this@DirectSaleActivity, "Stock tidak mencukupi", ConstantsObject.vShortToast)
-                                    }
+                                    qtyAdmTiet.text.toString().toInt() > selectedStock -> MedicalUtil.alertDialogDismiss(
+                                        "Stock tidak mencukupi",
+                                        ConstantsObject.vConfirmTitle, this@DirectSaleActivity, false)
                                     else -> {
                                        directSaleMl.add(DirectSaleModel(
                                             noTagihan = stBillNo,
@@ -204,7 +204,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
 
                 saveDsBtn.setOnClickListener {
                     MedicalUtil.showDialogConfirmation(
-                        this@DirectSaleActivity, "Konfirmasi",
+                        this@DirectSaleActivity, ConstantsObject.vConfirmTitle,
                         "Apakah anda yakin ingin simpan transaksi ini ?"
                     ){
                         Timber.e("transaksi")

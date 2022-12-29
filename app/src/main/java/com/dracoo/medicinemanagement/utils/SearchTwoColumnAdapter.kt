@@ -49,7 +49,8 @@ class SearchTwoColumnAdapter(
                         ThreeColumnModel(
                             listTwoColumn[position].column1,
                             listTwoColumn[position].column2,
-                            listTwoColumn[position].column3
+                            listTwoColumn[position].column3,
+                            listTwoColumn[position].column4
                         )
                     )
             }

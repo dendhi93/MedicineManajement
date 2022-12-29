@@ -64,7 +64,4 @@ class DirectSalesViewModel @Inject constructor(
             dataStoreRepo.saveSOData(stData)
         }
     }
-
-    fun getSOStore() = dataStoreRepo.getSOData().asLiveData()
-
 }
