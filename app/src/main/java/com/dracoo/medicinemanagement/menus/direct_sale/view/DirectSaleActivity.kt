@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -24,10 +26,12 @@ import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.dracoo.medicinemanagement.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
-class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
+class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface,StraightApiCallBack  {
     private var isConnected : Boolean = false
     private lateinit var binding: ActivityDirectSaleBinding
     private val directSalesViewModel : DirectSalesViewModel by viewModels()
@@ -36,10 +40,15 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
     private lateinit var directSalesAdapter: DirectSalesAdapter
     private var directSaleMl = mutableListOf<DirectSaleModel>()
     private var stUser = ""
+    private var queuePosition = 0
     private var dbPiecesPrize = "0"
     private var stMedicineCode = ""
     private var intBillTotal = 0
     private var selectedStock = 0
+    private var intSuccessUpload = 0
+    private var intFailedUpload = 0
+    private var stSelectedYear = ""
+    private var stSelectedMonth = ""
     private lateinit var stBillNo : String
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
@@ -149,6 +158,8 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                                         "Stock tidak mencukupi",
                                         ConstantsObject.vConfirmTitle, this@DirectSaleActivity, false)
                                     else -> {
+                                        if(stBillNo == ""){ stBillNo = MedicalUtil.getRandomString(6) }
+                                        Timber.e("tagihan no $stBillNo")
                                        directSaleMl.add(DirectSaleModel(
                                             noTagihan = stBillNo,
                                             kodeObat = stMedicineCode,
@@ -186,17 +197,37 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                         this@DirectSaleActivity, ConstantsObject.vConfirmTitle,
                         "Apakah anda yakin ingin simpan transaksi ini ?"
                     ){
-                        Timber.e("transaksi")
-                        MedicalUtil.snackBarMessage("No Tagihan anda " +directSaleMl[0].noTagihan,
-                            this@DirectSaleActivity, ConstantsObject.vSnackBarWithOutTombol)
+                        when {
+                            isConnected -> {
+                                binding.dsPg.visibility = View.VISIBLE
+                                activeInActiveSaveButton(false)
+                                queueTrans()
+                            }
+                            else -> initNotConnectedDialog()
+                        }
                     }
+                }
+
+                stSelectedYear = Calendar.getInstance().get(Calendar.YEAR).toString()
+                val intMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+                stSelectedMonth = when{
+                    intMonth < 10 -> "0$intMonth"
+                    else -> intMonth.toString()
                 }
             }
         }
     }
 
+    private fun queueTrans(){
+        directSalesViewModel.postDirectSale(
+            mModel = directSaleMl[queuePosition],
+            mYearMonth = "$stSelectedMonth-$stSelectedYear",
+            actionTrans = ConstantsObject.vAddEditAction,
+            this
+        )
+    }
+
     private fun getMedicineStock(){
-        binding.dsPg.visibility = View.VISIBLE
         directSalesViewModel.getDataSO(object :DataCallback<List<StockOpnameModel>>{
             override fun onDataLoaded(data: List<StockOpnameModel>?) {
                 data?.let {
@@ -247,6 +278,23 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
         }
     }
 
+    private fun activeInActiveSaveButton(isActive : Boolean){
+        binding.saveDsBtn.apply {
+            when(isActive){
+                true -> {
+                    backgroundTintList =
+                        ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.text_blue1)
+                    isEnabled = true
+                }
+                else -> {
+                    backgroundTintList =
+                        ContextCompat.getColorStateList(this@DirectSaleActivity, R.color.gray_button)
+                    isEnabled = false
+                }
+            }
+        }
+    }
+
     private fun initRecyleDirectSale(){
         binding.apply {
             when(directSaleMl.size){
@@ -269,6 +317,22 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
                     saveDsBtn.isEnabled = true
                 }
             }
+        }
+    }
+
+    private fun showResultDialogTransaction(){
+        if(queuePosition == directSaleMl.size){
+            activeInActiveSaveButton(true)
+            binding.dsPg.visibility = View.GONE
+            MedicalUtil.alertDialogDismiss(
+                "Success TerUpload $intSuccessUpload dan Gagal Upload $intFailedUpload" +
+                        "\ndengan kode tagihan "+directSaleMl[0].noTagihan,
+                ConstantsObject.vConfirmTitle, this@DirectSaleActivity, false)
+
+            stBillNo = ""
+            directSaleMl.clear()
+            directSalesAdapter.initAdapter(directSaleMl)
+            initRecyleDirectSale()
         }
     }
 
@@ -298,6 +362,27 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface {
             if(popUpSearchMedicine.isShowing){
                 popUpSearchMedicine.dismiss()
                 popUpSearchMedicine.cancel()
+            }
+        }
+    }
+
+    override fun onDataLoaded(data: String?) {
+        data?.let {
+            queuePosition += 1
+            intSuccessUpload += 1
+            if(queuePosition <= (directSaleMl.size -1)){queueTrans()}
+            Handler(Looper.getMainLooper()).post { showResultDialogTransaction() }
+        }
+    }
+
+    override fun onDataError(error: String?) {
+        error?.let {
+            queuePosition += 1
+            intFailedUpload += 1
+            if(queuePosition <= (directSaleMl.size -1)){queueTrans()}
+            Handler(Looper.getMainLooper()).post {
+                MedicalUtil.toastMessage(this, it, ConstantsObject.vShortToast)
+                showResultDialogTransaction()
             }
         }
     }

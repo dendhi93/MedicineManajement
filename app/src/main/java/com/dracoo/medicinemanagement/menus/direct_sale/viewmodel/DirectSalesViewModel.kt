@@ -3,12 +3,14 @@ package com.dracoo.medicinemanagement.menus.direct_sale.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.dracoo.medicinemanagement.utils.StraightApiCallBack
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -62,6 +64,12 @@ class DirectSalesViewModel @Inject constructor(
         viewModelScope.launch {
             val stData = Gson().toJson(alData)
             dataStoreRepo.saveSOData(stData)
+        }
+    }
+
+    fun postDirectSale(mModel : DirectSaleModel, mYearMonth : String, actionTrans : String, callback : StraightApiCallBack){
+        viewModelScope.launch {
+            apiRepository.postTransDirectSale(mModel, mYearMonth, actionTrans, callback)
         }
     }
 }

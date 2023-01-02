@@ -40,15 +40,15 @@ object ConstantsObject {
     const val vReportDirectSales = "Laporan Penjualan Obat"
 
     //url
-    const val vFinalMasterObatPostV10 = "https://script.google.com/macros/s/AKfycbze5aFFN0D6PH3YB7cyXjI4t78M-Gbu6Js7kZhpzGog7npqmB1TvrckcG-_Q0Mei9eYow/exec"
     const val vFinalMasterObatPostV11 = "https://script.google.com/macros/s/AKfycbwQ6S_65nqAmgHKE2H2lekhU6qwevv8ruebLiljvDOLDtpzWrpS6luzqeNB3lV-HMej/exec"
     const val vGetMasterObatExcel = "https://sheets.googleapis.com/v4/spreadsheets/1oH6Arqf17h5gdSBpjlh_tTuoNxF7qzNh_WsZQCFcAiY/values/Sheet1!A2:F1000?key=AIzaSyCvMjWrwreKmgqO9OspuYxY8f53V6SfQ8g"
-    const val vStockOpnamePostTransV3 ="https://script.google.com/macros/s/AKfycbyDXIlQL1XbpyWIFwq1A8WWRQCrfLkEEs4FzGa9QpNWsPQIDl3-VKHq3t7eo723nQeH/exec"
     const val vStockOpnamePostTransV4 ="https://script.google.com/macros/s/AKfycbz03efzmfjeTbxxwL24KfA3IDVmP3lQY8Qby7ADR0THMqxya09dO0ZuKbE-mCpoHCN1/exec"
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
     const val vStockOpnameGetV3 = "https://script.google.com/macros/s/AKfycbzklfRJr8gw6u2kOIIXakKodmGNNbc660gif1mitSu_liM02IM9gLcc5fH4LTGBdoMElQ/exec"
+    const val vDirectSaleV3 = "https://script.google.com/macros/s/AKfycbxOpbADQG6dH2VVhNwJNt7wsySedvDsvlyzt_PKgI8NVPEZ2o7SCsgvRRJzbrfPwPp1Xw/exec"
 
-    const val vDirectSale ="https://script.google.com/macros/s/AKfycbwiqESWGDPoIsAD-HsRnUpcGx5H6QuCXjRlOM5_7wGobrBzGgF1NnGHUupKEgBRS3xrcw/exec"
+    const val vDirectSaleV2 ="https://script.google.com/macros/s/AKfycbw5zSzd5AOqt7Gw2OOil4s69vukNWRTW03kPy1bWVhXOJEFruSrhNUvV3kGPeD5PA194A/exec"
+
 
     //JSON POST master medicine
 //    const val medicineCodeJson = "entry.438343947"
@@ -71,7 +71,7 @@ object ConstantsObject {
     const val passwordJson = "password"
     const val vNewJson = "New"
     const val vLoginJson = "Login"
-    const val vMonthYearJson = "monthYear"
+    const val vSelectedSheetJson = "sheet"
 
     //JSON POST Stock Opname
     const val idStockOpname = "14Po1xAeOhNbrR_jpeo6oPgeLuiZID8t2fHQ17RgvPik"
@@ -79,6 +79,11 @@ object ConstantsObject {
     const val qtyJson = "Jumlah"
     const val createDateJson = "CreateDate"
     const val userCreateJson = "UserCreate"
+
+    //JSON POST DIRECT SALE
+    const val tagihanNo = "NoTagihan"
+    const val isReverse = "isReverse"
+    const val total = "Total"
 
     //input mode
     const val vNewData = "New Data"
@@ -92,6 +97,7 @@ object ConstantsObject {
     //action API
     const val vAddEditAction = "Add Edit"
     const val vDeleteJson = "Delete"
+    const val vReverseJson = "Reverse"
 
     //extras
     const val vExtrasStockOpname = "extras_Stock_Opname"

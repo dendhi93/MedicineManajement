@@ -6,10 +6,12 @@ import com.android.volley.Request
 import com.android.volley.RetryPolicy
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.UserModel
 import com.dracoo.medicinemanagement.utils.ConstantsObject
+import com.dracoo.medicinemanagement.utils.StraightApiCallBack
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
@@ -198,6 +200,53 @@ constructor(
                     params[ConstantsObject.usernameJson] = model.username
                     params[ConstantsObject.passwordJson] = model.password
 
+                    return params
+                }
+            }
+
+            val retryPolicy: RetryPolicy =
+                DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            stringReq.retryPolicy = retryPolicy
+            queue.add(stringReq)
+        }
+    }
+
+    suspend fun postTransDirectSale(model : DirectSaleModel,yearMonth : String, actionRequest : String,callback: StraightApiCallBack){
+        val queue = Volley.newRequestQueue(context)
+        withContext(Dispatchers.IO) {
+            val stringReq: StringRequest = object : StringRequest(
+                Method.POST, ConstantsObject.vDirectSaleV3,
+                { response ->
+                    try {
+                        response.let {
+                            Timber.e("response $response")
+                            when {
+                                response.contains("Success") -> callback.onDataLoaded("Success")
+                                else -> callback.onDataError(it.toString())
+                            }
+                        }
+                    }catch (e :Exception){ callback.onDataError("error $e") }
+                },
+                {
+                    callback.onDataError("$it")
+                }
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val params : HashMap<String, String>  = HashMap()
+
+                    //here we pass params
+                    Timber.e("no tagihan " +model.noTagihan)
+                    params[ConstantsObject.tagihanNo] = model.noTagihan
+                    params[ConstantsObject.medicineCodeJsonV2] = model.kodeObat
+                    params[ConstantsObject.medicineNameJsonV2] = model.namaObat
+                    params[ConstantsObject.piecesPrizeJsonV2] = model.hargaSatuan
+                    params[ConstantsObject.qtyJson] = model.jumlah
+                    params[ConstantsObject.total] = model.total
+                    params[ConstantsObject.createDateJson] = model.createDate
+                    params[ConstantsObject.userCreateJson] = model.userCreate
+                    params[ConstantsObject.vSelectedSheetJson] = yearMonth
+                    params[ConstantsObject.actionJson] = actionRequest
+                    params[ConstantsObject.isReverse] = model.isReverse
                     return params
                 }
             }

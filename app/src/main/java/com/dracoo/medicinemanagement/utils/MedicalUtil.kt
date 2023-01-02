@@ -326,10 +326,7 @@ object MedicalUtil {
     }
 
     fun getRandomString(length: Int) : String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
+       return UUID.randomUUID().toString().substring(0,length)
     }
 
     interface TwoColumnInterface{
