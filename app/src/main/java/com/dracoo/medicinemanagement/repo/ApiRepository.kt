@@ -258,6 +258,39 @@ constructor(
         }
     }
 
+    suspend fun postDirectSaleData(monthYear : String, callback: ApiCallback<JSONObject>){
+        val queue = Volley.newRequestQueue(context)
+        withContext(Dispatchers.IO) {
+            val stringReq: StringRequest = object : StringRequest(
+                Method.POST, ConstantsObject.vReportDirectSales,
+                { response ->
+                    try {
+                        response.let {
+                            Timber.e("response $response")
+                            callback.onDataLoaded(JSONObject(it))
+                        }
+                    }catch (e :Exception){ callback.onDataError("error $e") }
+                },
+                {
+                    callback.onDataError("$it")
+                }
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val params : HashMap<String, String>  = HashMap()
+
+                    //here we pass params
+                    params[ConstantsObject.vSelectedSheetJson] = monthYear
+                    return params
+                }
+            }
+
+            val retryPolicy: RetryPolicy =
+                DefaultRetryPolicy(6000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            stringReq.retryPolicy = retryPolicy
+            queue.add(stringReq)
+        }
+    }
+
     //interface response from server
     interface ApiCallback<T> {
         fun onDataLoaded(data: T?)

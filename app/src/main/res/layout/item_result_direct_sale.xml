@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/column2_irds_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/column3_irds_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/column4_irds_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/column5_irds_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <TextView
+        android:id="@+id/sale_date_irds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/content_description"
+        android:textColor="@color/gray_1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_irds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/content_description"
+        android:textColor="@color/text_black1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
+        app:layout_constraintStart_toStartOf="@id/column2_irds_gl"
+        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
+
+    <TextView
+        android:id="@+id/qty_irds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/content_description"
+        android:textColor="@color/gray_1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
+        app:layout_constraintStart_toStartOf="@id/column3_irds_gl"
+        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
+
+    <TextView
+        android:id="@+id/total_irds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/content_description"
+        android:textColor="@color/gray_1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
+        app:layout_constraintStart_toEndOf="@id/column4_irds_gl"
+        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
+
+    <TextView
+        android:id="@+id/cashier_irds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/content_description"
+        android:textColor="@color/gray_1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
+        app:layout_constraintStart_toEndOf="@id/column5_irds_gl"
+        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/ic_arrow_right_blue"
+        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

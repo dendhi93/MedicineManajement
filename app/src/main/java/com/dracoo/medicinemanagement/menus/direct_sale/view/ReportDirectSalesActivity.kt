@@ -7,7 +7,9 @@ import android.view.MenuItem
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityReportDirectSalesBinding
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReportDirectSalesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReportDirectSalesBinding
 
