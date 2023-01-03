@@ -23,12 +23,14 @@ import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.Year
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object MedicalUtil {
@@ -323,6 +325,26 @@ object MedicalUtil {
         }
 
         return list
+    }
+
+    fun initReturnMedicalStock(jsonObject: JSONObject) : ArrayList<StockOpnameModel>{
+        val listStock = ArrayList<StockOpnameModel>()
+
+        val jArray: JSONArray = jsonObject.getJSONArray(ConstantsObject.vItemRequestJson)
+        (0 until jArray.length()).forEach { i ->
+            val jo: JSONObject = jArray.getJSONObject(i)
+            val medicineName = jo.getString("NamaObat")
+            val medicineCode = jo.getString("KodeObat")
+            val invoiceNo = jo.getString("NoFaktur")
+            val piecesPrize = jo.getString("HargaSatuan")
+            val qtyMedicine = jo.getString("Jumlah")
+            val userInput = jo.getString("UserCreate")
+            val dateSO = getChangeDateFormat(jo.getString(ConstantsObject.createDateJson),
+                ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
+
+            listStock.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput))
+        }
+        return listStock
     }
 
     fun getRandomString(length: Int) : String {

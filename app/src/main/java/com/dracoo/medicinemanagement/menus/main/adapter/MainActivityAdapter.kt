@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemGridHomeBinding
 import com.dracoo.medicinemanagement.menus.direct_sale.view.DirectSaleActivity
+import com.dracoo.medicinemanagement.menus.direct_sale.view.ReportDirectSalesActivity
 import com.dracoo.medicinemanagement.menus.new_medicine.view.NewMedicineActivity
 import com.dracoo.medicinemanagement.menus.stock_opname.view.ReportStockOpnameActivity
 import com.dracoo.medicinemanagement.menus.stock_opname.view.StockOpnameActivity
@@ -57,6 +58,10 @@ class MainActivityAdapter(private val listMenu: ArrayList<MenuModel>,
                     }
                     ConstantsObject.vDirectSales ->{
                         activity.startActivity(Intent(activity, DirectSaleActivity::class.java))
+                        activity.finish()
+                    }
+                    ConstantsObject.vReportDirectSales ->{
+                        activity.startActivity(Intent(activity, ReportDirectSalesActivity::class.java))
                         activity.finish()
                     }
                     else -> MedicalUtil.snackBarMessage("menu belum terdaftar", activity, ConstantsObject.vSnackBarWithOutTombol)

@@ -8,6 +8,7 @@
     <string name="report_stock_opname_activity">Laporan Stock Obat</string>
     <string name="add_new_menu_medicine">-</string>
     <string name="direct_sale_activity">Penjualan Obat</string>
+    <string name="report_direct_sale_activity">Laporan Penjualan Obat</string>
     <string name="detail_mnu">Detail</string>
     <string name="edit_mnu">Edit</string>
     <string name="delete_mnu">Delete</string>

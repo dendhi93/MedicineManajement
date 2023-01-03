@@ -45,10 +45,8 @@ object ConstantsObject {
     const val vStockOpnamePostTransV4 ="https://script.google.com/macros/s/AKfycbz03efzmfjeTbxxwL24KfA3IDVmP3lQY8Qby7ADR0THMqxya09dO0ZuKbE-mCpoHCN1/exec"
     const val vPostLoginV3 = "https://script.google.com/macros/s/AKfycbwyU1Vj9IqpO69HK8zjafauf_cogd8dr__iQeZhhb4xeH_yRBeFJIwIW30dRucLKNOx/exec"
     const val vStockOpnameGetV3 = "https://script.google.com/macros/s/AKfycbzklfRJr8gw6u2kOIIXakKodmGNNbc660gif1mitSu_liM02IM9gLcc5fH4LTGBdoMElQ/exec"
-    const val vDirectSaleV3 = "https://script.google.com/macros/s/AKfycbxOpbADQG6dH2VVhNwJNt7wsySedvDsvlyzt_PKgI8NVPEZ2o7SCsgvRRJzbrfPwPp1Xw/exec"
-
-    const val vDirectSaleV2 ="https://script.google.com/macros/s/AKfycbw5zSzd5AOqt7Gw2OOil4s69vukNWRTW03kPy1bWVhXOJEFruSrhNUvV3kGPeD5PA194A/exec"
-
+    const val vDirectSaleV4 = "https://script.google.com/macros/s/AKfycbyVBevs_SXxHwraE3vzvobCXsB0cuC4kwhUCwlrDdIbAQviileCuRzj4KY6rv0oBDslgA/exec"
+    const val vGetDirectSale = "https://script.google.com/macros/s/AKfycbyXtGdhXhXhFZeXN0qv12AYyhyFhuPp7PAvFVWgwYCJOm2NygFOHhUVYRfrvcpQCbYVEQ/exec"
 
     //JSON POST master medicine
 //    const val medicineCodeJson = "entry.438343947"
@@ -79,6 +77,7 @@ object ConstantsObject {
     const val qtyJson = "Jumlah"
     const val createDateJson = "CreateDate"
     const val userCreateJson = "UserCreate"
+    const val vItemRequestJson = "items"
 
     //JSON POST DIRECT SALE
     const val tagihanNo = "NoTagihan"
