@@ -6,4 +6,178 @@
     android:layout_height="match_parent"
     tools:context=".menus.direct_sale.view.ReportDirectSalesActivity">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:indeterminate="true"
+        android:id="@+id/rds_pg"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/calendar_rds_til"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="18dp"
+        app:boxBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/calendar_rso_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black1"
+            android:textSize="14sp"
+            android:focusable="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/tgl_rds_iv"
+        android:contentDescription="@string/content_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:visibility="visible"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/calendar_rds_til"
+        app:layout_constraintTop_toTopOf="@+id/calendar_rds_til"
+        app:layout_constraintEnd_toEndOf="@+id/calendar_rds_til"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_rds_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/border_color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendar_rds_til">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_rso_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:drawableStart="@drawable/ic_search_24"
+            android:maxLength="20"
+            android:hint="@string/search_medicine_name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/bg_header_table_rds_ll"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/bg_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_rds_til">
+    </View>
+
+    <TextView
+        android:id="@+id/column1_rds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/date_lbl"
+        android:textColor="@color/gray_1"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@id/search_rds_til"
+        app:layout_constraintTop_toBottomOf="@id/search_rds_til" />
+
+    <TextView
+        android:id="@+id/column2_rds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/medicine_name"
+        android:textColor="@color/gray_1"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/search_rds_til" />
+
+    <TextView
+        android:id="@+id/column3_rds_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/inter_light_beta"
+        android:text="@string/qty_medicine"
+        android:textColor="@color/gray_1"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/guideline5"
+        app:layout_constraintTop_toBottomOf="@id/search_rds_til" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/column5_rds_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_19sdp"-->
+<!--        android:fontFamily="@font/inter_light_beta"-->
+<!--        android:text="@string/name"-->
+<!--        android:textColor="@color/gray_1"-->
+<!--        android:textSize="@dimen/_10ssp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/guideline6"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/horizontalscroll" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/column4_rds_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_19sdp"-->
+<!--        android:fontFamily="@font/inter_light_beta"-->
+<!--        android:text="@string/status"-->
+<!--        android:textColor="@color/gray_1"-->
+<!--        android:textSize="@dimen/_10ssp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/guideline7"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/horizontalscroll" />-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.19" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.39" />
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline6"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_begin="@dimen/_167sdp" />-->
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline7"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_begin="@dimen/_230sdp" />-->
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
