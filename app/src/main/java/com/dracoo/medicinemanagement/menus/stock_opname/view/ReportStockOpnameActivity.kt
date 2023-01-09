@@ -167,21 +167,11 @@ class ReportStockOpnameActivity : AppCompatActivity() {
 
         checkConnection.observe(this) {
             isConnected = when {
-                !it -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, false
-                    )
-                    false
-                }
-                else -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, true
-                    )
-                    true
-                }
+                !it -> false
+                else -> true
             }
+
+            initNotConnectedDialog()
 
             reportSOViewModel.getSOStore().observe(this@ReportStockOpnameActivity){ itSOObserve ->
                 stSelectedYear = calendar.get(Calendar.YEAR).toString()
@@ -218,6 +208,17 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun initNotConnectedDialog(){
+        when(isConnected){
+            false -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, false)
+            true -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, true)
         }
     }
 

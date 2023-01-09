@@ -59,4 +59,6 @@
     <string name="direct_sale_input">Cari Obat dan Input Jumlah Obat</string>
     <string name="add_button">Tambah</string>
     <string name="total">Total</string>
+    <string name="bill_no">No Tagihan</string>
+    <string name="action">Aksi</string>
 </resources>

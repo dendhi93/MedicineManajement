@@ -262,7 +262,7 @@ constructor(
         val queue = Volley.newRequestQueue(context)
         withContext(Dispatchers.IO) {
             val stringReq: StringRequest = object : StringRequest(
-                Method.POST, ConstantsObject.vReportDirectSales,
+                Method.POST, ConstantsObject.vGetDirectSale,
                 { response ->
                     try {
                         response.let {

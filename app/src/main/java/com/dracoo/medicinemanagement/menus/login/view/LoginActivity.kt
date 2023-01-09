@@ -42,19 +42,10 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         checkConnection.observe(this){
             isConnected = when {
-                !it -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, false)
-                    false
-                }
-                else -> {
-                    MedicalUtil.alertDialogDismiss(
-                        ConstantsObject.vNoConnectionTitle,
-                        ConstantsObject.vNoConnectionMessage, this, true)
-                    true
-                }
+                !it -> false
+                else -> true
             }
+            initNotConnectedDialog()
         }
 
         binding.apply {
@@ -122,6 +113,17 @@ class LoginActivity : AppCompatActivity() {
 //                    },950)
                 }
             }
+        }
+    }
+
+    private fun initNotConnectedDialog(){
+        when(isConnected){
+            false -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, false)
+            true -> MedicalUtil.alertDialogDismiss(
+                ConstantsObject.vNoConnectionTitle,
+                ConstantsObject.vNoConnectionMessage, this, true)
         }
     }
 
