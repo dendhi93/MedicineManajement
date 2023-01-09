@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
 import com.dracoo.medicinemanagement.utils.DataCallback
+import com.dracoo.medicinemanagement.utils.MedicalUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -22,7 +23,7 @@ class ReportDirectSalesViewModel @Inject constructor(
                 override fun onDataLoaded(data: JSONObject?) {
                     data?.let {
                         Timber.e("json $it")
-//                        callback.onDataLoaded(it)
+                        callback.onDataLoaded(MedicalUtil.initReturnDirectSales(it))
                     }
                 }
 

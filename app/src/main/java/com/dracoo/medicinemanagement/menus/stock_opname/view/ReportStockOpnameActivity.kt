@@ -261,6 +261,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 error?.let {
                     MedicalUtil.snackBarMessage(it, this@ReportStockOpnameActivity, ConstantsObject.vSnackBarWithTombol)
                 }
+                if(isSwipeRefresh){binding.refreshRsoSrl.isRefreshing = false}
                 binding.rsoPg.visibility = View.GONE
             }
         })

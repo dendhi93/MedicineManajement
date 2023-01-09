@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.dzmitry_lakisau.month_year_picker_dialog.MonthYearPickerDialog
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.DialogSearch2ColumnBinding
+import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.model.MedicineMasterModel
 import com.dracoo.medicinemanagement.model.StockOpnameModel
 import com.dracoo.medicinemanagement.model.ThreeColumnModel
@@ -333,18 +334,40 @@ object MedicalUtil {
         val jArray: JSONArray = jsonObject.getJSONArray(ConstantsObject.vItemRequestJson)
         (0 until jArray.length()).forEach { i ->
             val jo: JSONObject = jArray.getJSONObject(i)
-            val medicineName = jo.getString("NamaObat")
-            val medicineCode = jo.getString("KodeObat")
-            val invoiceNo = jo.getString("NoFaktur")
-            val piecesPrize = jo.getString("HargaSatuan")
-            val qtyMedicine = jo.getString("Jumlah")
-            val userInput = jo.getString("UserCreate")
+            val medicineName = jo.getString(ConstantsObject.medicineNameJsonV2)
+            val medicineCode = jo.getString(ConstantsObject.medicineCodeJsonV2)
+            val invoiceNo = jo.getString(ConstantsObject.fakturJson)
+            val piecesPrize = jo.getString(ConstantsObject.piecesPrizeJsonV2)
+            val qtyMedicine = jo.getString(ConstantsObject.qtyJson)
+            val userInput = jo.getString(ConstantsObject.userCreateJson)
             val dateSO = getChangeDateFormat(jo.getString(ConstantsObject.createDateJson),
                 ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
 
             listStock.add(StockOpnameModel(medicineCode, medicineName, invoiceNo, piecesPrize, qtyMedicine, dateSO.toString(), userInput))
         }
         return listStock
+    }
+
+    fun initReturnDirectSales(jsonObject: JSONObject) : ArrayList<DirectSaleModel>{
+        val alDirectSale = ArrayList<DirectSaleModel>()
+        val jArray: JSONArray = jsonObject.getJSONArray(ConstantsObject.vItemRequestJson)
+        (0 until jArray.length()).forEach { i ->
+            val jo: JSONObject = jArray.getJSONObject(i)
+            val billNo = jo.getString(ConstantsObject.tagihanNo)
+            val medicineCode = jo.getString(ConstantsObject.medicineCodeJsonV2)
+            val medicineName = jo.getString(ConstantsObject.medicineNameJsonV2)
+            val piecesPrize = jo.getString(ConstantsObject.piecesPrizeJsonV2)
+            val qtySold = jo.getString(ConstantsObject.qtyJson)
+            val totalMedicine = jo.getString(ConstantsObject.total)
+            val dateSale = getChangeDateFormat(jo.getString(ConstantsObject.createDateJson),
+                ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
+            val userCreate = jo.getString(ConstantsObject.userCreateJson)
+            val isReverse = jo.getString(ConstantsObject.isReverse)
+
+            alDirectSale.add(DirectSaleModel(billNo, medicineCode, medicineName,piecesPrize,qtySold,
+                totalMedicine,dateSale.toString(),userCreate,isReverse))
+        }
+        return alDirectSale
     }
 
     fun getRandomString(length: Int) : String {

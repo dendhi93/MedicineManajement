@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -65,8 +67,20 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                     stSelectedMonth = mSelectedMonth
                     stSelectedYear = mSelectedYear
                     calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
-//                    if(isConnected){ getDataSO(true) }
+                    if(isConnected){getDirectSale(false)}
                 })
+            }
+
+            refreshRdsSrl.setOnRefreshListener{
+                refreshRdsSrl.isRefreshing = true
+                when(isConnected){
+                    true -> getDirectSale(true)
+                    else ->{
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            refreshRdsSrl.isRefreshing = false
+                        },100)
+                    }
+                }
             }
         }
     }
@@ -87,20 +101,33 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 intMonth < 10 -> "0$intMonth"
                 else -> intMonth.toString()
             }
-
-            reportDirectSalesViewModel.getDataDirectSale("$stSelectedMonth-$stSelectedYear", object :DataCallback<List<DirectSaleModel>>{
-                override fun onDataLoaded(data: List<DirectSaleModel>?) {
-                    binding.rdsPg.visibility = View.GONE
-                }
-
-                override fun onDataError(error: String?) {
-                    error?.let { itError ->
-                        MedicalUtil.snackBarMessage(itError, this@ReportDirectSalesActivity, ConstantsObject.vSnackBarWithTombol)
-                    }
-                    binding.rdsPg.visibility = View.GONE
-                }
-            })
+            if(isConnected){getDirectSale(false)}
         }
+    }
+
+    private fun getDirectSale(isSwipeRefresh : Boolean){
+        binding.rdsPg.visibility = View.VISIBLE
+        if(isSwipeRefresh){
+            aLDirectSalesReport.clear()
+            binding.directSalesRdsRv.visibility = View.GONE
+            binding.animEmptyRdsGiv.visibility = View.VISIBLE
+            binding.titleDataKosongRdsTv.visibility = View.VISIBLE
+        }
+
+        reportDirectSalesViewModel.getDataDirectSale("$stSelectedMonth-$stSelectedYear", object :DataCallback<List<DirectSaleModel>>{
+            override fun onDataLoaded(data: List<DirectSaleModel>?) {
+                if(isSwipeRefresh){binding.refreshRdsSrl.isRefreshing = false}
+                binding.rdsPg.visibility = View.GONE
+            }
+
+            override fun onDataError(error: String?) {
+                error?.let { itError ->
+                    MedicalUtil.snackBarMessage(itError, this@ReportDirectSalesActivity, ConstantsObject.vSnackBarWithTombol)
+                }
+                if(isSwipeRefresh){binding.refreshRdsSrl.isRefreshing = false}
+                binding.rdsPg.visibility = View.GONE
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

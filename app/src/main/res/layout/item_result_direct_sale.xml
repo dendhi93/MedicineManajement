@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name_irds_tv"
+        android:id="@+id/bill_no_irds_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_light_beta"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
 
     <TextView
-        android:id="@+id/qty_irds_tv"
+        android:id="@+id/name_irds_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_light_beta"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
 
     <TextView
-        android:id="@+id/total_irds_tv"
+        android:id="@+id/qty_irds_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_light_beta"
@@ -83,20 +83,9 @@
         app:layout_constraintStart_toEndOf="@id/column4_irds_gl"
         app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
 
-    <TextView
-        android:id="@+id/cashier_irds_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_light_beta"
-        android:text="@string/content_description"
-        android:textColor="@color/gray_1"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
-        app:layout_constraintStart_toEndOf="@id/column5_irds_gl"
-        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dtl_rpetak_btn"
+        android:id="@+id/dtl_rds_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action"
