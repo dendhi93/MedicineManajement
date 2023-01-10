@@ -1,7 +1,7 @@
 package com.dracoo.medicinemanagement.menus.direct_sale.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +12,8 @@ import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DiffUtils
 import com.dracoo.medicinemanagement.utils.MedicalUtil
 
-class ReportDirectSalesAdapter(private val context: Context)
+class ReportDirectSalesAdapter(
+    private val onItemClick: ((v : View, model : DirectSaleModel, position : Int) -> Unit)? = null)
     : RecyclerView.Adapter<ReportDirectSalesAdapter.ViewHolder>(){
     private var listData = ArrayList<DirectSaleModel>()
 
@@ -39,6 +40,10 @@ class ReportDirectSalesAdapter(private val context: Context)
                     when{
                         position % 2 == 0-> root.setBackgroundResource(R.color.white)
                         else -> root.setBackgroundResource(R.color.gray_3)
+                    }
+
+                    dtlRdsBtn.setOnClickListener {
+                        onItemClick?.invoke(it, data, position)
                     }
                 }
             }

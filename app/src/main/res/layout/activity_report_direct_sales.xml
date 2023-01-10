@@ -69,13 +69,13 @@
         app:layout_constraintTop_toBottomOf="@+id/calendar_rds_til">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_rso_tiet"
+            android:id="@+id/search_rds_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:drawableStart="@drawable/ic_search_24"
             android:maxLength="20"
-            android:hint="@string/search_medicine_name" />
+            android:hint="@string/search_medicine_or_bill" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

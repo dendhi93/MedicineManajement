@@ -1,6 +1,7 @@
 package com.dracoo.medicinemanagement.menus.direct_sale.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
@@ -46,4 +47,6 @@ class ReportDirectSalesViewModel @Inject constructor(
             dataStoreRepo.saveDirectSaleData(stData)
         }
     }
+
+    fun getDSStore() = dataStoreRepo.getDirectSaleData().asLiveData()
 }

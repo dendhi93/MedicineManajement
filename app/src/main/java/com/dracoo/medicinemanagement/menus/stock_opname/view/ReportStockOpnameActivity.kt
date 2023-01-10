@@ -34,10 +34,10 @@ class ReportStockOpnameActivity : AppCompatActivity() {
     private lateinit var reportStockOpnameAdapter: ReportStockOpnameAdapter
     private val reportSOViewModel : ReportStockOpnameViewModel by viewModels()
     private var aLSOReport: ArrayList<StockOpnameModel> = ArrayList()
-    private val calendar = Calendar.getInstance()
     private var isConnected = false
-    private var stSelectedMonth = ""
-    private var stSelectedYear = ""
+//    private val calendar = Calendar.getInstance()
+//    private var stSelectedMonth = ""
+//    private var stSelectedYear = ""
     private val checkConnection by lazy {
         CheckConnectionUtil(application)
     }
@@ -137,16 +137,6 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                 }
             }
 
-            tglRsoIv.setOnClickListener {
-                MedicalUtil.monthAndYearPicker(this@ReportStockOpnameActivity, onSelected = {
-                        mSelectedMonth, mSelectedYear ->
-                    stSelectedMonth = mSelectedMonth
-                    stSelectedYear = mSelectedYear
-                    calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
-                    if(isConnected){ getDataSO(true) }
-                })
-            }
-
             refreshRsoSrl.setOnRefreshListener{
                 refreshRsoSrl.isRefreshing = true
                 when(isConnected){
@@ -158,6 +148,16 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                     }
                 }
             }
+
+        //            tglRsoIv.setOnClickListener {
+//                MedicalUtil.monthAndYearPicker(this@ReportStockOpnameActivity, onSelected = {
+//                        mSelectedMonth, mSelectedYear ->
+//                    stSelectedMonth = mSelectedMonth
+//                    stSelectedYear = mSelectedYear
+//                    calendarRsoTiet.setText("$mSelectedMonth-$mSelectedYear")
+//                    if(isConnected){ getDataSO(true) }
+//                })
+//            }
         }
     }
 
@@ -174,12 +174,12 @@ class ReportStockOpnameActivity : AppCompatActivity() {
             initNotConnectedDialog()
 
             reportSOViewModel.getSOStore().observe(this@ReportStockOpnameActivity){ itSOObserve ->
-                stSelectedYear = calendar.get(Calendar.YEAR).toString()
-                val intMonth = calendar.get(Calendar.MONTH) + 1
-                stSelectedMonth = when{
-                    intMonth < 10 -> "0$intMonth"
-                    else -> intMonth.toString()
-                }
+//                stSelectedYear = calendar.get(Calendar.YEAR).toString()
+//                val intMonth = calendar.get(Calendar.MONTH) + 1
+//                stSelectedMonth = when{
+//                    intMonth < 10 -> "0$intMonth"
+//                    else -> intMonth.toString()
+//                }
 
                 itSOObserve?.let { itLet ->
                     when{
@@ -203,7 +203,7 @@ class ReportStockOpnameActivity : AppCompatActivity() {
                         }
                         else -> {
                             if(isConnected){ getDataSO(false) }
-                            binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
+//                            binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
                         }
                     }
                 }

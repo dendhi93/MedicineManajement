@@ -164,18 +164,33 @@ object MedicalUtil {
     }
 
     fun filterSOAdapter(text: String?, displayedList: ArrayList<StockOpnameModel>): ArrayList<StockOpnameModel> {
-        val temp: ArrayList<StockOpnameModel> = ArrayList()
+        val tempSO: ArrayList<StockOpnameModel> = ArrayList()
         for (d in displayedList) {
             //or use .equal(text) with you want equal match
             //use .toLowerCase() for better matches
             if (text != null) {
                 if (d.NamaObat.lowercase().contains(text.lowercase())) {
-                    temp.add(d)
+                    tempSO.add(d)
                 }
             }
         }
         //update recyclerview
-        return temp
+        return tempSO
+    }
+
+    fun filterDirectSalesAdapter(text: String?, displayedList: ArrayList<DirectSaleModel>): ArrayList<DirectSaleModel> {
+        val tempDs: ArrayList<DirectSaleModel> = ArrayList()
+        for (d in displayedList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (text != null) {
+                if (d.namaObat.lowercase().contains(text.lowercase()) || d.noTagihan.lowercase().contains(text.lowercase())) {
+                    tempDs.add(d)
+                }
+            }
+        }
+        //update recyclerview
+        return tempDs
     }
 
     fun initPopUpSearch2Column(

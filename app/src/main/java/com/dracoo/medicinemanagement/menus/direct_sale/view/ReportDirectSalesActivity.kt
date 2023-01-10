@@ -9,6 +9,7 @@ import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityReportDirectSalesBinding
@@ -20,7 +21,11 @@ import com.dracoo.medicinemanagement.utils.CheckConnectionUtil
 import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -86,7 +91,10 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 }
             }
 
-            reportDirectSaleAdapter = ReportDirectSalesAdapter(this@ReportDirectSalesActivity)
+            reportDirectSaleAdapter = ReportDirectSalesAdapter(onItemClick = {
+                    _, model, _ ->
+                Timber.e("model " +model.noTagihan)
+            })
 
             directSalesRdsRv.apply {
                 layoutManager = LinearLayoutManager(
@@ -96,6 +104,22 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 )
                 setHasFixedSize(true)
                 adapter = reportDirectSaleAdapter
+            }
+
+            searchRdsTiet.addTextChangedListener {
+                when(aLDirectSalesReport.size){
+                    0 -> MedicalUtil.snackBarMessage(getString(R.string.empty_data),
+                        this@ReportDirectSalesActivity, ConstantsObject.vSnackBarWithOutTombol)
+                    else ->{
+                        when(it?.length){
+                            0 -> reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
+                            else -> {
+                                val selectedArrayList = MedicalUtil.filterDirectSalesAdapter(it.toString(), aLDirectSalesReport).distinct().toList()
+                                reportDirectSaleAdapter.initDataAdapter(selectedArrayList)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -117,8 +141,28 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 intMonth < 10 -> "0$intMonth"
                 else -> intMonth.toString()
             }
-            binding.calendarRsoTiet.setText(stSelectedMonth+"-"+stSelectedYear)
-            if(isConnected){getDirectSale(false)}
+            binding.calendarRsoTiet.setText("$stSelectedMonth-$stSelectedYear")
+            reportDirectSalesViewModel.getDSStore().observe(this@ReportDirectSalesActivity){ itObserve ->
+                itObserve?.let { itLet ->
+                    when{
+                        itLet.isNotEmpty() -> {
+                            val type: Type = object : TypeToken<List<DirectSaleModel?>?>() {}.type
+                            val tempSDList: List<DirectSaleModel> = Gson().fromJson(itLet, type)
+                            if(tempSDList.isNotEmpty()){
+                                binding.animEmptyRdsGiv.visibility = View.GONE
+                                binding.titleDataKosongRdsTv.visibility = View.GONE
+                                binding.directSalesRdsRv.visibility = View.VISIBLE
+
+                                aLDirectSalesReport.clear()
+                                aLDirectSalesReport.addAll(tempSDList)
+                                reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
+                            }
+                            binding.rdsPg.visibility = View.GONE
+                        }
+                        else ->if(isConnected){getDirectSale(false)}
+                    }
+                }
+            }
         }
     }
 
@@ -149,7 +193,10 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                                 directSalesRdsRv.visibility = View.VISIBLE
                             }
                         }
-                        reportDirectSaleAdapter.initDataAdapter(it)
+                        val tempList = it.sortedByDescending { obj -> obj.createDate }
+                        aLDirectSalesReport.clear()
+                        aLDirectSalesReport.addAll(tempList)
+                        reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
                     }
                 }
             }
