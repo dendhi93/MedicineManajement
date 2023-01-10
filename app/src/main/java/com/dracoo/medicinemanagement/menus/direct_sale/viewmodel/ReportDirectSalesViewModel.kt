@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dracoo.medicinemanagement.model.DirectSaleModel
 import com.dracoo.medicinemanagement.repo.ApiRepository
+import com.dracoo.medicinemanagement.repo.DataStoreRepo
 import com.dracoo.medicinemanagement.utils.DataCallback
 import com.dracoo.medicinemanagement.utils.MedicalUtil
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -14,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportDirectSalesViewModel @Inject constructor(
+    private val dataStoreRepo: DataStoreRepo,
     private val apiRepository: ApiRepository
 ): ViewModel() {
 
@@ -24,6 +27,7 @@ class ReportDirectSalesViewModel @Inject constructor(
                     data?.let {
                         Timber.e("json $it")
                         callback.onDataLoaded(MedicalUtil.initReturnDirectSales(it))
+                        saveJsonDirectSale(MedicalUtil.initReturnDirectSales(it))
                     }
                 }
 
@@ -33,6 +37,13 @@ class ReportDirectSalesViewModel @Inject constructor(
                     }
                 }
             })
+        }
+    }
+
+    private fun saveJsonDirectSale(alData : List<DirectSaleModel>){
+        viewModelScope.launch {
+            val stData = Gson().toJson(alData)
+            dataStoreRepo.saveDirectSaleData(stData)
         }
     }
 }

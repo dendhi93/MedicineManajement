@@ -9,8 +9,10 @@ import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ActivityReportDirectSalesBinding
+import com.dracoo.medicinemanagement.menus.direct_sale.adapter.ReportDirectSalesAdapter
 import com.dracoo.medicinemanagement.menus.direct_sale.viewmodel.ReportDirectSalesViewModel
 import com.dracoo.medicinemanagement.menus.main.view.MainActivity
 import com.dracoo.medicinemanagement.model.DirectSaleModel
@@ -26,6 +28,7 @@ import kotlin.collections.ArrayList
 class ReportDirectSalesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReportDirectSalesBinding
     private val reportDirectSalesViewModel : ReportDirectSalesViewModel by viewModels()
+    private lateinit var reportDirectSaleAdapter : ReportDirectSalesAdapter
     private var aLDirectSalesReport: ArrayList<DirectSaleModel> = ArrayList()
     private val calendar = Calendar.getInstance()
     private var isConnected = false
@@ -82,9 +85,22 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            reportDirectSaleAdapter = ReportDirectSalesAdapter(this@ReportDirectSalesActivity)
+
+            directSalesRdsRv.apply {
+                layoutManager = LinearLayoutManager(
+                    this@ReportDirectSalesActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+                setHasFixedSize(true)
+                adapter = reportDirectSaleAdapter
+            }
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
         checkConnection.observe(this) {
@@ -101,6 +117,7 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 intMonth < 10 -> "0$intMonth"
                 else -> intMonth.toString()
             }
+            binding.calendarRsoTiet.setText(stSelectedMonth+"-"+stSelectedYear)
             if(isConnected){getDirectSale(false)}
         }
     }
@@ -116,8 +133,25 @@ class ReportDirectSalesActivity : AppCompatActivity() {
 
         reportDirectSalesViewModel.getDataDirectSale("$stSelectedMonth-$stSelectedYear", object :DataCallback<List<DirectSaleModel>>{
             override fun onDataLoaded(data: List<DirectSaleModel>?) {
-                if(isSwipeRefresh){binding.refreshRdsSrl.isRefreshing = false}
-                binding.rdsPg.visibility = View.GONE
+                binding.apply {
+                    if(isSwipeRefresh){refreshRdsSrl.isRefreshing = false}
+                    rdsPg.visibility = View.GONE
+                    data?.let {
+                        when(it.size){
+                            0 -> {
+                                animEmptyRdsGiv.visibility = View.VISIBLE
+                                titleDataKosongRdsTv.visibility = View.VISIBLE
+                                directSalesRdsRv.visibility = View.GONE
+                            }
+                            else ->{
+                                animEmptyRdsGiv.visibility = View.GONE
+                                titleDataKosongRdsTv.visibility = View.GONE
+                                directSalesRdsRv.visibility = View.VISIBLE
+                            }
+                        }
+                        reportDirectSaleAdapter.initDataAdapter(it)
+                    }
+                }
             }
 
             override fun onDataError(error: String?) {

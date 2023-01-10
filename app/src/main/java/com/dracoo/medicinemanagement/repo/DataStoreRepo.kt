@@ -44,6 +44,12 @@ constructor(
         }
     }
 
+    suspend fun saveDirectSaleData(stResponse : String){
+        context.dataStore.edit { preferences ->
+            preferences[vDirectSaleDataKey] = stResponse
+        }
+    }
+
     fun getUser(): Flow<String?> = context.dataStore.data
         .map { preferences ->
             preferences[vUserKey] ?: ""
@@ -64,6 +70,11 @@ constructor(
             preferences[vSODataKey] ?: ""
         }
 
+    fun getDirectSaleData(): Flow<String?> = context.dataStore.data
+        .map { preferences ->
+            preferences[vDirectSaleDataKey] ?: ""
+        }
+
     suspend fun clearDataStore(){
         context.dataStore.edit {
             it.clear()
@@ -78,6 +89,7 @@ constructor(
         val vUserRoleKey = stringPreferencesKey("user_role")
         val vMasterMedicineKey = stringPreferencesKey("master_medicine")
         val vSODataKey = stringPreferencesKey("stock_opname_data")
+        val vDirectSaleDataKey = stringPreferencesKey("direct_sale_data")
     }
 
 }
