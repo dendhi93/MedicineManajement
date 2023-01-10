@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dracoo.medicinemanagement.R
 import com.dracoo.medicinemanagement.databinding.ItemResultDirectSaleBinding
 import com.dracoo.medicinemanagement.model.DirectSaleModel
-import com.dracoo.medicinemanagement.utils.ConstantsObject
 import com.dracoo.medicinemanagement.utils.DiffUtils
-import com.dracoo.medicinemanagement.utils.MedicalUtil
 
 class ReportDirectSalesAdapter(
     private val onItemClick: ((v : View, model : DirectSaleModel, position : Int) -> Unit)? = null)
@@ -31,8 +29,7 @@ class ReportDirectSalesAdapter(
         RecyclerView.ViewHolder(binding.root) {
             fun bind(data: DirectSaleModel, position: Int) {
                 binding.apply {
-                    saleDateIrdsTv.text = MedicalUtil.getChangeDateFormat(data.createDate,
-                        ConstantsObject.vTahunJamSetrip, ConstantsObject.vTglSetrip)
+                    saleDateIrdsTv.text = data.createDate
                     billNoIrdsTv.text = data.noTagihan
                     nameIrdsTv.text = data.namaObat
                     qtyIrdsTv.text = data.jumlah

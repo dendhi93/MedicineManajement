@@ -153,8 +153,9 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                                 binding.titleDataKosongRdsTv.visibility = View.GONE
                                 binding.directSalesRdsRv.visibility = View.VISIBLE
 
+                                val tempSortSd = tempSDList.sortedByDescending { obj -> obj.createDate }
                                 aLDirectSalesReport.clear()
-                                aLDirectSalesReport.addAll(tempSDList)
+                                aLDirectSalesReport.addAll(tempSortSd)
                                 reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
                             }
                             binding.rdsPg.visibility = View.GONE

@@ -26,6 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -374,13 +375,13 @@ object MedicalUtil {
             val piecesPrize = jo.getString(ConstantsObject.piecesPrizeJsonV2)
             val qtySold = jo.getString(ConstantsObject.qtyJson)
             val totalMedicine = jo.getString(ConstantsObject.total)
-            val dateSale = getChangeDateFormat(jo.getString(ConstantsObject.createDateJson),
-                ConstantsObject.vSpecialDateJson, ConstantsObject.vTahunJamSetrip)
+            val dateSale = jo.getString(ConstantsObject.createDateJson).split(" ")[0].replace("\\", "")
+            Timber.e("date Sales $dateSale")
             val userCreate = jo.getString(ConstantsObject.userCreateJson)
             val isReverse = jo.getString(ConstantsObject.isReverse)
 
             alDirectSale.add(DirectSaleModel(billNo, medicineCode, medicineName,piecesPrize,qtySold,
-                totalMedicine,dateSale.toString(),userCreate,isReverse))
+                totalMedicine,dateSale,userCreate,isReverse))
         }
         return alDirectSale
     }
