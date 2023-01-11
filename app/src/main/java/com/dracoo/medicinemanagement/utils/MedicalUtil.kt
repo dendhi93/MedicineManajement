@@ -294,6 +294,25 @@ object MedicalUtil {
         popup.show()
     }
 
+    fun showPopUpMenuDirectSale(context: Context,
+                      view: View,isReverse : Boolean,
+                      onClickMenu: ((selectedItem : String) -> Unit)? = null) {
+        val popup = PopupMenu(context, view)
+        when(isReverse){
+            false -> popup.inflate(R.menu.direct_sale_menu)
+            else -> popup.inflate(R.menu.direct_sale_menu_v2)
+        }
+
+        popup.setOnMenuItemClickListener { item: MenuItem? ->
+            when (item?.itemId) {
+                R.id.mnu_ds_detail -> onClickMenu?.invoke(context.getString(R.string.detail_mnu))
+                else -> onClickMenu?.invoke(context.getString(R.string.reverse_mnu))
+            }
+            true
+        }
+        popup.show()
+    }
+
     fun monthAndYearPicker(
         activity: Activity,
         onSelected: ((
@@ -375,7 +394,9 @@ object MedicalUtil {
             val piecesPrize = jo.getString(ConstantsObject.piecesPrizeJsonV2)
             val qtySold = jo.getString(ConstantsObject.qtyJson)
             val totalMedicine = jo.getString(ConstantsObject.total)
-            val dateSale = jo.getString(ConstantsObject.createDateJson).split(" ")[0].replace("\\", "")
+            var dateSale = jo.getString(ConstantsObject.createDateJson).split(" ")[0].replace("\\", "")
+            val timeSale = jo.getString(ConstantsObject.createDateJson).split(" ")[1]
+            dateSale = "$dateSale $timeSale"
             Timber.e("date Sales $dateSale")
             val userCreate = jo.getString(ConstantsObject.userCreateJson)
             val isReverse = jo.getString(ConstantsObject.isReverse)

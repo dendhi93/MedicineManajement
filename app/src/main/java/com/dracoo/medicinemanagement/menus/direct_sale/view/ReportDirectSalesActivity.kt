@@ -92,8 +92,17 @@ class ReportDirectSalesActivity : AppCompatActivity() {
             }
 
             reportDirectSaleAdapter = ReportDirectSalesAdapter(onItemClick = {
-                    _, model, _ ->
+                    v, model, _ ->
                 Timber.e("model " +model.noTagihan)
+                when(model.isReverse){
+                    "0" -> MedicalUtil.showPopUpMenuDirectSale(this@ReportDirectSalesActivity, v, false,onClickMenu = {
+                        Timber.e("itMenu $it")
+                    })
+                    else -> MedicalUtil.showPopUpMenuDirectSale(this@ReportDirectSalesActivity, v, true,onClickMenu = {
+                        Timber.e("itMenu $it")
+                    })
+                }
+
             })
 
             directSalesRdsRv.apply {

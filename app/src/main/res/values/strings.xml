@@ -11,6 +11,7 @@
     <string name="report_direct_sale_activity">Laporan Penjualan Obat</string>
     <string name="detail_mnu">Detail</string>
     <string name="edit_mnu">Edit</string>
+    <string name="reverse_mnu">Reverse</string>
     <string name="delete_mnu">Delete</string>
 
     //login activity
