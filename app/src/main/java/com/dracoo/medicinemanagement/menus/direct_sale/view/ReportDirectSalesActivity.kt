@@ -96,7 +96,14 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                 Timber.e("model " +model.noTagihan)
                 when(model.isReverse){
                     "0" -> MedicalUtil.showPopUpMenuDirectSale(this@ReportDirectSalesActivity, v, false,onClickMenu = {
-                        Timber.e("itMenu $it")
+                        when(it){
+                            getString(R.string.detail_mnu) ->{
+                                Timber.e("model " +model.namaObat)
+                            }
+                            else ->{
+                                Timber.e("model " +model.namaObat)
+                            }
+                        }
                     })
                     else -> MedicalUtil.showPopUpMenuDirectSale(this@ReportDirectSalesActivity, v, true,onClickMenu = {
                         Timber.e("itMenu $it")
