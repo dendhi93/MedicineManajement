@@ -148,6 +148,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface,S
                         this@DirectSaleActivity, ConstantsObject.vConfirmTitle,
                         "Apakah anda yakin ingin menambahkan "+medicineNameAdsTiet.text.toString() + " ?"
                     ){
+                        Timber.e("medicine Code $stMedicineCode")
                         val isSameData = directSaleMl.find { itFind ->
                             stMedicineCode == itFind.kodeObat
                         }
@@ -178,6 +179,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface,S
                                         directSalesAdapter.initAdapter(directSaleMl)
                                         initRecyleDirectSale()
                                         selectedStock = 0
+                                        stMedicineCode = ""
                                     }
                                 }
 
