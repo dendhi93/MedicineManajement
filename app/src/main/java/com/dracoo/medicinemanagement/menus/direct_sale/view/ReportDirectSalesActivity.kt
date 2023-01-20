@@ -210,9 +210,21 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                                 directSalesRdsRv.visibility = View.VISIBLE
                             }
                         }
-                        val tempList = it.sortedByDescending { obj -> obj.createDate }
+
+//                        var x = 1
+//                        val alTempDirectSale: ArrayList<DirectSaleModel> = ArrayList()
+//                        it.forEach { itLoop ->
+//                            if(x <= it.size){
+//                                if(itLoop.kodeObat != it[x].kodeObat){
+//                                    alTempDirectSale.add(itLoop)
+//                                }
+//                            }
+//
+//                            x += 1
+//                        }
+                        val tempListSortBy = it.sortedByDescending { obj -> obj.createDate }
                         aLDirectSalesReport.clear()
-                        aLDirectSalesReport.addAll(tempList)
+                        aLDirectSalesReport.addAll(tempListSortBy)
                         reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
                     }
                 }
