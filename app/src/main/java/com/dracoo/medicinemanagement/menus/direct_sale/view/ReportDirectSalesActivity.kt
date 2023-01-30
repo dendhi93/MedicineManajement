@@ -24,6 +24,9 @@ import com.dracoo.medicinemanagement.utils.MedicalUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
@@ -35,6 +38,7 @@ class ReportDirectSalesActivity : AppCompatActivity() {
     private val reportDirectSalesViewModel : ReportDirectSalesViewModel by viewModels()
     private lateinit var reportDirectSaleAdapter : ReportDirectSalesAdapter
     private var aLDirectSalesReport: ArrayList<DirectSaleModel> = ArrayList()
+    private var aLTempDirectSalesReport: ArrayList<DirectSaleModel> = ArrayList()
     private val calendar = Calendar.getInstance()
     private var isConnected = false
     private var stSelectedMonth = ""
@@ -169,9 +173,23 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                                 binding.titleDataKosongRdsTv.visibility = View.GONE
                                 binding.directSalesRdsRv.visibility = View.VISIBLE
 
-                                val tempSortSd = tempSDList.sortedByDescending { obj -> obj.createDate }
+                                val alTempDirectSale: ArrayList<DirectSaleModel> = ArrayList()
+                                tempSDList.forEach { itLoop ->
+                                    val medicineBill = itLoop.noTagihan.trim()
+                                    val isSame = alTempDirectSale.find { itFind ->
+                                        medicineBill == itFind.noTagihan.trim()
+                                    }
+                                    when(isSame != null){
+                                        false -> { alTempDirectSale.add(itLoop) }
+                                        else ->{ Timber.e("same $medicineBill") }
+                                    }
+                                }
+
+                                aLTempDirectSalesReport.clear()
+                                aLTempDirectSalesReport.addAll(tempSDList)
+                                val tempListSortBy = alTempDirectSale.sortedByDescending { obj -> obj.createDate }
                                 aLDirectSalesReport.clear()
-                                aLDirectSalesReport.addAll(tempSortSd)
+                                aLDirectSalesReport.addAll(tempListSortBy)
                                 reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
                             }
                             binding.rdsPg.visibility = View.GONE
@@ -195,37 +213,43 @@ class ReportDirectSalesActivity : AppCompatActivity() {
         reportDirectSalesViewModel.getDataDirectSale("$stSelectedMonth-$stSelectedYear", object :DataCallback<List<DirectSaleModel>>{
             override fun onDataLoaded(data: List<DirectSaleModel>?) {
                 binding.apply {
-                    if(isSwipeRefresh){refreshRdsSrl.isRefreshing = false}
-                    rdsPg.visibility = View.GONE
-                    data?.let {
-                        when(it.size){
-                            0 -> {
-                                animEmptyRdsGiv.visibility = View.VISIBLE
-                                titleDataKosongRdsTv.visibility = View.VISIBLE
-                                directSalesRdsRv.visibility = View.GONE
+                    CoroutineScope(Dispatchers.Main).launch {
+                        if(isSwipeRefresh){refreshRdsSrl.isRefreshing = false}
+                        rdsPg.visibility = View.GONE
+                        data?.let {
+                            when(it.size){
+                                0 -> {
+                                    animEmptyRdsGiv.visibility = View.VISIBLE
+                                    titleDataKosongRdsTv.visibility = View.VISIBLE
+                                    directSalesRdsRv.visibility = View.GONE
+                                }
+                                else ->{
+                                    animEmptyRdsGiv.visibility = View.GONE
+                                    titleDataKosongRdsTv.visibility = View.GONE
+                                    directSalesRdsRv.visibility = View.VISIBLE
+                                }
                             }
-                            else ->{
-                                animEmptyRdsGiv.visibility = View.GONE
-                                titleDataKosongRdsTv.visibility = View.GONE
-                                directSalesRdsRv.visibility = View.VISIBLE
-                            }
-                        }
 
-//                        var x = 1
-//                        val alTempDirectSale: ArrayList<DirectSaleModel> = ArrayList()
-//                        it.forEach { itLoop ->
-//                            if(x <= it.size){
-//                                if(itLoop.kodeObat != it[x].kodeObat){
-//                                    alTempDirectSale.add(itLoop)
-//                                }
-//                            }
-//
-//                            x += 1
-//                        }
-                        val tempListSortBy = it.sortedByDescending { obj -> obj.createDate }
-                        aLDirectSalesReport.clear()
-                        aLDirectSalesReport.addAll(tempListSortBy)
-                        reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
+                            aLTempDirectSalesReport.clear()
+                            aLTempDirectSalesReport.addAll(it)
+                            val alTempDirectSale: ArrayList<DirectSaleModel> = ArrayList()
+                            aLTempDirectSalesReport.forEach { itLoop ->
+                                val medicineBill = itLoop.noTagihan.trim()
+                                val isSame = alTempDirectSale.find { itFind ->
+                                    medicineBill == itFind.noTagihan.trim()
+                                }
+                                when(isSame != null){
+                                    false -> { alTempDirectSale.add(itLoop) }
+                                    else ->{ Timber.e("same $medicineBill") }
+                                }
+                            }
+
+//                        val tempListSortBy = it.sortedByDescending { obj -> obj.createDate }
+                            val tempListSortBy = alTempDirectSale.sortedByDescending { obj -> obj.createDate }
+                            aLDirectSalesReport.clear()
+                            aLDirectSalesReport.addAll(tempListSortBy)
+                            reportDirectSaleAdapter.initDataAdapter(aLDirectSalesReport)
+                        }
                     }
                 }
             }
