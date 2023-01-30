@@ -38,7 +38,6 @@ import kotlin.collections.ArrayList
 object MedicalUtil {
     private lateinit var search2ColumnAdapter: SearchTwoColumnAdapter
 
-
     fun snackBarMessage(snackMessage: String, activity: Activity, action: Int) {
         val rootView = activity.window.decorView.findViewById<View>(android.R.id.content)
         when(action) {

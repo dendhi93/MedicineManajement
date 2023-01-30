@@ -31,9 +31,8 @@ class ReportDirectSalesAdapter(
                 binding.apply {
                     saleDateIrdsTv.text = data.createDate
                     billNoIrdsTv.text = data.noTagihan
-                    nameIrdsTv.text = data.namaObat
-                    qtyIrdsTv.text = data.jumlah
-
+                    nameIrdsTv.text = data.userCreate
+                    
                     when{
                         position % 2 == 0-> root.setBackgroundResource(R.color.white)
                         else -> root.setBackgroundResource(R.color.gray_3)

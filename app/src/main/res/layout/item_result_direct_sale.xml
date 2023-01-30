@@ -25,13 +25,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.64" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/column5_irds_gl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
-
     <TextView
         android:id="@+id/sale_date_irds_tv"
         android:layout_width="68dp"
@@ -74,18 +67,6 @@
         app:layout_constraintStart_toStartOf="@id/column3_irds_gl"
         app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
 
-    <TextView
-        android:id="@+id/qty_irds_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_light_beta"
-        android:text="@string/content_description"
-        android:textColor="@color/gray_1"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
-        app:layout_constraintStart_toEndOf="@id/column4_irds_gl"
-        app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dtl_rds_btn"
@@ -100,7 +81,7 @@
         app:strokeWidth="1dp"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/sale_date_irds_tv"
-        app:layout_constraintStart_toEndOf="@id/column5_irds_gl"
+        app:layout_constraintStart_toEndOf="@id/column4_irds_gl"
         app:layout_constraintTop_toTopOf="@id/sale_date_irds_tv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

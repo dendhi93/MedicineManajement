@@ -103,9 +103,17 @@ class ReportDirectSalesActivity : AppCompatActivity() {
                         when(it){
                             getString(R.string.detail_mnu) ->{
                                 Timber.e("model " +model.namaObat)
+//                                val intentNewDirect = Intent(this@ReportDirectSalesActivity, DirectSaleActivity::class.java)
+//                                intentNewDirect.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vShowData)
+//                                startActivity(intentNewDirect)
+//                                finish()
                             }
                             else ->{
                                 Timber.e("model " +model.namaObat)
+                                val intentNewDirect = Intent(this@ReportDirectSalesActivity, DirectSaleActivity::class.java)
+                                intentNewDirect.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vEditData)
+                                startActivity(intentNewDirect)
+                                finish()
                             }
                         }
                     })

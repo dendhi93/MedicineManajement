@@ -57,7 +57,9 @@ class MainActivityAdapter(private val listMenu: ArrayList<MenuModel>,
                         activity.finish()
                     }
                     ConstantsObject.vDirectSales ->{
-                        activity.startActivity(Intent(activity, DirectSaleActivity::class.java))
+                        val intentNewDirect = Intent(activity, DirectSaleActivity::class.java)
+                        intentNewDirect.putExtra(ConstantsObject.vExtrasActionForm, ConstantsObject.vNewData)
+                        activity.startActivity(intentNewDirect)
                         activity.finish()
                     }
                     ConstantsObject.vReportDirectSales ->{

@@ -39,6 +39,7 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface,S
     private var alMstMedicine =  mutableListOf<StockOpnameModel>()
     private lateinit var directSalesAdapter: DirectSalesAdapter
     private var directSaleMl = mutableListOf<DirectSaleModel>()
+    private var intentActionForm : String? = null
     private var stUser = ""
     private var queuePosition = 0
     private var dbPiecesPrize = "0"
@@ -92,6 +93,9 @@ class DirectSaleActivity : AppCompatActivity(), MedicalUtil.TwoColumnInterface,S
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.saleDsRv)
         stBillNo = MedicalUtil.getRandomString(6)
+
+        intentActionForm = intent.getStringExtra(ConstantsObject.vExtrasActionForm).toString()
+        Timber.e("intent $intentActionForm")
     }
 
     @SuppressLint("SetTextI18n")

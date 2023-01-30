@@ -62,5 +62,6 @@
     <string name="total">Total</string>
     <string name="bill_no">No Tagihan</string>
     <string name="action">Aksi</string>
+    <string name="cashier">Kasir</string>
     <string name="search_medicine_or_bill">Cari Nama Obat / No Tagihan</string>
 </resources>
