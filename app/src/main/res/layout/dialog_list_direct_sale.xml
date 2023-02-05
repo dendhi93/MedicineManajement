@@ -30,26 +30,57 @@
 
         <TextView
             android:id="@+id/col1_s2cd_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/content_description"
             android:textColor="@color/gray_1"
             android:textSize="13sp"
             android:layout_marginStart="17dp"
+            android:layout_marginEnd="5dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/gd_lds_1"
+            app:layout_constraintTop_toBottomOf="@id/search_label_s2cd_tv" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_lds_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gd_lds_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <TextView
+            android:id="@+id/colMid_s2cd_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/content_description"
+            android:textColor="@color/gray_1"
+            android:textSize="13sp"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintStart_toStartOf="@+id/gd_lds_1"
+            app:layout_constraintEnd_toEndOf="@+id/gd_lds_2"
             app:layout_constraintTop_toBottomOf="@id/search_label_s2cd_tv" />
 
         <TextView
             android:id="@+id/col2_s2cd_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/content_description"
             android:textColor="@color/gray_1"
             android:layout_marginEnd="17dp"
+            android:layout_marginStart="5dp"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gd_lds_2"
             app:layout_constraintTop_toBottomOf="@id/search_label_s2cd_tv" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -71,12 +102,26 @@
             app:layout_constraintStart_toStartOf="@id/col1_s2cd_tv"
             app:layout_constraintTop_toBottomOf="@id/list_s2cd_rv" />
 
+        <TextView
+            android:id="@+id/value_total_s2cd_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/content_description"
+            android:textColor="@color/gray_1"
+            android:layout_marginEnd="17dp"
+            android:layout_marginStart="5dp"
+            android:gravity="end"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gd_lds_2"
+            app:layout_constraintTop_toBottomOf="@id/separator_s2cd_view" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_s2cd_mb"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:layout_marginEnd="13dp"
             android:layout_marginBottom="13dp"
             android:backgroundTint="@color/white"
             android:paddingTop="9dp"
@@ -85,7 +130,7 @@
             android:textColor="@color/text_gray1"
             app:layout_constraintEnd_toStartOf="@id/choose_s2cd_mb"
             app:layout_constraintStart_toStartOf="@id/separator_s2cd_view"
-            app:layout_constraintTop_toBottomOf="@id/separator_s2cd_view"
+            app:layout_constraintTop_toBottomOf="@id/value_total_s2cd_tv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:strokeColor="@color/border_color2"
             app:strokeWidth="1dp" />
