@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -312,6 +313,7 @@ object MedicalUtil {
         popup.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun monthAndYearPicker(
         activity: Activity,
         onSelected: ((
